@@ -153,28 +153,14 @@ custom_repo_name := "karo-custom"
 [arg('action', help="karo-custom repo command", pattern="get|remove")]
 [arg('username', help="karo-custom repo username (e.g. 'karolabs', 'hazzuk')")]
 custom action username:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    # manage user input
-    case "{{action}}" in
-        get)
-            echo "Getting repo {{lowercase(username)}}/karo-custom"
-            just custom-get {{lowercase(username)}}
-            ;;
-        remove)
-            echo "removing custom/{{lowercase(username)}}"
-            just custom-remove {{lowercase(username)}}
-            ;;
-        *)
-            echo "action must be 'get' or 'remove'" >&2; exit 1;
-            ;;
-    esac
+    just custom-{{action}} {{lowercase(username)}}
 
 # Get remote karo-custom repo
 [private]
 custom-get username:
     #!/usr/bin/env bash
     set -euo pipefail
+    printf "cloning {{username}}/karo-custom repo\n"
     # clone karo-custom git repo
     git clone git@github.com:{{username}}/{{custom_repo_name}}.git custom/{{username}}
     # check karo-custom repo dir not empty
@@ -191,6 +177,7 @@ custom-get username:
 # Remove a karo-custom repo
 [private]
 @custom-remove username:
+    printf "removing custom/{{username}}\n"
     # check username dir exists
     test -d "custom/{{username}}"
     # confirm removal
