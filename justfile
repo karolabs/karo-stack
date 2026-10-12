@@ -9,6 +9,7 @@ set minimum-version := '1.55.0'
 set default-list := true
 
 # List recipes or usage
+[arg('recipe', help="Justfile recipe name (e.g. 'install', 'compose')")]
 @help recipe='':
     {{ just_executable() }} {{ if recipe != "" { "--usage " + recipe } else { '' } }}
 
@@ -17,6 +18,8 @@ set default-list := true
 [confirm("proceed? (y/N)")]
 @confirm:
     echo
+
+hostname_usage := "Ansible managed host (e.g. 'homeserver', 'proxyserver')"
 
 # DEBIAN INSTALL
 # ---
@@ -51,13 +54,16 @@ host-preseed platform:
 
 # Setup a system
 [group('System setup')]
-@install hostname='': check-password
+[arg('hostname', help=hostname_usage)]
+@install hostname: check-password
     ansible-playbook run.yml --tags install --limit "{{hostname}}"
 
 # Up/down/recreate Docker stacks
 [group('System setup')]
-[arg("stack", long, short="s")]
-compose action hostname='' stack='all': check-password
+[arg('action', help="Docker Compose command")]
+[arg('hostname', help=hostname_usage)]
+[arg('stack', long, short="s", help="karo-custom stack name (e.g. 'traefik', 'pocketid')")]
+compose action hostname stack='all': check-password
     #!/usr/bin/env bash
     set -euo pipefail
     recreate=false
@@ -94,6 +100,7 @@ password := "/run/user/1000/karo/ansible/vault_pass"
 
 # Manage a vault
 [group('Ansible vault')]
+[arg('hostname', help=hostname_usage)]
 vault hostname:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -138,6 +145,8 @@ wireguard:
 
 # Get/remove custom repos
 [group('Custom repos')]
+[arg('action', help="karo-custom repo command")]
+[arg('username', help="karo-custom repo username (e.g. 'karolabs', 'hazzuk')")]
 custom action username:
     #!/usr/bin/env bash
     set -euo pipefail
