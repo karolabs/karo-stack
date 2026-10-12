@@ -8,9 +8,9 @@
 set minimum-version := '1.55.0'
 set default-list := true
 
-# List recipes
-help:
-    @{{ just_executable() }}
+# List recipes or usage
+@help recipe='':
+    {{ just_executable() }} {{ if recipe != "" { "--usage " + recipe } else { '' } }}
 
 # Reusable confirmation statement
 [private]
