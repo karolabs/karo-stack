@@ -99,7 +99,7 @@ compose action hostname stack='all': check-password
 # ANSIBLE VAULT
 # ---
 
-password := "/run/user/1000/karo/ansible/vault_pass"
+password_file := "/run/user/1000/karo/ansible/vault_pass"
 
 # Manage a vault
 [group('Ansible vault')]
@@ -108,7 +108,7 @@ vault hostname:
     #!/usr/bin/env bash
     set -euo pipefail
     # check password file exists
-    if [ -e "{{password}}" ]; then
+    if [ -e "{{password_file}}" ]; then
         # check vault file exists
         export vault="inventory/host_vars/{{hostname}}/vault.yml"; echo $vault
         if [ -e "$vault" ]; then
@@ -119,18 +119,18 @@ vault hostname:
             ansible-vault create "$vault"
         fi
     else
-        echo "{{password}} not found, run 'just password'." >&2; exit 1;
+        echo "{{password_file}} not found, run 'just password'." >&2; exit 1;
     fi
 
-# Create the Ansible vault password file when missing
+# Create Ansible vault password file when missing
 [private]
 @check-password:
-    [ -e "{{password}}" ] || micro -backup false -mkparents true "{{password}}"
+    [ -e "{{password_file}}" ] || micro -backup false -mkparents true "{{password_file}}"
 
 # Set password file
 [group('Ansible vault')]
 @password:
-    micro -backup false -mkparents true "{{password}}"
+    micro -backup false -mkparents true "{{password_file}}"
 
 # WIREGUARD
 # ---
@@ -145,6 +145,8 @@ wireguard:
 
 # CUSTOM REPOS
 # ---
+
+custom_repo_name := "karo-custom"
 
 # Get/remove custom repo
 [group('Custom repos')]
@@ -168,15 +170,13 @@ custom action username:
             ;;
     esac
 
-repo_name := "karo-custom"
-
 # Get remote karo-custom repo
 [private]
 custom-get username:
     #!/usr/bin/env bash
     set -euo pipefail
     # clone karo-custom git repo
-    git clone git@github.com:{{username}}/{{repo_name}}.git custom/{{username}}
+    git clone git@github.com:{{username}}/{{custom_repo_name}}.git custom/{{username}}
     # check karo-custom repo dir not empty
     if [ -z "$(find custom/{{username}}/karo-compose -mindepth 1 -maxdepth 1)" ]; then
         exit 0
