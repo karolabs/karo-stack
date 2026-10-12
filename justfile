@@ -15,8 +15,8 @@ set default-list := true
 # Reusable confirmation statement
 [private]
 [confirm("proceed? (y/N)")]
-confirm:
-    @echo
+@confirm:
+    echo
 
 # DEBIAN INSTALL
 # ---
@@ -37,8 +37,8 @@ confirm:
 
 # Write the authorized SSH key to the Debian preseed file
 [private]
-insert-preseed-key value platform:
-    @sed -i "s|echo '.*'|echo '{{value}}'|" debian/{{platform}}/d-i/trixie/preseed.cfg
+@insert-preseed-key value platform:
+    sed -i "s|echo '.*'|echo '{{value}}'|" debian/{{platform}}/d-i/trixie/preseed.cfg
 
 # Run a Python HTTP server to host the preseed file
 [private]
@@ -114,13 +114,13 @@ vault hostname:
 
 # Create the Ansible vault password file when missing
 [private]
-check-password:
-    @[ -e "{{password}}" ] || micro -backup false -mkparents true "{{password}}"
+@check-password:
+    [ -e "{{password}}" ] || micro -backup false -mkparents true "{{password}}"
 
 # Set password file
 [group('Ansible vault')]
-password:
-    @micro -backup false -mkparents true "{{password}}"
+@password:
+    micro -backup false -mkparents true "{{password}}"
 
 # WIREGUARD
 # ---
