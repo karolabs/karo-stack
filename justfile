@@ -18,7 +18,7 @@ help:
 confirm:
     @echo
 
-# Debian install
+# DEBIAN INSTALL
 # ---
 
 # Host preseed.cfg
@@ -46,7 +46,7 @@ host-preseed platform:
     @echo "press 'Ctrl + C' to exit"
     -python3 -m http.server 8000 --bind 0.0.0.0 --directory ./debian/{{platform}}
 
-# System setup
+# SYSTEM SETUP
 # ---
 
 # Setup a system
@@ -87,7 +87,7 @@ compose action hostname='' stack='all': check-password
         --skip-tags "$skip_tags" \
         --limit "{{hostname}}"
 
-# Ansible vault
+# ANSIBLE VAULT
 # ---
 
 password := "/run/user/1000/karo/ansible/vault_pass"
@@ -122,7 +122,7 @@ check-password:
 password:
     @micro -backup false -mkparents true "{{password}}"
 
-# Wireguard
+# WIREGUARD
 # ---
 
 # Generate key pair
@@ -133,7 +133,7 @@ wireguard:
     printf 'Private key: %s\n' "$priv"; \
     printf 'Public key: %s\n' "$pub"
 
-# Custom repos
+# CUSTOM REPOS
 # ---
 
 # Get/remove custom repos
