@@ -60,14 +60,14 @@ host-preseed platform:
 
 # Up/down/recreate Docker stacks
 [group('System setup')]
-[arg('action', help="Docker Compose command")]
+[arg('action', help="Docker Compose command", pattern="up|down|recreate")]
 [arg('hostname', help=hostname_usage)]
 [arg('stack', long, short="s", help="karo-custom stack name (e.g. 'traefik', 'pocketid')")]
 compose action hostname stack='all': check-password
     #!/usr/bin/env bash
     set -euo pipefail
     recreate=false
-    # check user input for action
+    # manage user input
     case "{{action}}" in
         up)
             skip_tags="down"
@@ -143,13 +143,14 @@ wireguard:
 # CUSTOM REPOS
 # ---
 
-# Get/remove custom repos
+# Get/remove custom repo
 [group('Custom repos')]
-[arg('action', help="karo-custom repo command")]
+[arg('action', help="karo-custom repo command", pattern="get|remove")]
 [arg('username', help="karo-custom repo username (e.g. 'karolabs', 'hazzuk')")]
 custom action username:
     #!/usr/bin/env bash
     set -euo pipefail
+    # manage user input
     case "{{action}}" in
         get)
             echo "Getting repo {{lowercase(username)}}/karo-custom"
