@@ -8,6 +8,9 @@
 set minimum-version := '1.55.0'
 set default-list := true
 
+# HELPER RECIPES
+# ---
+
 # List recipes or usage
 [arg('recipe', help="Justfile recipe name (e.g. 'install', 'compose')")]
 @help recipe='':
