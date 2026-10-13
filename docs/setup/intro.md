@@ -32,7 +32,7 @@ Debian host layout
 
     An important distinction compared to most self-hosted setups,
     is that the karo-stack configures the Docker daemon to run as rootless.
-    Living under a separate non‑privileged user.
+    Living under a separate non-privileged user.
 
     By default, the Docker daemon would normally run as root.
     But this is considered a bad practice when running third party containers.
