@@ -12,6 +12,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 [![Latest release](https://img.shields.io/github/v/release/karolabs/karo-stack?display_name=tag&cacheSeconds=7200&label=latest)](https://github.com/karolabs/karo-stack/releases)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-B461B3)](https://github.com/karolabs/karo-stack/blob/main/LICENSE)
+[![Prek](https://github.com/karolabs/karo-stack/actions/workflows/prek.yml/badge.svg?branch=main)](https://github.com/karolabs/karo-stack/actions/workflows/prek.yml)
 [![REUSE status](https://api.reuse.software/badge/github.com/karolabs/karo-stack)](https://api.reuse.software/info/github.com/karolabs/karo-stack)
 [![Hits-of-Code](https://hitsofcode.com/github/karolabs/karo-stack)](https://hitsofcode.com/github/karolabs/karo-stack/view)
 
