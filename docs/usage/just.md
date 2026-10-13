@@ -8,8 +8,13 @@ icon: lucide/file-terminal
 
 # just
 
-The karo-stack uses [just](https://just.systems/man/en/), a tool to run project-specific commands.
-Each just command is called a recipe, these recipes help simplify common commands you'll need to run when using the project.
+The karo-stack uses [just](https://just.systems/man/en/),
+a tool to run project-specific commands.
+Each just command is called a recipe,
+these recipes help simplify common commands
+you'll need to run when using the project.
+
+<!-- editorconfig-checker-disable -->
 
 ??? info "Commands vs just recipes"
 
@@ -17,13 +22,19 @@ Each just command is called a recipe, these recipes help simplify common command
 
     - `ansible-playbook run.yml --tags install --limit "homeserver"`
 
-    But the karo-stack uses just to provide a simplified way of invoking this command:
+    But the karo-stack uses just to
+    provide a simplified way of invoking this command:
 
-    - `just install homeserver` (This recipe runs the command shown above, and additional logic)
+    - `just install homeserver`
+      (This recipe runs the command shown above, and additional logic)
 
-Recipes can be invoked from any subdirectory.
-They run irrespective of your current working directory.
-And you can use `just help` to see a full list of available recipes.
+<!-- editorconfig-checker-enable -->
+
+Recipes can be invoked from any subdirectory,
+as recipes run with the working directory set
+to the directory that contains the justfile.
+You can use `just help` to see a full list of available recipes,
+or run `just help <recipe>` to see more detailed usage information.
 
 ## System setup
 
@@ -71,7 +82,8 @@ Run Ansible to deploy or remove custom Docker Compose stacks.
 
     !!! note "Stack data"
 
-        Using `just compose down` is the same as `docker compose down`, meaning stack data will persist.
+        Using `just compose down` is the same as `docker compose down`,
+        meaning stack data will persist.
 
     ``` sh { .no-copy }
     # force recreate 'pocketid' stack
@@ -124,7 +136,9 @@ Get or remove karo-custom repositories.
 
 ### :lucide-sprout: `preseed`
 
-An optional preseed method, running a Python webserver to host the Debian `preseed.cfg` file. Making it accessible for use over a local network.
+An optional preseed method,
+running a Python webserver to host the Debian `preseed.cfg` file.
+Making it accessible for use over a local network.
 
 !!! example "Recipe examples"
 
@@ -140,4 +154,6 @@ An optional preseed method, running a Python webserver to host the Debian `prese
 
     !!! note "When to use this recipe"
 
-        For use by advanced users, or when testing changes to the preseed file. See [this guide](../setup/debian/preseed.md#automatic-setup-advanced) for details.
+        For use by advanced users, or when testing changes to the preseed file.
+        See [this guide](../setup/debian/preseed.md#automatic-setup-advanced)
+        for details.

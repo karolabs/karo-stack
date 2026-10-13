@@ -8,17 +8,23 @@
 set minimum-version := '1.55.0'
 set default-list := true
 
-# List recipes
-help:
-    @{{ just_executable() }}
+# HELPER RECIPES
+# ---
+
+# List recipes or usage
+[arg('recipe', help="Justfile recipe name (e.g. 'install', 'compose')")]
+@help recipe='':
+    {{ just_executable() }} {{ if recipe != "" { "--usage " + recipe } else { '' } }}
 
 # Reusable confirmation statement
 [private]
 [confirm("proceed? (y/N)")]
-confirm:
-    @echo
+@confirm:
+    echo
 
-# Debian install
+hostname_usage := "Ansible managed host (e.g. 'homeserver', 'proxyserver')"
+
+# DEBIAN INSTALL
 # ---
 
 # Host preseed.cfg
@@ -37,8 +43,8 @@ confirm:
 
 # Write the authorized SSH key to the Debian preseed file
 [private]
-insert-preseed-key value platform:
-    @sed -i "s|echo '.*'|echo '{{value}}'|" debian/{{platform}}/d-i/trixie/preseed.cfg
+@insert-preseed-key value platform:
+    sed -i "s|echo '.*'|echo '{{value}}'|" debian/{{platform}}/d-i/trixie/preseed.cfg
 
 # Run a Python HTTP server to host the preseed file
 [private]
@@ -46,22 +52,25 @@ host-preseed platform:
     @echo "press 'Ctrl + C' to exit"
     -python3 -m http.server 8000 --bind 0.0.0.0 --directory ./debian/{{platform}}
 
-# System setup
+# SYSTEM SETUP
 # ---
 
 # Setup a system
 [group('System setup')]
-@install hostname='': check-password
+[arg('hostname', help=hostname_usage)]
+@install hostname: check-password
     ansible-playbook run.yml --tags install --limit "{{hostname}}"
 
 # Up/down/recreate Docker stacks
 [group('System setup')]
-[arg("stack", long, short="s")]
-compose action hostname='' stack='all': check-password
+[arg('action', help="Docker Compose command", pattern="up|down|recreate")]
+[arg('hostname', help=hostname_usage)]
+[arg('stack', long, short="s", help="karo-custom stack name (e.g. 'traefik', 'pocketid')")]
+compose action hostname stack='all': check-password
     #!/usr/bin/env bash
     set -euo pipefail
     recreate=false
-    # check user input for action
+    # manage user input
     case "{{action}}" in
         up)
             skip_tags="down"
@@ -87,18 +96,19 @@ compose action hostname='' stack='all': check-password
         --skip-tags "$skip_tags" \
         --limit "{{hostname}}"
 
-# Ansible vault
+# ANSIBLE VAULT
 # ---
 
-password := "/run/user/1000/karo/ansible/vault_pass"
+password_file := "/run/user/1000/karo/ansible/vault_pass"
 
 # Manage a vault
 [group('Ansible vault')]
+[arg('hostname', help=hostname_usage)]
 vault hostname:
     #!/usr/bin/env bash
     set -euo pipefail
     # check password file exists
-    if [ -e "{{password}}" ]; then
+    if [ -e "{{password_file}}" ]; then
         # check vault file exists
         export vault="inventory/host_vars/{{hostname}}/vault.yml"; echo $vault
         if [ -e "$vault" ]; then
@@ -109,20 +119,20 @@ vault hostname:
             ansible-vault create "$vault"
         fi
     else
-        echo "{{password}} not found, run 'just password'." >&2; exit 1;
+        echo "{{password_file}} not found, run 'just password'." >&2; exit 1;
     fi
 
-# Create the Ansible vault password file when missing
+# Create Ansible vault password file when missing
 [private]
-check-password:
-    @[ -e "{{password}}" ] || micro -backup false -mkparents true "{{password}}"
+@check-password:
+    [ -e "{{password_file}}" ] || micro -backup false -mkparents true "{{password_file}}"
 
 # Set password file
 [group('Ansible vault')]
-password:
-    @micro -backup false -mkparents true "{{password}}"
+@password:
+    micro -backup false -mkparents true "{{password_file}}"
 
-# Wireguard
+# WIREGUARD
 # ---
 
 # Generate key pair
@@ -133,37 +143,26 @@ wireguard:
     printf 'Private key: %s\n' "$priv"; \
     printf 'Public key: %s\n' "$pub"
 
-# Custom repos
+# CUSTOM REPOS
 # ---
 
-# Get/remove custom repos
-[group('Custom repos')]
-custom action username:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    case "{{action}}" in
-        get)
-            echo "Getting repo {{lowercase(username)}}/karo-custom"
-            just custom-get {{lowercase(username)}}
-            ;;
-        remove)
-            echo "removing custom/{{lowercase(username)}}"
-            just custom-remove {{lowercase(username)}}
-            ;;
-        *)
-            echo "action must be 'get' or 'remove'" >&2; exit 1;
-            ;;
-    esac
+custom_repo_name := "karo-custom"
 
-repo_name := "karo-custom"
+# Get/remove custom repo
+[group('Custom repos')]
+[arg('action', help="karo-custom repo command", pattern="get|remove")]
+[arg('username', help="karo-custom repo username (e.g. 'karolabs', 'hazzuk')")]
+custom action username:
+    just custom-{{action}} {{lowercase(username)}}
 
 # Get remote karo-custom repo
 [private]
 custom-get username:
     #!/usr/bin/env bash
     set -euo pipefail
+    printf "cloning {{username}}/karo-custom repo\n"
     # clone karo-custom git repo
-    git clone git@github.com:{{username}}/{{repo_name}}.git custom/{{username}}
+    git clone git@github.com:{{username}}/{{custom_repo_name}}.git custom/{{username}}
     # check karo-custom repo dir not empty
     if [ -z "$(find custom/{{username}}/karo-compose -mindepth 1 -maxdepth 1)" ]; then
         exit 0
@@ -178,6 +177,7 @@ custom-get username:
 # Remove a karo-custom repo
 [private]
 @custom-remove username:
+    printf "removing custom/{{username}}\n"
     # check username dir exists
     test -d "custom/{{username}}"
     # confirm removal
