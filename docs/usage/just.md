@@ -21,9 +21,10 @@ Each just command is called a recipe, these recipes help simplify common command
 
     - `just install homeserver` (This recipe runs the command shown above, and additional logic)
 
-Recipes can be invoked from any subdirectory.
-They run irrespective of your current working directory.
-And you can use `just help` to see a full list of available recipes.
+Recipes can be invoked from any subdirectory,
+as recipes run with the working directory set to the directory that contains the justfile.
+You can use `just help` to see a full list of available recipes,
+or run `just help <recipe>` to see more detailed usage information.
 
 ## System setup
 
