@@ -26,13 +26,16 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 ## About
 
-The karo-stack enables users to reliably and efficiently deploy a personalised,
-self-hosted homeserver.
+The karo-stack enables users to reliably
+and efficiently deploy a personalised homeserver.
 
-It's a smaller, more comprehensible alternative to an all-encompassing,
-abstracted solution like Proxmox, Unraid or TrueNAS.
-It assists with the installation of a lightweight Debian Linux operating system.
-Then further configuration is all performed declaratively,
+Platforms such as Proxmox, Unraid and TrueNAS offer powerful,
+comprehensive solutions, but that breadth can also bring unnecessary overhead
+and layers of abstraction that many setups simply don't need.
+The karo-stack takes a smaller approach,
+as a purpose-built self-hosting solution.
+It assists with installing a lightweight Debian Linux operating system,
+then further configuration is applied declaratively
 using Ansible and Git. This includes creating a dedicated
 'rootless' Docker environment to run services more securely.
 
