@@ -39,13 +39,13 @@ then further configuration is applied declaratively
 using Ansible and Git. This includes creating a dedicated
 'rootless' Docker environment to run services more securely.
 
-Prior knowledge of these underlying technologies is not required,
+Prior experience with these underlying technologies isn't required,
 although a basic understanding of self-hosting with Docker is recommended.
-The project includes both in-depth documentation
+The project includes both detailed documentation
 and a set of simplified, project-specific commands.
-These provide guidance throughout homeserver setup and configuration,
-with Ansible orchestrating these processes in a consistent
-and reproducible manner, while Git tracks changes over time.
+Together, these help guide users through homeserver setup
+and ongoing maintenance, streamlining common tasks into straightforward,
+repeatable processes.
 
 It also provides an extensible system for community-maintained
 Docker Compose stacks. Each one is built around a standardised environment
