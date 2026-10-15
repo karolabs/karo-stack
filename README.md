@@ -47,16 +47,19 @@ Together, these help guide users through homeserver setup
 and ongoing maintenance, streamlining common tasks into straightforward,
 repeatable processes.
 
-It also provides an extensible system for community-maintained
-Docker Compose stacks. Each one is built around a standardised environment
-and robust set of guidelines. These are used to promote compatibility
-between stacks and across different karo-stack homeservers.
-For users, this means they can easily deploy numerous templated stacks,
-configurable to an individual's needs,
-without having to directly modify Compose files.
+It also provides an extensible system for portable Docker Compose stacks.
+Each stack uses variable-driven templates and can follow a shared set of
+guidelines for structuring Compose files. These conventions promote
+improved readability, security hardening, and long-term maintainability,
+while also helping stacks remain consistent and compatible across
+karo-stack homeservers. Stack configuration is managed through the same
+declarative Ansible workflow, whether users deploy community-maintained
+stacks or define their own privately. The templates expose configurable
+options, allowing users to tailor stacks to their own needs without
+having to modify Compose files directly.
 
-The project is completely free and open-source software,
-written with careful consideration and long-term stability in mind.
+The project is free and open-source software,
+developed with careful consideration and long-term stability in mind.
 It is a deliberately minimal and opinionated toolkit,
 built to provide a focused set of practical features.
 It takes care of the fundamentals needed for a well-optimised homeserver,
