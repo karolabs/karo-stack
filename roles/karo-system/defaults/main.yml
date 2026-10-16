@@ -21,10 +21,8 @@ karo_system_packages:
   - wireguard
 
 karo_system_motd_raw: |
-   _                           _             _
-  | | ____ _ _ __ ___      ___| |_ __ _  ___| | __
-  | |/ / _` | '__/ _ \ ___/ __| __/ _` |/ __| |/ /
-  |   < (_| | | | (_) |___\__ \ || (_| | (__|   <
-  |_|\_\__,_|_|  \___/    |___/\__\__,_|\___|_|\_\
-
-  > https://karolabs.dev
+  ┌───────┐
+  │ ■   ■ │ > karo-stack
+  │ ■ ■   │ > https://karolabs.dev
+  │ ■   ■ │ > {{ inventory_hostname | upper }}
+  └───────┘
