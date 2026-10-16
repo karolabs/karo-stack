@@ -42,7 +42,7 @@ This is why the karo-stack exists, built to a philosophy of six intrinsic princi
 !!! info "TL;DR"
 
     The karo-stack enables users to reliably and
-    efficiently deploy a personalised self‑hosted homeserver.
+    efficiently deploy a personalised self-hosted homeserver.
 
     Starting with an automated installation of Debian Linux.
     The server configuration tracked in git.
