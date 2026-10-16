@@ -15,6 +15,11 @@ the relevant commands to update the different parts of your system.
 
 -   **Debian packages** [:lucide-external-link:](https://linuxize.com/cheatsheet/apt/)
 
+    ??? info "unattended-upgrades"
+
+        The Debian preseed configures unattended-upgrades to run daily,
+        which automatically installs security patches for system packages.
+
     ``` sh
     # update package index
     sudo apt update
