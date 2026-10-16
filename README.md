@@ -39,14 +39,6 @@ then further configuration is applied declaratively
 using Ansible and Git. This includes creating a dedicated
 'rootless' Docker environment to run services more securely.
 
-Prior experience with these underlying technologies isn't required,
-although a basic understanding of self-hosting with Docker is recommended.
-The project includes both detailed documentation
-and a set of simplified, project-specific commands.
-Together, these help guide users through homeserver setup
-and ongoing maintenance, streamlining common tasks into straightforward,
-repeatable processes.
-
 It also provides an extensible system for portable Docker Compose stacks.
 Each stack uses variable-driven templates and can follow a shared set of
 guidelines for structuring Compose files. These conventions promote
@@ -66,6 +58,14 @@ It takes care of the fundamentals needed for a well-optimised homeserver,
 while preserving a user's sovereignty over their system.
 
 ## Documentation
+
+Prior experience with Ansible or Git isn't required,
+although a basic understanding of self-hosting with Docker is recommended.
+The project includes both detailed documentation
+and a set of simplified, project-specific commands.
+Together, these help guide users through homeserver setup
+and ongoing maintenance, streamlining common tasks into straightforward,
+repeatable processes.
 
 Learn more about the project at [docs.karolabs.dev](https://docs.karolabs.dev/).
 
