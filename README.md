@@ -32,11 +32,11 @@ and efficiently deploy a personalised homeserver.
 Platforms such as Proxmox, Unraid and TrueNAS offer powerful,
 comprehensive solutions, but that breadth can also bring unnecessary overhead
 and layers of abstraction that many setups simply don't need.
-The karo-stack takes a smaller approach,
-as a purpose-built self-hosting solution.
+The karo-stack takes a more direct approach
+as a purpose-built self-hosting toolkit.
 It assists with installing a lightweight Debian Linux operating system,
 then further configuration is applied declaratively
-using Ansible and Git. This includes creating a dedicated
+using Ansible and Git. This includes setting up a dedicated
 'rootless' Docker environment to run services more securely.
 
 It also provides an extensible system for portable Docker Compose stacks.
@@ -47,7 +47,7 @@ while also helping stacks remain consistent and compatible across
 karo-stack homeservers. Stack configuration is managed through the same
 declarative Ansible workflow, whether users deploy community-maintained
 stacks or define their own privately. The templates expose configurable
-options, allowing users to tailor stacks to their own needs without
+options, allowing users to quickly tailor stacks to their own needs without
 having to modify Compose files directly.
 
 The project is free and open-source software,
