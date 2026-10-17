@@ -4,6 +4,21 @@
 
 ---
 
+docker_update_enabled: true
+
+karo_docker_prereq_packages:
+  - curl
+  - ca-certificates
+  - python3-debian
+  - uidmap
+
+karo_docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
 # login required for docker hardened images
 karo_docker_login_enabled: true
 

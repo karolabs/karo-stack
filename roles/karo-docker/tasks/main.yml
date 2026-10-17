@@ -7,19 +7,15 @@
 
 ---
 
-- name: Install docker
+- name: Prepare docker install
   block:
     - name: Install docker prerequisite packages
       ansible.builtin.apt:
         cache_valid_time: 86400
-        name:
-          - curl
-          - ca-certificates
-          - python3-debian
-          - uidmap
+        name: "{{ karo_docker_prereq_packages }}"
         state: present
 
-    - name: Add docker repository
+    - name: Add docker package repository
       ansible.builtin.deb822_repository:
         name: "docker"
         types: deb
@@ -31,17 +27,43 @@
       vars:
         docker_repo_url: https://download.docker.com/linux/debian
 
-    - name: Install docker packages
-      ansible.builtin.apt:
-        update_cache: true
-        name:
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
-          - docker-buildx-plugin
-          - docker-compose-plugin
-        allow_downgrade: true
-        state: present
+- name: Check existing docker setup
+  block:
+    - name: Look up existing dockeruser
+      ansible.builtin.getent:
+        database: passwd
+        key: dockeruser
+        fail_key: false
+
+    - name: Check docker update readiness
+      when:
+        - ansible_facts['getent_passwd']['dockeruser'] is not none
+        - docker_update_enabled
+      block:
+        - name: Gather docker facts
+          ansible.builtin.include_tasks: info.yml
+
+        - name: Prevent docker update (containers running)
+          ansible.builtin.set_fact:
+            docker_update_enabled: false
+          when: docker_facts.host_info.ContainersRunning > 0
+
+- name: Install docker packages
+  ansible.builtin.apt:
+    cache_valid_time: 300
+    name: "{{ karo_docker_packages }}"
+    state: present
+
+- name: Upgrade docker packages
+  ansible.builtin.apt:
+    cache_valid_time: 300
+    name: "{{ karo_docker_packages }}"
+    state: latest
+    only_upgrade: true
+  notify:
+    - Restart rootless docker service
+    - Gather docker facts
+  when: docker_update_enabled
 
 - name: Setup rootless docker
   ansible.builtin.include_tasks: rootless.yml
