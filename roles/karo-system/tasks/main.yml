@@ -10,19 +10,11 @@
     mode: "0700"
     state: directory
 
-- name: Manage packages
-  block:
-    - name: Install essential packages
-      ansible.builtin.apt:
-        cache_valid_time: 86400
-        name: "{{ karo_system_packages }}"
-        state: present
-
-    - name: Upgrade packages
-      ansible.builtin.apt:
-        update_cache: true
-        allow_downgrade: true
-        upgrade: true
+- name: Install essential packages
+  ansible.builtin.apt:
+    cache_valid_time: 86400
+    name: "{{ karo_system_packages }}"
+    state: present
 
 - name: Configure kernel
   block:

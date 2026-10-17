@@ -76,6 +76,7 @@ nav = [
   { "Usage" = [
     "usage/just.md",
     "usage/linux.md",
+    "usage/maintenance.md",
     "usage/git.md",
     "usage/updates.md",
   ] },

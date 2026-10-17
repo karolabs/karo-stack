@@ -3,12 +3,17 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-icon: lucide/arrow-down-to-line
+icon: lucide/unlink
 ---
 
-# Updates
+# Breaking updates
 
-## Updating from v2 to v3
+This page details any actions required to smoothly upgrade to new
+karo-stack versions which contain breaking changes.
+
+---
+
+## v3.0.0
 
 ### Remove your fork
 
@@ -37,7 +42,7 @@ Because of this, you'll need to setup the official `karo-custom` repo.
     just compose down homeserver
     ```
 
-2.  [Upgrade the karo-stack](git.md#upgrade-your-karo-stack)
+2.  [Upgrade the karo-stack](maintenance.md#karo-stack-upgrades)
 
 3.  [Add the official karo-custom repo](https://custom.karolabs.dev/)
 
