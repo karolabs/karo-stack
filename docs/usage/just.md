@@ -70,22 +70,22 @@ Run Ansible to deploy or remove custom Docker Compose stacks.
 !!! example "Recipe examples"
 
     ``` sh { .no-copy }
-    # setup on 'homeserver' all enabled stacks
+    # setup all enabled stacks on 'homeserver'
     just compose up homeserver
     ```
 
     ``` sh { .no-copy }
-    # setup on 'homeserver' the 'traefik' stack (if enabled)
+    # setup the 'traefik' stack (if enabled) on 'homeserver'
     just compose up homeserver -s traefik
     ```
 
     ``` sh { .no-copy }
-    # remove on 'homeserver' all enabled stacks
+    # remove all enabled stacks on 'homeserver'
     just compose down homeserver
     ```
 
     ``` sh { .no-copy }
-    # remove on 'proxyserver' the 'proxy' stack (if enabled)
+    # remove the 'proxy' stack (if enabled) on 'proxyserver'
     just compose down proxyserver -s proxy
     ```
 
@@ -95,7 +95,7 @@ Run Ansible to deploy or remove custom Docker Compose stacks.
         meaning stack data will persist.
 
     ``` sh { .no-copy }
-    # force recreate 'pocketid' stack
+    # force recreate the 'pocketid' stack
     just compose recreate homeserver -s pocketid
     ```
 
@@ -132,12 +132,12 @@ Get or remove karo-custom repositories.
 !!! example "Recipe example"
 
     ``` sh { .no-copy }
-    # get karo-custom repo from github
+    # clone a karo-custom repo from github
     just custom get karolabs
     ```
 
     ``` sh { .no-copy }
-    # remove existing karo-custom repo
+    # remove an existing karo-custom repo
     just custom remove karolabs
     ```
 
@@ -152,12 +152,12 @@ Making it accessible for use over a local network.
 !!! example "Recipe examples"
 
     ``` sh { .no-copy }
-    # starts a python webserver to host 'debian/server/d-i/trixie/preseed.cfg'
+    # start a python webserver to host 'debian/server/d-i/trixie/preseed.cfg'
     just preseed server
     ```
 
     ``` sh { .no-copy }
-    # starts a python webserver to host 'debian/desktop/d-i/trixie/preseed.cfg'
+    # start a python webserver to host 'debian/desktop/d-i/trixie/preseed.cfg'
     just preseed desktop
     ```
 
