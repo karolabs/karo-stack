@@ -26,7 +26,7 @@ to manage Docker Compose stacks.
 -   Run the playbook's 'install' roles:
 
     ``` sh
-    # run ansible system roles
+    # run install roles
     cd /srv/karo
     just install all homeserver
     ```
