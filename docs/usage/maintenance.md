@@ -17,8 +17,10 @@ the relevant commands to update the different parts of your system.
 
     ??? info "unattended-upgrades"
 
-        The Debian preseed configures unattended-upgrades to run daily,
-        which automatically installs security patches for system packages.
+        The Debian preseed configures
+        [unattended-upgrades](https://packages.debian.org/stable/unattended-upgrades).
+        Every day, it attempts to automatically install
+        security patches for system packages.
 
     ``` sh
     # update package index
