@@ -13,6 +13,22 @@ the relevant commands to update the different parts of your system.
 
 ## System upgrades
 
+-   **Docker system packages**
+
+    ``` sh
+    # upgrade docker packages
+    just compose down homeserver && \
+    just install docker homeserver && \ # (1)!
+    just compose up homeserver
+    ```
+
+    <!-- editorconfig-checker-disable -->
+
+    1. For safety, the `docker` role will only upgrade Docker packages when
+       no containers are running.
+
+    <!-- editorconfig-checker-enable -->
+
 -   **Debian packages** [:lucide-external-link:](https://linuxize.com/cheatsheet/apt/)
 
     ??? info "unattended-upgrades"
@@ -22,13 +38,21 @@ the relevant commands to update the different parts of your system.
         Every day, it attempts to automatically install
         security patches for system packages.
 
-    ``` sh
-    # update package index
-    sudo apt update
+    ??? warning "Upgrade Docker first"
 
-    # upgrade installed packages
+        Docker is installed as a system package using an `apt` repository.
+        Upgrading all system packages will include upgrading Docker.
+        This can cause unwanted container downtime.
+
+        Upgrade Docker first to avoid this.
+
+    ``` sh
+    # upgrade system packages
+    sudo apt update && \ # (1)!
     sudo apt upgrade
     ```
+
+    1. Refreshes the package index with the latest package versions.
 
 -   **Python packages**
 
