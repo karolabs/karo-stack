@@ -41,5 +41,5 @@ With Debian installed, follow these commands to quickly restore your setup:
     If some time has passed since last running your setup. Then please consult the project's [release notes](https://github.com/karolabs/karo-stack/releases), and ensure there are no new breaking changes.
 
 ``` sh
-just install homeserver
+just install all homeserver
 ```

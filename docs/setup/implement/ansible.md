@@ -26,7 +26,7 @@ One manages Docker Compose stacks, the other manages the remaining system setup.
     ``` sh
     # run ansible system roles
     cd /srv/karo
-    just install homeserver
+    just install all homeserver
     ```
 
 In short, this will enable the nftables firewall, make minor system changes,
@@ -46,7 +46,7 @@ and install rootless Docker for `dockeruser`.
     Simply put it's very good at knowing when it's doesn't have to anything at all.
 
     You can safely **try this for yourself** by running
-    `just install homeserver` a second time.
+    `just install all homeserver` a second time.
     As you'll see, rather than repeating every action again.
     Ansible checks that each part of the system already matches its desired state.
     And skips anything that doesn't need changing.

@@ -25,7 +25,7 @@ you'll need to run when using the project.
     But the karo-stack uses just to
     provide a simplified way of invoking this command:
 
-    - `just install homeserver`
+    - `just install all homeserver`
       (This recipe runs the command shown above, and additional logic)
 
 <!-- editorconfig-checker-enable -->
@@ -46,12 +46,12 @@ Run Ansible to configure the core components of your system.
 
     ``` sh { .no-copy }
     # runs the main ansible roles to setup 'homeserver'
-    just install homeserver
+    just install all homeserver
     ```
 
     ``` sh { .no-copy }
     # runs the main ansible roles to setup 'proxyserver'
-    just install proxyserver
+    just install all proxyserver
     ```
 
 ### :lucide-container: `compose`
