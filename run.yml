@@ -6,7 +6,6 @@
 
 - name: Manage system setup
   hosts: server
-  become: true
   tags: install
   roles:
     - karo-system
@@ -17,7 +16,6 @@
 
 - name: Manage compose stacks
   hosts: server
-  become: true
   tags: compose
   roles:
     - karo-compose
