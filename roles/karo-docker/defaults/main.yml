@@ -4,6 +4,8 @@
 
 ---
 
+docker_update_enabled: true
+
 karo_docker_prereq_packages:
   - curl
   - ca-certificates

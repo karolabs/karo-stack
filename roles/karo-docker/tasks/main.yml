@@ -27,6 +27,27 @@
       vars:
         docker_repo_url: https://download.docker.com/linux/debian
 
+- name: Check existing docker setup
+  block:
+    - name: Look up existing dockeruser
+      ansible.builtin.getent:
+        database: passwd
+        key: dockeruser
+        fail_key: false
+
+    - name: Check docker update readiness
+      when:
+        - ansible_facts['getent_passwd']['dockeruser'] is not none
+        - docker_update_enabled
+      block:
+        - name: Gather docker facts
+          ansible.builtin.include_tasks: info.yml
+
+        - name: Prevent docker update (containers running)
+          ansible.builtin.set_fact:
+            docker_update_enabled: false
+          when: docker_facts.host_info.ContainersRunning > 0
+
 - name: Install docker packages
   ansible.builtin.apt:
     cache_valid_time: 300
@@ -42,6 +63,7 @@
   notify:
     - Restart rootless docker service
     - Gather docker facts
+  when: docker_update_enabled
 
 - name: Setup rootless docker
   ansible.builtin.include_tasks: rootless.yml
