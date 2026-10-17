@@ -12,16 +12,18 @@ Having installed Debian, cloned the `karo-stack`,
 and setup your `karo-inventory` repo.
 It is now time to run the Ansible playbook.
 
-The playbook is separated into different Ansible roles
-(`system`, `nftables`, `ssh`, `git`, `docker`, and `compose`).
-Each of which is responsible for configuring a specific part of the system.
-These roles are mostly run together, currently grouped under two
-[main tasks](https://github.com/karolabs/karo-stack/blob/main/run.yml).
-One manages Docker Compose stacks, the other manages the remaining system setup.
+The playbook is separated into different Ansible roles,
+each of which is responsible for configuring a specific part of the system.
+The majority of these roles are grouped as 'install' roles:
 
-## System roles
+`system` `nftables` `ssh` `git` `docker`
 
--   Run the playbook's main system configuration roles:
+The remaining `compose` role is specifically used
+to manage Docker Compose stacks.
+
+## Run install roles
+
+-   Run the playbook's 'install' roles:
 
     ``` sh
     # run ansible system roles
@@ -29,9 +31,9 @@ One manages Docker Compose stacks, the other manages the remaining system setup.
     just install all homeserver
     ```
 
-In short, this will enable the nftables firewall, make minor system changes,
-tighten SSH security, adjust the git configuration,
-and install rootless Docker for `dockeruser`.
+In short, this will make minor system changes,
+enable the nftables firewall, tighten SSH security,
+adjust your git configuration, and set up a rootless Docker environment.
 
 ??? question "Why Ansible?"
 
