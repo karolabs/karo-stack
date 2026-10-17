@@ -57,9 +57,13 @@ host-preseed platform:
 
 # Setup a system
 [group('System setup')]
+[arg('role', help="Ansible role name", pattern="all|system|nftables|ssh|git|docker")]
 [arg('hostname', help=hostname_usage)]
-@install hostname: check-password
-    ansible-playbook run.yml --tags "install,untagged" --limit "{{hostname}}"
+@install role hostname='': check-password
+    # run ansible playbook
+    ansible-playbook run.yml \
+        --tags "{{ if role == "all" { "install" } else { role } }},untagged" \
+        --limit "{{hostname}}"
 
 # Up/down/recreate Docker stacks
 [group('System setup')]
