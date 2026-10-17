@@ -4,18 +4,35 @@
 
 ---
 
-- name: Manage system setup
+- name: Manage server
   hosts: server
-  tags: install
-  roles:
-    - karo-system
-    - karo-nftables
-    - karo-ssh
-    - karo-git
-    - karo-docker
+  tasks:
+    - name: Run system role
+      ansible.builtin.include_role:
+        name: karo-system
+      tags: [system, install]
 
-- name: Manage compose stacks
-  hosts: server
-  tags: compose
-  roles:
-    - karo-compose
+    - name: Run nftables role
+      ansible.builtin.include_role:
+        name: karo-nftables
+      tags: [nftables, install]
+
+    - name: Run ssh role
+      ansible.builtin.include_role:
+        name: karo-ssh
+      tags: [ssh, install]
+
+    - name: Run git role
+      ansible.builtin.include_role:
+        name: karo-git
+      tags: [git, install]
+
+    - name: Run docker role
+      ansible.builtin.include_role:
+        name: karo-docker
+      tags: [docker, install]
+
+    - name: Run compose role
+      ansible.builtin.include_role:
+        name: karo-compose
+      tags: [compose]

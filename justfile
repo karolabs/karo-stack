@@ -59,41 +59,22 @@ host-preseed platform:
 [group('System setup')]
 [arg('hostname', help=hostname_usage)]
 @install hostname: check-password
-    ansible-playbook run.yml --tags install --limit "{{hostname}}"
+    ansible-playbook run.yml --tags "install,untagged" --limit "{{hostname}}"
 
 # Up/down/recreate Docker stacks
 [group('System setup')]
 [arg('action', help="Docker Compose command", pattern="up|down|recreate")]
 [arg('hostname', help=hostname_usage)]
 [arg('stack', long, short="s", help="karo-custom stack name (e.g. 'traefik', 'pocketid')")]
-compose action hostname stack='all': check-password
-    #!/usr/bin/env bash
-    set -euo pipefail
-    recreate=false
-    # manage user input
-    case "{{action}}" in
-        up)
-            skip_tags="down"
-            ;;
-        down)
-            skip_tags="up"
-            ;;
-        recreate)
-            skip_tags="down"
-            recreate=true
-            ;;
-        *)
-            printf "action must be 'up', 'down' or 'recreate'\n" >&2
-            exit 2
-            ;;
-    esac
+@compose action hostname='' stack='all': check-password
     # manage symlinks
     just custom-symlink
-    # run user action
-    ANSIBLE_DISPLAY_SKIPPED_HOSTS=false ansible-playbook run.yml \
-        --extra-vars "{\"karo_compose_justfile_stack\":\"{{stack}}\", \"karo_compose_recreate_enabled\":${recreate}}" \
-        --tags compose \
-        --skip-tags "$skip_tags" \
+    # run ansible playbook
+    ANSIBLE_DISPLAY_SKIPPED_HOSTS=false \
+    ansible-playbook run.yml \
+        --extra-vars "karo_compose_justfile_stack={{stack}}" \
+        --extra-vars '{"karo_compose_recreate_enabled":{{ if action == "recreate" { "true" } else { "false" } }}}' \
+        --tags "compose,untagged,{{action}}" \
         --limit "{{hostname}}"
 
 # ANSIBLE VAULT

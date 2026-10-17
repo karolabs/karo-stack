@@ -74,7 +74,7 @@
 - name: Down stacks
   become: true
   become_user: dockeruser
-  tags: down
+  tags: [down]
   block:
     - name: Down compose stacks
       ansible.builtin.include_tasks: down.yml
@@ -89,7 +89,7 @@
 - name: Up stacks
   become: true
   become_user: dockeruser
-  tags: up
+  tags: [up, recreate]
   block:
     - name: Up compose stacks
       ansible.builtin.include_tasks: up.yml
