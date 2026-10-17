@@ -213,7 +213,7 @@ proxyserver ansible_host=proxyserver.example.com ansible_port=22 ansible_connect
 Run the playbook for the VPS:
 
 ``` sh
-just install proxyserver
+just install all proxyserver
 ```
 
 Afterwards, adjust your `hosts.ini` file to use the new SSH port `#!ini ansible_port=4444`:
