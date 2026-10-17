@@ -28,10 +28,6 @@ the relevant commands to update the different parts of your system.
     sudo apt upgrade
     ```
 
-    !!! note
-
-        A system [reboot](linux.md?h=reboot#system) is normally recommended after a new kernel is installed.
-
 -   **Python packages**
 
     ``` sh
