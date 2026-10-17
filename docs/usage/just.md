@@ -45,14 +45,23 @@ Run Ansible to configure the core components of your system.
 !!! example "Recipe examples"
 
     ``` sh { .no-copy }
-    # runs the main ansible roles to setup 'homeserver'
+    # run the install roles to setup 'homeserver'
     just install all homeserver
     ```
 
     ``` sh { .no-copy }
-    # runs the main ansible roles to setup 'proxyserver'
+    # run the install roles to setup 'proxyserver'
     just install all proxyserver
     ```
+
+    ``` sh { .no-copy }
+    # run the individual docker install role
+    just install docker homeserver
+    ```
+
+    !!! tip "Recipe arguments"
+
+        Run `just help install` to see all available roles.
 
 ### :lucide-container: `compose`
 
