@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: © 2026 hazzuk
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+---
+
+- name: Get docker host info
+  become: true
+  become_user: dockeruser
+  community.docker.docker_host_info:
+    docker_host: unix:///run/user/1001/docker.sock
+  register: docker_facts
+
+- name: Report docker host info
+  ansible.builtin.debug:
+    msg:
+      - "Server Version: {{ docker_facts.host_info.ServerVersion }}"
+      - "Containers Running: {{ docker_facts.host_info.ContainersRunning }}"

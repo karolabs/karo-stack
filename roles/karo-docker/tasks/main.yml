@@ -41,6 +41,7 @@
     only_upgrade: true
   notify:
     - Restart rootless docker service
+    - Gather docker facts
 
 - name: Setup rootless docker
   ansible.builtin.include_tasks: rootless.yml
