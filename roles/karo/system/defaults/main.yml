@@ -5,20 +5,21 @@
 ---
 
 karo_system_packages:
-  - acl
-  - btop
+  ## utils
   - chrony
-  - curl
-  # - git (managed by karo/git role)
   - man-db
-  - micro
-  # - openssh-server (managed by karo/ssh role)
   - parted
-  - pipx
+  - wireguard
+  ## tools
+  - btop
+  - curl
+  - micro
   - rsync
   - tree
   - wget
-  - wireguard
+  ## ansible
+  - acl
+  - pipx
 
 karo_system_motd_raw: |
   ┌───────┐
