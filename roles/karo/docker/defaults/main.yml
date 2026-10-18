@@ -10,6 +10,7 @@ karo_docker_prereq_packages:
   - curl
   - ca-certificates
   - python3-debian
+  - python3-requests
   - uidmap
 
 karo_docker_packages:
