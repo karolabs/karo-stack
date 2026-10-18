@@ -9,10 +9,10 @@ karo_system_packages:
   - btop
   - chrony
   - curl
-  # - git (managed by karo-git)
+  # - git (managed by karo/git role)
   - man-db
   - micro
-  # - openssh-server (managed by karo-ssh)
+  # - openssh-server (managed by karo/ssh role)
   - parted
   - pipx
   - rsync

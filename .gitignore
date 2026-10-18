@@ -4,10 +4,10 @@
 
 # karo-custom
 /repos/
-/roles/karo-compose/defaults/main/*
-/roles/karo-compose/templates/*
-!/roles/karo-compose/defaults/main/main.yml
-!/roles/karo-compose/templates/.gitkeep
+/roles/karo/compose/defaults/main/*
+/roles/karo/compose/templates/*
+!/roles/karo/compose/defaults/main/main.yml
+!/roles/karo/compose/templates/.gitkeep
 
 # docs
 /.cache/

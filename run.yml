@@ -9,30 +9,30 @@
   tasks:
     - name: Run system role
       ansible.builtin.include_role:
-        name: karo-system
+        name: karo/system
       tags: [system, install]
 
     - name: Run nftables role
       ansible.builtin.include_role:
-        name: karo-nftables
+        name: karo/nftables
       tags: [nftables, install]
 
     - name: Run ssh role
       ansible.builtin.include_role:
-        name: karo-ssh
+        name: karo/ssh
       tags: [ssh, install]
 
     - name: Run git role
       ansible.builtin.include_role:
-        name: karo-git
+        name: karo/git
       tags: [git, install]
 
     - name: Run docker role
       ansible.builtin.include_role:
-        name: karo-docker
+        name: karo/docker
       tags: [docker, install]
 
     - name: Run compose role
       ansible.builtin.include_role:
-        name: karo-compose
+        name: karo/compose
       tags: [compose]

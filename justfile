@@ -137,7 +137,7 @@ custom_repo_name := "karo-custom"
 [group('Custom repos')]
 [arg('action', help="karo-custom repo command", pattern="get|remove")]
 [arg('username', help="karo-custom repo username (e.g. 'karolabs', 'hazzuk')")]
-custom action username:
+@custom action username:
     just custom-{{action}} {{lowercase(username)}}
 
 # Get remote karo-custom repo
@@ -145,7 +145,7 @@ custom action username:
 custom-get username:
     #!/usr/bin/env bash
     set -euo pipefail
-    printf "cloning {{username}}/karo-custom repo\n"
+    printf "repo: github.com/{{username}}/{{custom_repo_name}}\n\n"
     # clone karo-custom git repo
     git clone git@github.com:{{username}}/{{custom_repo_name}}.git repos/{{username}}
     # check repo dir not empty
@@ -155,8 +155,8 @@ custom-get username:
         # manage symlinks
         just custom-symlink
         # list stack groups for username
-        echo "new karo-compose stack groups:"
-        ls -1 roles/karo-compose/templates | grep {{username}} | awk '{print "- " $0}'
+        printf "\nnew stack groups:\n"
+        ls -1 roles/karo/compose/templates | grep {{username}} | awk '{print "- " $0}'
     fi
 
 # Remove a karo-custom repo
@@ -178,19 +178,19 @@ custom-symlink:
     #!/usr/bin/env bash
     set -euo pipefail
     # clear existing symlinks
-    find roles/karo-compose/defaults/main/ -mindepth 1 -maxdepth 1 ! -name "main.yml" -delete
-    find roles/karo-compose/templates/ -mindepth 1 -maxdepth 1 ! -name ".gitkeep" -delete
+    find roles/karo/compose/defaults/main/ -mindepth 1 -maxdepth 1 ! -name "main.yml" -delete
+    find roles/karo/compose/templates/ -mindepth 1 -maxdepth 1 ! -name ".gitkeep" -delete
     # check repos dir not empty
     if [ -z "$(find repos -mindepth 1 -maxdepth 1)" ]; then
         exit 0
     else
         # symlink custom files
-        ln -sr repos/*/karo-compose/defaults/main/*/ roles/karo-compose/defaults/main/
-        ln -sr repos/*/karo-compose/templates/*/ roles/karo-compose/templates/
+        ln -sr repos/*/karo-compose/defaults/main/*/ roles/karo/compose/defaults/main/
+        ln -sr repos/*/karo-compose/templates/*/ roles/karo/compose/templates/
     fi
     # check inventory for compose dir
     if [ -d inventory/karo-compose ]; then
         # symlink custom files from inventory
-        ln -sr inventory/karo-compose/defaults/main/*/ roles/karo-compose/defaults/main/
-        ln -sr inventory/karo-compose/templates/*/ roles/karo-compose/templates/
+        ln -sr inventory/karo-compose/defaults/main/*/ roles/karo/compose/defaults/main/
+        ln -sr inventory/karo-compose/templates/*/ roles/karo/compose/templates/
     fi
