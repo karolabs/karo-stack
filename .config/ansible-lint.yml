@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: © 2026 hazzuk
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+# Configuration file for `ansible-lint`, an Ansible playbook linter.
+# See https://docs.ansible.com/projects/lint for more info.
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible-lint-config.json
+
+---
+
+profile: null
+
+# ignored rules
+skip_list:
+  - var-naming[no-role-prefix] # allows `karo_` prefix for role defaults
