@@ -11,8 +11,6 @@ icon: lucide/form
 While Docker Compose files offer considerable flexibility, this can also introduce ambiguity, confusion, and inconsistency.
 To avoid these issues, and to better facilitate collaboration and maintenance, the following principles should be adhered to:
 
-<!-- editorconfig-checker-disable -->
-
 - **Verbose** - Stacks must be more explicit in their definitions, avoiding ambiguity.
   Preferring long-form syntax, and absolute paths.
   To create more clearly and safely defined stacks.
@@ -24,8 +22,6 @@ To avoid these issues, and to better facilitate collaboration and maintenance, t
 - **Standardised** - Stacks must follow a consistent ordering and structure of definitions.
   Reducing potential errors, and making work across different stacks much more seamless.
 
-<!-- editorconfig-checker-enable -->
-
 ## Example stack
 
 Also see the Docker Compose reference guides for
@@ -33,8 +29,6 @@ Also see the Docker Compose reference guides for
 [networks](https://docs.docker.com/reference/compose-file/networks/),
 [volumes](https://docs.docker.com/reference/compose-file/volumes/),
 and [secrets](https://docs.docker.com/reference/compose-file/secrets/).
-
-<!-- editorconfig-checker-disable -->
 
 <!-- REUSE-IgnoreStart -->
 
@@ -110,8 +104,6 @@ secrets:
 
 <!-- REUSE-IgnoreEnd -->
 
-<!-- editorconfig-checker-enable -->
-
 ??? info "Naming conventions"
 
     - Volume names: `<container name>_<volume use>` (e.g. foobar_data, foobar_cache)
@@ -128,14 +120,10 @@ secrets:
 
     Use the following short syntax for port mappings:
 
-    <!-- editorconfig-checker-disable -->
-
     ``` html { .no-copy }
     ports:
       - "<HOST>:<CONTAINER>/<PROTOCOL>"
     ```
-
-    <!-- editorconfig-checker-enable -->
 
     Ensure you **always specify the protocol**.
     And for stacks that need both UDP and TCP traffic on the same port, you'll need to map the same port twice for both protocols.

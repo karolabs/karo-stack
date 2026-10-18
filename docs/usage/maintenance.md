@@ -22,12 +22,8 @@ the relevant commands to update the different parts of your system.
     just compose up homeserver
     ```
 
-    <!-- editorconfig-checker-disable -->
-
     1. For safety, the `docker` role will only upgrade Docker packages when
        no containers are running.
-
-    <!-- editorconfig-checker-enable -->
 
 -   **Debian packages** [:lucide-external-link:](https://linuxize.com/cheatsheet/apt/)
 
