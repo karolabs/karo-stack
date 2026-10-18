@@ -4,12 +4,6 @@
 
 ---
 
-- name: Install nftables
-  ansible.builtin.apt:
-    cache_valid_time: 86400
-    name: nftables
-    state: present
-
 - name: Configure nftables
   ansible.builtin.template:
     src: nftables.conf.j2

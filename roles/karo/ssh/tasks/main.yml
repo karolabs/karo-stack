@@ -4,11 +4,6 @@
 
 ---
 
-- name: Install openssh server
-  ansible.builtin.apt:
-    name: openssh-server
-    state: present
-
 - name: Enable service
   ansible.builtin.service:
     name: sshd

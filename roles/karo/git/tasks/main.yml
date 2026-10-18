@@ -4,11 +4,6 @@
 
 ---
 
-- name: Install git
-  ansible.builtin.apt:
-    name: git
-    state: present
-
 - name: Set gitconfig for karo
   ansible.builtin.copy:
     content: "{{ karo_git_config_raw }}"
