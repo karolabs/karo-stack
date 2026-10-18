@@ -37,8 +37,15 @@ rev = "e98e4ec6d3bb64b4b62ec4f0ce6cacdfba12f9a0"  # v4.0.1
 hooks = [
   {
     id = "editorconfig-checker",
-    name = "editorconfig: lint files",
-  }
+    name = "editorconfig: lint code files",
+    exclude_types = ["markdown"],
+  },
+  {
+    id = "editorconfig-checker",
+    name = "editorconfig: lint markdown files",
+    args = ["--disable-indent-size"],
+    types = ["markdown"],
+  },
 ]
 
 [[repos]]
