@@ -10,8 +10,6 @@ icon: lucide/snowflake
 
 The container's version is controlled by the Docker image URI value:
 
-<!-- editorconfig-checker-disable -->
-
 === "Format"
 
     ``` c { .no-copy title="compose example" }
@@ -72,5 +70,3 @@ example_group_foobar_stack_defaults:
   foobar:
     version: v1.0.0@sha256:100689790a0a0ea43ca45997e0450bc26aeb5308375b41c84dfc4f247
 ```
-
-<!-- editorconfig-checker-enable -->

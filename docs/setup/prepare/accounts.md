@@ -20,12 +20,8 @@ Which is a non-profit, community-led effort that also provides git hosting
 
 Once you've created your account, you'll need to add your public SSH keys.
 
-<!-- editorconfig-checker-disable -->
-
 - Add your SSH authentication, and signing keys to your
   [account's SSH keys](https://github.com/settings/keys)
-
-<!-- editorconfig-checker-enable -->
 
 ## Docker account
 

@@ -14,8 +14,6 @@ Each just command is called a recipe,
 these recipes help simplify common commands
 you'll need to run when using the project.
 
-<!-- editorconfig-checker-disable -->
-
 ??? info "Commands vs just recipes"
 
     This is the main Ansible playbook command:
@@ -27,8 +25,6 @@ you'll need to run when using the project.
 
     - `just install all homeserver`
       (This recipe runs the command shown above, and additional logic)
-
-<!-- editorconfig-checker-enable -->
 
 Recipes can be invoked from any subdirectory,
 as recipes run with the working directory set

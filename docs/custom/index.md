@@ -49,8 +49,6 @@ Where compose files become templates, which can include variables
 that users can substitute with their own configuration
 (instead of needing to edit a compose file directly).
 
-<!-- editorconfig-checker-disable -->
-
 ``` yaml+jinja { title="Traefik compose.yml.j2 (truncated example)" }
 name: traefik
 services:
@@ -58,8 +56,6 @@ services:
     image: {{ stack_vars.traefik.image }}
     container_name: traefik
 ```
-
-<!-- editorconfig-checker-enable -->
 
 Stack configuration is stored beside
 the rest of the user's karo-stack config,

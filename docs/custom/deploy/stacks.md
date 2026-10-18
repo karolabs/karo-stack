@@ -33,7 +33,6 @@ icon: simple/docker
 
 1. Edit your Ansible vault (e.g. `just vault homeserver`)
 
-    <!-- editorconfig-checker-disable -->
     === "Format"
 
         - Add **all** available stack groups
@@ -79,7 +78,6 @@ icon: simple/docker
               qui:
                 log_level: info
             ```
-    <!-- editorconfig-checker-enable -->
 
 1. Deploy newly configured stacks (e.g. `just compose up homeserver`)
 
