@@ -3,11 +3,11 @@
 /inventory
 
 # karo-custom
-/custom/
-/roles/karo-compose/defaults/main/*
-/roles/karo-compose/templates/*
-!/roles/karo-compose/defaults/main/main.yml
-!/roles/karo-compose/templates/.gitkeep
+/repos/
+/roles/karo/compose/defaults/main/*
+/roles/karo/compose/templates/*
+!/roles/karo/compose/defaults/main/main.yml
+!/roles/karo/compose/templates/.gitkeep
 
 # docs
 /.cache/

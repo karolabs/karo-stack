@@ -13,6 +13,18 @@ karo-stack versions which contain breaking changes.
 
 ---
 
+## v4.0.0
+
+### Rename karo-custom repos directory
+
+The expected name for the directory containing cloned
+karo-custom repos has changed. You need to rename it
+from `custom` to `repos`.
+
+``` sh
+mv /srv/karo/custom/ /srv/karo/repos/
+```
+
 ## v3.0.0
 
 ### Remove your fork
