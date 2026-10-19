@@ -176,6 +176,11 @@ karo_ssh_port: 4444
 karo_docker_login_username: username # docker username
 karo_docker_login_token: "dckr_pat_..." # docker personal access token
 
+# [micro]
+
+## use terminal clipboard for copy/paste
+# karo_micro_terminal_clipboard_enabled: true
+
 # [compose]
 
 karo_compose_root_domain: example.com # registered domain name
