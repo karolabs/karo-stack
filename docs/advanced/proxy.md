@@ -108,10 +108,10 @@ install -m 0644 -o karo -g karo /root/.ssh/authorized_keys /home/karo/.ssh
 # install packages
 apt -y install \
     chrony man-db parted wireguard \
-    btop curl micro rsync tree wget \
+    btop curl rsync tree wget \
     acl pipx python3-debian python3-requests \
     ca-certificates uidmap \
-    git nftables openssh-server
+    git micro nftables openssh-server
 ```
 
 ``` sh
