@@ -13,6 +13,8 @@ karo_system_packages:
   ## tools
   - btop
   - curl
+  - duf
+  - gdu
   - rsync
   - tree
   - wget
