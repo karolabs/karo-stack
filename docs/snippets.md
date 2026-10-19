@@ -55,7 +55,7 @@ just password
 --8<-- [start:terminal_paste]
 !!! tip "Terminal paste"
 
-    Use ++ctrl+shift+v++ to paste your clipboard when using the terminal.
+    Use ++ctrl+shift+v++ to paste clipboard content into the terminal.
 --8<-- [end:terminal_paste]
 
 <!-- text -->
