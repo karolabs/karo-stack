@@ -154,6 +154,59 @@ The following is a list of essential commands and shortcuts for using a Linux se
     micro file.txt
     ```
 
+## Storage
+
+-   **Disk usage**
+
+    ``` sh
+    # analyse working directory
+    gdu
+    ```
+
+    ``` sh
+    # analyse given path
+    gdu /path/to/destination
+    ```
+
+    ``` sh
+    # ignore paths
+    gdu -i /sys,/proc /path/to/destination
+    ```
+
+    <!-- requires gdu v5.30.0
+    ``` sh
+    # show top 3 largest files
+    gdu -t 3 /path/to/destination
+    ```
+    -->
+
+    ``` sh
+    # show all mounted disks
+    gdu -d
+    ```
+
+    ``` sh { title="Coreutils alternative" }
+    # show file or directory disk usage
+    du -sh /path/to/destination
+    ```
+
+-   **Filesystems**
+
+    ``` sh
+    # show filesystems
+    duf
+    ```
+
+    ``` sh
+    # filter by given path
+    duf /path/to/destination
+    ```
+
+    ``` sh { title="Coreutils alternative" }
+    # show filesystems disk usage
+    df -h -x tmpfs
+    ```
+
 ## System
 
 -   **Monitoring**
@@ -161,13 +214,6 @@ The following is a list of essential commands and shortcuts for using a Linux se
     ``` sh
     # view system usage
     btop
-    ```
-
--   **Disk Usage** [:lucide-external-link:](https://linuxize.com/cheatsheet/df/)
-
-    ``` sh
-    # show disk usage
-    df -h -x tmpfs
     ```
 
 -   **Services** [:lucide-external-link:](https://linuxize.com/cheatsheet/systemctl/)
