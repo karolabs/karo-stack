@@ -50,5 +50,5 @@ indent_size = 2
 
 # Project Files
 
-[haproxy.cfg.j2]
+[*.{cfg,json,toml,yml}.j2]
 indent_size = 2
