@@ -4,12 +4,12 @@
 
 ---
 
-- name: Configure nftables
+- name: Render nftables configuration template
   ansible.builtin.template:
     src: nftables.conf.j2
     dest: /etc/nftables.conf
     mode: "0644"
-  notify: Restart nftables
+  notify: Restart nftables service
 
 - name: Enable nftables service
   ansible.builtin.service:

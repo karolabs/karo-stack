@@ -8,7 +8,7 @@
   ansible.builtin.systemd_service:
     daemon_reload: true
 
-- name: Restart systemd-modules-load
+- name: Restart systemd-modules-load service
   ansible.builtin.systemd_service:
     name: systemd-modules-load.service
     state: restarted

@@ -7,7 +7,7 @@
 
 ---
 
-- name: Add docker package repository
+- name: Add docker apt repository
   ansible.builtin.deb822_repository:
     name: "docker"
     types: deb
@@ -35,7 +35,7 @@
         - name: Gather docker facts
           ansible.builtin.include_tasks: info.yml
 
-        - name: Prevent docker update (containers running)
+        - name: Prevent docker update when containers running
           ansible.builtin.set_fact:
             docker_update_enabled: false
           when: docker_facts.host_info.ContainersRunning > 0
@@ -57,5 +57,5 @@
     - Gather docker facts
   when: docker_update_enabled
 
-- name: Setup rootless docker
+- name: Configure rootless docker
   ansible.builtin.include_tasks: rootless.yml

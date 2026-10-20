@@ -4,7 +4,7 @@
 
 ---
 
-- name: Setup rootless docker user
+- name: Configure rootless docker user
   block:
     - name: Create dockeruser group
       ansible.builtin.group:
@@ -19,7 +19,7 @@
         create_home: true
         state: present
 
-    - name: Create dockeruser home directories
+    - name: Create home directories for dockeruser
       ansible.builtin.file:
         path: "/home/dockeruser/{{ item.dir }}"
         mode: "{{ item.mode }}"

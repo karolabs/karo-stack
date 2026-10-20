@@ -4,17 +4,17 @@
 
 ---
 
-- name: Enable service
+- name: Enable sshd service
   ansible.builtin.service:
     name: sshd
     enabled: true
     state: started
 
-- name: Configure daemon
+- name: Render sshd configuration template
   ansible.builtin.template:
     src: karo.conf.j2
     dest: /etc/ssh/sshd_config.d/karo.conf
     mode: "0644"
   notify:
-    - Restart sshd
+    - Restart sshd service
     - Reload systemd

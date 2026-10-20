@@ -10,7 +10,7 @@
     dest: /home/karo/.gitconfig
     mode: "0644"
 
-- name: Set allowedsigners for karo
+- name: Set git allowedsigners for karo
   ansible.builtin.copy:
     content: "{{ karo_git_user_signingkey }}"
     dest: /home/karo/.ssh/git_allowedsigners
