@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: © 2026 hazzuk
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+---
+
+debian_bash_profile: |-
+  # SPDX-SnippetBegin
+  # SPDX-FileCopyrightText: © 1995-2011 Software in the Public Interest
+  # SPDX-License-Identifier: GPL-2.0-or-later
+
+  # ~/.profile: executed by the command interpreter for login shells.
+  # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login exists.
+
+  # if running bash
+  if [ -n "$BASH_VERSION" ]; then
+      # include .bashrc if it exists
+      if [ -f "$HOME/.bashrc" ]; then
+          . "$HOME/.bashrc"
+      fi
+  fi
+
+  # set PATH so it includes user's private bin if it exists
+  if [ -d "$HOME/bin" ] ; then
+      PATH="$HOME/bin:$PATH"
+  fi
+
+  # set PATH so it includes user's private bin if it exists
+  if [ -d "$HOME/.local/bin" ] ; then
+      PATH="$HOME/.local/bin:$PATH"
+  fi
+
+  # SPDX-SnippetEnd
+
+debian_bash_logout: |-
+  # SPDX-SnippetBegin
+  # SPDX-FileCopyrightText: © 1995-2011 Software in the Public Interest
+  # SPDX-License-Identifier: GPL-2.0-or-later
+
+  # ~/.bash_logout: executed by bash(1) when login shell exits.
+
+  # when leaving the console clear the screen to increase privacy
+
+  if [ "$SHLVL" = 1 ]; then
+      [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
+  fi
+
+  # SPDX-SnippetEnd

@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: © 2025 hazzuk
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+# UID: dockeruser
+
+{{ debian_bash_profile }}
+
+# set initial working directory
+cd /srv/docker || return
+
+# set DOCKER_HOST for rootless docker
+export DOCKER_HOST="unix://$XDG_RUNTIME_DIR/docker.sock"

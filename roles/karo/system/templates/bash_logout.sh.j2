@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: © 2025 hazzuk
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+# UID: karo
+
+{{ debian_bash_logout }}
+
+# shred ansible vault password on logout
+export P="/run/user/1000/karo/ansible/vault_pass"; [ -e "$P" ] && shred -u "$P" >/dev/null 2>&1 || true

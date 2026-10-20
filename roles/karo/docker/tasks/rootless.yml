@@ -45,9 +45,9 @@
         owner: dockeruser
         group: dockeruser
 
-    - name: Set bash profile for dockeruser
-      ansible.builtin.copy:
-        src: profile
+    - name: Render bash profile template for dockeruser
+      ansible.builtin.template:
+        src: profile.sh.j2
         dest: /home/dockeruser/.profile
         mode: "0644"
         owner: dockeruser

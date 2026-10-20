@@ -18,16 +18,16 @@
 
 - name: Configure kernel
   block:
-    - name: Set kernel parameters
-      ansible.builtin.copy:
-        src: sysctl_karo.conf
+    - name: Render kernel parameters template
+      ansible.builtin.template:
+        src: sysctl.conf.j2
         dest: /etc/sysctl.d/karo.conf
         mode: "0644"
       notify: Reload sysctl config
 
-    - name: Load kernel modules
-      ansible.builtin.copy:
-        src: modules_karo.conf
+    - name: Render kernel modules template
+      ansible.builtin.template:
+        src: modules.conf.j2
         dest: /etc/modules-load.d/karo.conf
         mode: "0644"
       notify: Restart systemd-modules-load
@@ -37,9 +37,9 @@
 
 - name: Setup system
   block:
-    - name: Set bash configuration for karo
-      ansible.builtin.copy:
-        src: "{{ item }}"
+    - name: Render bash configuration templates for karo
+      ansible.builtin.template:
+        src: "{{ item }}.sh.j2"
         dest: "/home/karo/.{{ item }}"
         mode: "0644"
         owner: karo

@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: © 2026 hazzuk
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+{# https://git-scm.com/docs/git-config#_configuration_file #}
+
+# UID: karo
+
+{% if karo_git_config_raw %}
+{# render user config when supplied #}
+{{ karo_git_config_raw }}
+{% else %}
+[user]
+  email = {{ karo_git_user_email }}
+  name = {{ karo_git_user_name }}
+  signingkey = {{ karo_git_user_signingkey }}
+[init]
+  defaultBranch = main
+[core]
+  editor = micro
+[gpg]
+  format = ssh
+[commit]
+  gpgsign = {{ karo_git_commit_gpgsign | lower }}
+[gpg "ssh"]
+  allowedSignersFile = /home/karo/.ssh/git_allowedsigners
+[push]
+  autoSetupRemote = true
+{% endif %}
