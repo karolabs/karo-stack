@@ -37,6 +37,8 @@ and [secrets](https://docs.docker.com/reference/compose-file/secrets/).
 #
 # SPDX-License-Identifier: <license>
 
+{{ ansible_managed | comment }}
+
 ---
 
 name: foobar

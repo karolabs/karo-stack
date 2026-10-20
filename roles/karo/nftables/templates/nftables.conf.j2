@@ -4,11 +4,10 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-# https://wiki.nftables.org/wiki-nftables/index.php/
-
-
-# avoid flushing docker rules
-# flush ruleset
+{{ ansible_managed | comment }}
+{# https://wiki.nftables.org/wiki-nftables/index.php #}
+{# avoid flushing docker rules #}
+{# flush ruleset #}
 
 table inet filter {
     chain input {
