@@ -4,7 +4,7 @@
 
 ---
 
-- name: Restart nftables
+- name: Restart nftables service
   ansible.builtin.service:
     name: nftables
     state: restarted

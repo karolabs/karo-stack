@@ -30,7 +30,7 @@
         src: modules.conf.j2
         dest: /etc/modules-load.d/karo.conf
         mode: "0644"
-      notify: Restart systemd-modules-load
+      notify: Restart systemd-modules-load service
 
     - name: Flush handlers
       ansible.builtin.meta: flush_handlers
