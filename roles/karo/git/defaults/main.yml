@@ -2,8 +2,6 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-# https://git-scm.com/docs/git-config#_configuration_file
-
 ---
 
 karo_git_user_email: git@example.com
@@ -12,20 +10,4 @@ karo_git_user_name: username
 karo_git_commit_gpgsign: true
 karo_git_user_signingkey: "ssh-ed25519 AAAAC3NzaNeXaMpLe"
 
-karo_git_config_raw: |
-  [user]
-    email = {{ karo_git_user_email }}
-    name = {{ karo_git_user_name }}
-    signingkey = {{ karo_git_user_signingkey }}
-  [init]
-    defaultBranch = main
-  [core]
-    editor = micro
-  [gpg]
-    format = ssh
-  [commit]
-    gpgsign = {{ karo_git_commit_gpgsign | lower }}
-  [gpg "ssh"]
-    allowedSignersFile = /home/karo/.ssh/git_allowedsigners
-  [push]
-    autoSetupRemote = true
+karo_git_config_raw: ""

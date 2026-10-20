@@ -4,9 +4,9 @@
 
 ---
 
-- name: Set gitconfig for karo
-  ansible.builtin.copy:
-    content: "{{ karo_git_config_raw }}"
+- name: Render gitconfig template for karo
+  ansible.builtin.template:
+    src: gitconfig.ini.j2
     dest: /home/karo/.gitconfig
     mode: "0644"
 

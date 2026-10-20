@@ -50,5 +50,5 @@ indent_size = 2
 
 # Project Files
 
-[*.{cfg,json,toml,yml}.j2]
+[*.{cfg,ini,json,toml,yml}.j2]
 indent_size = 2
