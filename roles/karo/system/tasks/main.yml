@@ -10,7 +10,7 @@
     mode: "0700"
     state: directory
 
-- name: Install essential packages
+- name: Install essential system packages
   ansible.builtin.apt:
     cache_valid_time: 86400
     name: "{{ karo_system_packages }}"
@@ -35,7 +35,7 @@
     - name: Flush handlers
       ansible.builtin.meta: flush_handlers
 
-- name: Setup system
+- name: Configure system
   block:
     - name: Render bash configuration templates for karo
       ansible.builtin.template:
@@ -48,7 +48,7 @@
         - bash_logout
         - profile
 
-    - name: Add hostname to hosts
+    - name: Add hostname to hosts file
       ansible.builtin.lineinfile:
         path: /etc/hosts
         regexp: '^127\.0\.1\.1\s+debian(\s+{{ inventory_hostname }})?$'
@@ -59,7 +59,7 @@
         name: "{{ inventory_hostname }}"
         use: systemd
 
-    - name: Set motd
+    - name: Set system motd
       ansible.builtin.copy:
         content: "{{ karo_system_motd_raw }}"
         dest: /etc/motd
