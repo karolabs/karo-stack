@@ -31,3 +31,18 @@ debian_bash_profile: |-
   fi
 
   # SPDX-SnippetEnd
+
+debian_bash_logout: |-
+  # SPDX-SnippetBegin
+  # SPDX-FileCopyrightText: © 1995-2011 Software in the Public Interest
+  # SPDX-License-Identifier: GPL-2.0-or-later
+
+  # ~/.bash_logout: executed by bash(1) when login shell exits.
+
+  # when leaving the console clear the screen to increase privacy
+
+  if [ "$SHLVL" = 1 ]; then
+      [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
+  fi
+
+  # SPDX-SnippetEnd

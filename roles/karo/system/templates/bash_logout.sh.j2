@@ -1,22 +1,10 @@
-# SPDX-FileCopyrightText: © 1995-2011 Software in the Public Interest
-#
-# SPDX-License-Identifier: GPL-2.0-or-later
-
-# ~/.bash_logout: executed by bash(1) when login shell exits.
-
-# when leaving the console clear the screen to increase privacy
-
-if [ "$SHLVL" = 1 ]; then
-    [ -x /usr/bin/clear_console ] && /usr/bin/clear_console -q
-fi
-
-# SPDX-SnippetBegin
 # SPDX-FileCopyrightText: © 2025 hazzuk
+#
 # SPDX-License-Identifier: AGPL-3.0-only
 
-# karo-stack
+# UID: karo
 
-# clean-up vault password on logout
+{{ debian_bash_logout }}
+
+# shred ansible vault password on logout
 export P="/run/user/1000/karo/ansible/vault_pass"; [ -e "$P" ] && shred -u "$P" >/dev/null 2>&1 || true
-
-# SPDX-SnippetEnd
