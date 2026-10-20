@@ -2,7 +2,9 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-only
 
+{{ ansible_managed | comment('c') }}
 {# https://github.com/micro-editor/micro/blob/master/runtime/help/options.md #}
+
 {
 {% if karo_micro_terminal_clipboard_enabled %}
   "clipboard": "terminal",

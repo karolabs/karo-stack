@@ -4,6 +4,10 @@
 
 ---
 
+ansible_managed: |-
+  ANSIBLE MANAGED FILE
+  DO NOT EDIT DIRECTLY
+
 debian_bash_profile: |-
   # SPDX-SnippetBegin
   # SPDX-FileCopyrightText: © 1995-2011 Software in the Public Interest
