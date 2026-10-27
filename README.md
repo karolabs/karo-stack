@@ -8,7 +8,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 # karo-stack
 
-**A minimal toolkit for building a declarative Linux homeserver**
+**A minimal toolkit for configuring a declarative Linux homeserver**
 
 [![Latest release](https://img.shields.io/github/v/release/karolabs/karo-stack?display_name=tag&cacheSeconds=7200&label=latest)](https://github.com/karolabs/karo-stack/releases)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-B461B3)](https://github.com/karolabs/karo-stack/blob/main/LICENSE)
@@ -27,19 +27,20 @@ SPDX-License-Identifier: AGPL-3.0-only
 ## About
 
 The karo-stack enables users to reliably
-and efficiently deploy a personalised homeserver.
+and efficiently configure a personalised homeserver.
 
 Platforms such as Proxmox, Unraid and TrueNAS offer powerful,
 comprehensive solutions, but that breadth can also bring unnecessary overhead
 and layers of abstraction that many setups simply don't need.
-The karo-stack takes a more direct approach
-as a purpose-built self-hosting toolkit.
+The karo-stack takes a different approach, providing a
+purpose-built self-hosting toolkit that leverages existing
+software rather than introducing another all-in-one platform.
 It assists with installing a lightweight Debian Linux operating system,
 then further configuration is applied declaratively
 using Ansible and Git. This includes setting up a dedicated
 'rootless' Docker environment to run services more securely.
 
-It also provides an extensible system for portable Docker Compose stacks.
+It also offers an extensible system for portable Docker Compose stacks.
 Each stack uses variable-driven templates and can follow a shared set of
 guidelines for structuring Compose files. These conventions promote
 improved readability, security hardening, and long-term maintainability,
@@ -54,7 +55,7 @@ The project is free and open-source software,
 developed with careful consideration and long-term stability in mind.
 It is a deliberately minimal and opinionated toolkit,
 built to provide a focused set of practical features.
-It takes care of the fundamentals needed for a well-optimised homeserver,
+It helps take care of the fundamentals needed for a well-optimised homeserver,
 while preserving a user's sovereignty over their system.
 
 ## Documentation
