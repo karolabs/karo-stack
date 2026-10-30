@@ -44,7 +44,10 @@ However, for greater clarity and stronger security, both should always be set.
 
 ## Registry
 
-Specifying an image registry avoids ambiguity (normally `docker.io` or `ghcr.io`):
+Specifying an image registry avoids ambiguity (normally
+[docker.io](https://hub.docker.com "Docker Hub Registry"),
+[dhi.io](https://hub.docker.com/hardened-images/catalog "Docker Hardened Images Registry") or
+[ghcr.io](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry "GitHub Container Registry")):
 
 ``` yaml { .no-copy title="images.yml (defaults file)" }
 example_foobar_image: docker.io/foobarorg/foobar
