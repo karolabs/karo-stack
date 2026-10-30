@@ -13,3 +13,4 @@ profile: null
 # ignored rules
 skip_list:
   - var-naming[no-role-prefix] # allows `karo_` prefix for role defaults
+  - role-name[path] # allows using paths for role names

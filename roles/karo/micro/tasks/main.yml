@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: © 2026 hazzuk
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+---
+
+- name: Configure micro
+  ansible.builtin.include_tasks: user.yml
+  loop:
+    - karo
+    - dockeruser
+  loop_control:
+    loop_var: user
+  vars:
+    micro_config_path: "/home/{{ user }}/.config/micro"

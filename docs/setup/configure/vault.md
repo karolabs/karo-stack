@@ -113,6 +113,11 @@ With the password set, you can now create an Ansible vault file encrypted by you
     karo_docker_login_username: username # docker username
     karo_docker_login_token: "dckr_pat_..." # docker personal access token
 
+    # [micro]
+
+    ## use terminal clipboard for copy/paste
+    # karo_micro_terminal_clipboard_enabled: true(1)
+
     # [compose]
 
     karo_compose_root_domain: example.com # registered domain name
@@ -126,6 +131,12 @@ With the password set, you can now create an Ansible vault file encrypted by you
 
     # [custom]
     ```
+
+    1.  Disable this if your terminal doesn't support OSC 52.
+
+        See Micro's
+        [copypaste documentation](https://github.com/micro-editor/micro/blob/master/runtime/help/copypaste.md)
+        for more details.
 
     ??? success "Check encrypted state"
 

@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: © 2026 hazzuk
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+---
+
+- name: "Look up {{ user }}"
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ user }}"
+    fail_key: false
+
+- name: Configure micro for {{ user }}
+  when: ansible_facts['getent_passwd'][user] is not none
+  block:
+    - name: "Create micro config directory for {{ user }}"
+      ansible.builtin.file:
+        path: "{{ micro_config_path }}"
+        state: directory
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: "0775"
+
+    - name: "Render micro settings template for {{ user }}"
+      ansible.builtin.template:
+        src: settings.json.j2
+        dest: "{{ micro_config_path }}/settings.json"
+        owner: "{{ user }}"
+        group: "{{ user }}"
+        mode: "0644"

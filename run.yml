@@ -32,6 +32,11 @@
         name: karo/docker
       tags: [docker, install]
 
+    - name: Run micro role
+      ansible.builtin.include_role:
+        name: karo/micro
+      tags: [micro, install]
+
     - name: Run compose role
       ansible.builtin.include_role:
         name: karo/compose

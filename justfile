@@ -57,7 +57,7 @@ host-preseed platform:
 
 # Setup a system
 [group('System setup')]
-[arg('role', help="Ansible role name", pattern="all|system|nftables|ssh|git|docker")]
+[arg('role', help="Ansible role name", pattern="all|system|nftables|ssh|git|docker|micro")]
 [arg('hostname', help=hostname_usage)]
 @install role hostname='': check-password
     # run ansible playbook

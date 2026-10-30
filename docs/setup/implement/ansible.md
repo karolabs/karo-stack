@@ -16,7 +16,7 @@ The playbook is separated into different Ansible roles,
 each of which is responsible for configuring a specific part of the system.
 The majority of these roles are grouped as 'install' roles:
 
-`system` `nftables` `ssh` `git` `docker`
+`system` `nftables` `ssh` `git` `docker` `micro`
 
 The remaining `compose` role is specifically used
 to manage Docker Compose stacks.
@@ -31,9 +31,10 @@ to manage Docker Compose stacks.
     just install all homeserver
     ```
 
-In short, this will make minor system changes,
-enable the nftables firewall, tighten SSH security,
-adjust your git configuration, and set up a rootless Docker environment.
+In short, this will make minor system changes, implement the nftables firewall,
+tighten SSH security, personalise your Git setup,
+configure the Micro text editor, and create a rootless Docker environment
+(with a new unprivileged user named `dockeruser`).
 
 ??? question "Why Ansible?"
 
