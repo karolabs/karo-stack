@@ -8,14 +8,12 @@ icon: lucide/snowflake
 
 # Image format
 
-The container's version is controlled by the Docker image URI value:
-
 === "Format"
 
-    ``` c { .no-copy title="compose example" }
+    ``` c { .no-copy title="Compose example" }
     services:
       foobar:
-        image: <registry>/<project>/<image>:<tag>@<digest>
+        image: <registry>/<project>/<container>:<tag>@<digest>
     ```
 
 === "Template file"
@@ -26,7 +24,7 @@ The container's version is controlled by the Docker image URI value:
         image: {{ stack_vars.foobar.image }}
     ```
 
-=== "Result"
+=== "Rendered file"
 
     ``` yaml { .no-copy title="compose.yml" }
     services:
@@ -36,6 +34,13 @@ The container's version is controlled by the Docker image URI value:
 
 It's common for both `<registry>` and `<digest>` to go unused when defining an image URI.
 However, for greater clarity and stronger security, both should always be set.
+
+!!! info "Docker terminology"
+
+    More broadly, Docker refers to an image as `REPOSITORY:TAG`,
+    and a Docker image 'reference' is the  combination of the repository and tag.
+    See [Docker docs](https://docs.docker.com/reference/cli/docker/image/ls/)
+    and [OCI docs](https://github.com/opencontainers/.github/blob/main/docs/docs/introduction/digests.md).
 
 ## Registry
 
