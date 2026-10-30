@@ -14,7 +14,7 @@ icon: lucide/folder-tree
 
     ``` text { .no-copy title="Repo example" }
     karo-custom/
-    ├── karo-compose/...
+    ├── compose/...
     ├── LICENSE
     └── README.md
     ```
@@ -40,7 +40,7 @@ icon: lucide/folder-tree
 
     ``` text { .no-copy title="Repo example" }
     karo-inventory/
-    ├── karo-compose/...
+    ├── compose/...
     ├── host_vars/...
     └── hosts.ini
     ```
@@ -57,72 +57,74 @@ Files for custom stacks are symbolically linked
 to the inside of the karo-stack's Ansible playbook.
 Because of this, custom stacks must follow a very specific structure.
 
-=== "Ansible role"
+=== "Stack group(s)"
 
-    ``` toml { .no-copy title="Extend the Ansible compose role" hl_lines="1" }
+    ``` c { .no-copy hl_lines="3" }
     --8<-- "docs/snippets.md:custom_compose_filetree"
     ```
 
-=== "Role directories"
+    ??? info "Stack group rules"
 
-    ``` toml { .no-copy title="Defaults and templates directories" hl_lines="2 6" }
+        - **Must** be at least one stack group.
+
+        - **Must** be named `<username>_<scope>`.
+
+            Username:
+
+            - GitHub username or organisation name that owns the public repository.
+            - `inventory` when creating files inside your karo-inventory repo.
+
+            Scope:
+
+            - Avoid using the following words:
+
+                - [Ansible role names](https://github.com/karolabs/karo-stack/tree/main/roles/karo) (e.g. `compose` or `system`)
+                - `stack` or `stacks`
+                - `custom`
+                - `karo`
+                - `inventory`
+
+=== "Defaults files"
+
+    ``` c { .no-copy hl_lines="2 4 9" }
     --8<-- "docs/snippets.md:custom_compose_filetree"
     ```
 
-=== "Stack groups"
+=== "Template file(s)"
 
-    ``` toml { .no-copy title="Stack group directories" hl_lines="3 7" }
+    ``` c { .no-copy hl_lines="7" }
     --8<-- "docs/snippets.md:custom_compose_filetree"
     ```
 
-    !!! info "Stack group naming"
+    ??? info "Template rules"
 
-        - There must always be at least one stack group.
+        - **Must** end with a `.j2` file extension (Jinja).
 
-        - Stack groups must follow a strict naming convention `<username>_<scope>`.
+        - You can create multiple template files for each stack.
 
-        - Do **not** use any of the following words for the scope name:
+            === "Template files"
 
-            - [Ansible role names](https://github.com/karolabs/karo-stack/tree/main/roles) (e.g. `compose` or `system`)
-            - `stack` or `stacks`
-            - `custom`
-            - `karo`
-
-=== "Defaults"
-
-    ``` toml { .no-copy title="Stack group defaults files" hl_lines="4-5" }
-    --8<-- "docs/snippets.md:custom_compose_filetree"
-    ```
-
-=== "Templates"
-
-    ``` toml { .no-copy title="Stack group templates" hl_lines="8-9" }
-    --8<-- "docs/snippets.md:custom_compose_filetree"
-    ```
-
-    !!! info "Template files"
-
-        - Template files **must** end with the `.j2` file extension
-
-        - You can create multiple template files for each stack
-
-            === "Templates"
-
-                ``` toml { .no-copy }
-                templates/
+                ``` c { .no-copy }
+                compose/
                 └── karolabs_ops/
                     └── godns/
                         ├── compose.yml.j2
                         └── config.json.j2
                 ```
 
-            === "Deployed files"
+            === "Rendered files"
 
-                ``` toml { .no-copy }
-                /srv/
+                ``` c { .no-copy }
+                srv/
                 └── docker/
                     └── karolabs_ops/
                         └── godns/
-                            ├── compose.yml.j2
-                            └── config.json.j2
+                            ├── compose.yml
+                            └── config.json
                 ```
+
+=== "Documentation files"
+
+    ``` c { .no-copy hl_lines="5 8" }
+    --8<-- "docs/snippets.md:custom_compose_filetree"
+    ```
