@@ -23,7 +23,13 @@ with default values to be overridden where needed.
 
 ## Defaults files
 
-To add a stack (e.g. 'foobar') to your karo-custom repo, you'd need two defaults files.
+To add a stack (e.g. 'foobar') to your karo-custom repo, you'd need three defaults files.
+
+-   `images.yml` (image variables, for specifying Docker image references)
+
+    ``` yaml { .no-copy title="compose/images.yml" }
+    example_foobar_image: docker.io/foobarorg/foobar:v1.0.0@sha256:100689790a0a0ea4...
+    ```
 
 -   `group.yml` (group variables, must define the deployment order of stacks)
 
