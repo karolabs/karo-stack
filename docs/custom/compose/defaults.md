@@ -18,31 +18,31 @@ which later become a part of the rendered template.
 
 However, users aren't expected to define every possible variable,
 and they also need to know the variable names to use.
-Hence a defaults file, which contains all available variables,
+Hence the use of defaults files, which contains all available variables,
 with default values to be overridden where needed.
 
 ## Defaults files
 
-To add a stack (e.g. 'foobar') to your karo-custom repo, you'd need to create two defaults files.
+To add a stack (e.g. 'foobar') to your karo-custom repo, you'd need two defaults files.
 
--   `main.yml` (internal variables, primarily for the deployment order of stacks)
+-   `group.yml` (group variables, must define the deployment order of stacks)
 
-    ``` yaml+jinja { .no-copy title="karo-compose/defaults/main/example_group/main.yml" }
+    ``` yaml+jinja { .no-copy title="compose/example_group/group.yml" }
     ## docker will start stacks in this order
     ## docker will stop stacks in reverse order
     example_group_stacks:
       - foobar
     ```
 
--   `foobar.yml` (stack variables, for users to override)
+-   `stack.yml` (stack variables, for compose file variables which users can override)
 
     !!! info "Stack variables"
 
         All variables created for a stack need to be added to the stack's defaults file.
 
-        Common variables include `image`, `version`, `domain` and `log_level`.
+        Common variables include `image`, `domain` and `log_level`.
 
-    ``` yaml+jinja { .no-copy title="karo-compose/defaults/main/example_group/foobar.yml" }
+    ``` yaml+jinja { .no-copy title="compose/example_group/foobar/stack.yml" }
     example_group_foobar_enabled: false
 
     example_group_foobar_stack_defaults:
