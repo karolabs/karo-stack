@@ -48,7 +48,7 @@ services:
     image: {{ stack_vars.foobar.image }}:{{ stack_vars.foobar.version }}
     container_name: foobar
     restart: {{ karo_compose_restart_policy }}
-    # security
+    ## security
     # user: 1000:1000
     # tty: false
     # stdin_open: false
@@ -75,7 +75,7 @@ services:
       - traefik.http.routers.foobar.rule=Host(`{{ stack_vars.foobar.domain }}`)
       - traefik.http.services.foobar.loadbalancer.server.port=1234
 {% if stack_vars.foobar.forward_auth_enabled %}
-      # forward auth
+      ## forward auth
       - traefik.http.routers.foobar.middlewares=tinyauth
       - tinyauth.apps.foobar.config.domain={{ stack_vars.foobar.domain }}
       - tinyauth.apps.foobar.oauth.groups={{ karo_compose_oidc_admin_group }}
