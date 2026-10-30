@@ -149,7 +149,7 @@ custom-get username:
     # clone karo-custom git repo
     git clone git@github.com:{{username}}/{{custom_repo_name}}.git repos/{{username}}
     # check repo dir not empty
-    if [ -z "$(find repos/{{username}}/karo-compose -mindepth 1 -maxdepth 1)" ]; then
+    if [ -z "$(find repos/{{username}}/compose -mindepth 1 -maxdepth 1)" ]; then
         exit 0
     else
         # refresh symlinks
