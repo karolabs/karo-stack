@@ -27,13 +27,13 @@ To add a stack (e.g. 'foobar') to your karo-custom repo, you'd need three defaul
 
 -   `images.yml` (image variables, for specifying Docker image references)
 
-    ``` yaml { .no-copy title="compose/images.yml" }
+    ``` yaml { .no-copy title="(karo-custom)/compose/images.yml" }
     example_foobar_image: docker.io/foobarorg/foobar:v1.0.0@sha256:100689790a0a0ea4...
     ```
 
 -   `group.yml` (group variables, must define the deployment order of stacks)
 
-    ``` yaml+jinja { .no-copy title="compose/example_group/group.yml" }
+    ``` yaml+jinja { .no-copy title="(karo-custom)/compose/example_group/group.yml" }
     ## docker will start stacks in this order
     ## docker will stop stacks in reverse order
     example_group_stacks:
@@ -48,7 +48,7 @@ To add a stack (e.g. 'foobar') to your karo-custom repo, you'd need three defaul
 
         Common variables include `image`, `domain` and `log_level`.
 
-    ``` yaml+jinja { .no-copy title="compose/example_group/foobar/stack.yml" }
+    ``` yaml+jinja { .no-copy title="(karo-custom)/compose/example_group/foobar/stack.yml" }
     example_group_foobar_enabled: false
 
     example_group_foobar_stack_defaults:

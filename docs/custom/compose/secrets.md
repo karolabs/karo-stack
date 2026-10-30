@@ -21,7 +21,7 @@ This is done by using [Docker secrets](https://docs.docker.com/reference/compose
     Both are variables declared inside their encrypted Ansible vault.
     Though secrets are always defined under a nested dictionary named `secrets`.
 
-    ``` yaml+jinja { .no-copy title="inventory/host_vars/homeserver/vault.yml" hl_lines="7-8" }
+    ``` yaml+jinja { .no-copy title="(karo-inventory)/host_vars/homeserver/vault.yml" hl_lines="7-8" }
     example_group_foobar_enabled: true
 
     example_group_foobar_stack:
@@ -47,7 +47,7 @@ This is done by using [Docker secrets](https://docs.docker.com/reference/compose
     inside the compose file defines a new Docker secret.
     Its value is set based on the contents of a secrets file.
 
-    ``` yaml+jinja { .no-copy title="roles/karo-compose/templates/extra/foobar/compose.yml.j2" hl_lines="11-13" }
+    ``` yaml+jinja { .no-copy title="(karo-custom)/compose/example_group/foobar/compose.yml.j2" hl_lines="11-13" }
     --8<-- "docs/snippets.md:compose_secrets_example"
     ```
 
@@ -61,7 +61,7 @@ This is done by using [Docker secrets](https://docs.docker.com/reference/compose
     (this similar to a bind mount).
     These secrets files are found at `/run/secrets` inside the container's filesystem.
 
-    ``` yaml+jinja { .no-copy title="roles/karo-compose/templates/extra/foobar/compose.yml.j2" hl_lines="8-9" }
+    ``` yaml+jinja { .no-copy title="(karo-custom)/compose/example_group/foobar/compose.yml.j2" hl_lines="8-9" }
     --8<-- "docs/snippets.md:compose_secrets_example"
     ```
 
@@ -73,6 +73,6 @@ This is done by using [Docker secrets](https://docs.docker.com/reference/compose
 
         The service used must support setting an environment variable or config value to the contents of a file.
 
-    ``` yaml+jinja { .no-copy title="roles/karo-compose/templates/extra/foobar/compose.yml.j2" hl_lines="6-7" }
+    ``` yaml+jinja { .no-copy title="(karo-custom)/compose/example_group/foobar/compose.yml.j2" hl_lines="6-7" }
     --8<-- "docs/snippets.md:compose_secrets_example"
     ```

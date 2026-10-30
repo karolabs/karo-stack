@@ -10,7 +10,7 @@ icon: lucide/snowflake
 
 === "Format"
 
-    ``` c { .no-copy title="Compose example" }
+    ``` c { .no-copy title="Compose file example" }
     services:
       foobar:
         image: <registry>/<project>/<container>:<tag>@<digest>
@@ -49,7 +49,7 @@ Specifying an image registry avoids ambiguity (normally
 [dhi.io](https://hub.docker.com/hardened-images/catalog "Docker Hardened Images Registry") or
 [ghcr.io](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry "GitHub Container Registry")):
 
-``` yaml { .no-copy title="images.yml (defaults file)" }
+``` yaml { .no-copy title="(karo-custom)/compose/images.yml" }
 example_foobar_image: docker.io/foobarorg/foobar
 ```
 
@@ -64,6 +64,6 @@ While it's not necessary to add a tag when using a digest, it's still helpful to
 The digest is the secure cryptographic identifier.
 Whereas the tag provides a human readable version number:
 
-``` yaml { .no-copy title="images.yml (defaults file)" }
+``` yaml { .no-copy title="(karo-custom)/compose/images.yml" }
 example_foobar_image: docker.io/foobarorg/foobar:v1.0.0@sha256:100689790a0a0ea43ca45997e0450bc26aeb5308375b41c84dfc4f2475937ab
 ```

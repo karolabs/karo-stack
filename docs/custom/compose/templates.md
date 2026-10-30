@@ -32,7 +32,7 @@ and [secrets](https://docs.docker.com/reference/compose-file/secrets/).
 
 <!-- REUSE-IgnoreStart -->
 
-``` yaml+jinja { title="karo-compose/templates/example_group/foobar/compose.yml.j2" }
+``` yaml+jinja { title="(karo-custom)/compose/example_group/foobar/compose.yml.j2" }
 # SPDX-FileCopyrightText: © <year> <author>
 #
 # SPDX-License-Identifier: <license>
