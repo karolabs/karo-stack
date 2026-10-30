@@ -45,7 +45,7 @@ name: foobar
 services:
 
   foobar:
-    image: {{ stack_vars.foobar.image }}:{{ stack_vars.foobar.version }}
+    image: {{ stack_vars.foobar.image }}
     container_name: foobar
     restart: {{ karo_compose_restart_policy }}
     ## security
