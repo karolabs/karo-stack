@@ -7,8 +7,9 @@
 from pathlib import Path # https://docs.python.org/3/library/pathlib.html
 
 def main() -> None:
-    # handle broken symlinks
-    remove_symlinks()
+    # handle existing symlinks in compose defaults and templates
+    remove_broken_symlinks(Path("roles/karo/compose/defaults/main"))
+    remove_broken_symlinks(Path("roles/karo/compose/templates"))
 
     # symlink inventory
     if Path("inventory/compose").exists():
@@ -28,15 +29,9 @@ def main() -> None:
         print("no karo-custom repos found")
     return
 
-def remove_symlinks() -> None:
-    # check defaults
-    for path in Path("roles/karo/compose/defaults/main").iterdir():
-        if not path.exists() and path.is_symlink():
-            print(f"removing broken link: {path}")
-            path.unlink()
-
-    # check templates
-    for path in Path("roles/karo/compose/templates").iterdir():
+def remove_broken_symlinks(directory: Path) -> None:
+    for path in directory.iterdir():
+        # check for broken symlink
         if not path.exists() and path.is_symlink():
             print(f"removing broken link: {path}")
             path.unlink()
