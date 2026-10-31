@@ -6,10 +6,13 @@
 
 from pathlib import Path # https://docs.python.org/3/library/pathlib.html
 
+DEFAULTS_DIR = Path("roles/karo/compose/defaults/main")
+TEMPLATES_DIR = Path("roles/karo/compose/templates")
+
 def main() -> None:
     # handle existing symlinks in compose defaults and templates
-    remove_broken_symlinks(Path("roles/karo/compose/defaults/main"))
-    remove_broken_symlinks(Path("roles/karo/compose/templates"))
+    remove_broken_symlinks(DEFAULTS_DIR)
+    remove_broken_symlinks(TEMPLATES_DIR)
 
     # symlink inventory
     if Path("inventory/compose").exists():
@@ -56,14 +59,14 @@ def symlink_defaults(repo: Path) -> None:
         # symlink defaults files
         match defaults_file.name:
             case "images.yml":
-                link = Path(f"roles/karo/compose/defaults/main/{repo}.images.yml")
+                link = Path(f"{DEFAULTS_DIR}/{repo}.images.yml")
                 target = Path(f"../../../../../{defaults_file}")
                 if not link.exists():
                     link.symlink_to(target)
 
             case "group.yml":
                 group_name = defaults_file.parent.name # karolabs_core
-                link = Path(f"roles/karo/compose/defaults/main/{group_name}.group.yml")
+                link = Path(f"{DEFAULTS_DIR}/{group_name}.group.yml")
                 target = Path(f"../../../../../{defaults_file}")
                 if not link.exists():
                     link.symlink_to(target)
@@ -71,7 +74,7 @@ def symlink_defaults(repo: Path) -> None:
             case "stack.yml":
                 stack_name = defaults_file.parent.parts[-1] # traefik
                 group_name = defaults_file.parent.parts[-2] # karolabs_core
-                link = Path(f"roles/karo/compose/defaults/main/{group_name}_{stack_name}.stack.yml")
+                link = Path(f"{DEFAULTS_DIR}/{group_name}_{stack_name}.stack.yml")
                 target = Path(f"../../../../../{defaults_file}")
                 if not link.exists():
                     link.symlink_to(target)
@@ -88,7 +91,7 @@ def symlink_templates(repo: Path) -> None:
     for group_dir in Path(f"{repo_path}/compose").iterdir():
         if group_dir.is_dir():
             # e.g. group_dir is "repos/karolabs/compose/karolabs_core"
-            link = Path(f"roles/karo/compose/templates/{group_dir.name}")
+            link = Path(f"{TEMPLATES_DIR}/{group_dir.name}")
             target = Path(f"../../../../{group_dir}")
             if not link.exists():
                 link.symlink_to(target)
