@@ -33,6 +33,7 @@
   loop_control:
     loop_var: template
     label: "{{ template.path }}"
+  when: template.path.endswith('.j2')
 
 # secrets
 

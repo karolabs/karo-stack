@@ -32,7 +32,7 @@ and [secrets](https://docs.docker.com/reference/compose-file/secrets/).
 
 <!-- REUSE-IgnoreStart -->
 
-``` yaml+jinja { title="karo-compose/templates/example_group/foobar/compose.yml.j2" }
+``` yaml+jinja { title="(karo-custom)/compose/example_group/foobar/compose.yml.j2" }
 # SPDX-FileCopyrightText: © <year> <author>
 #
 # SPDX-License-Identifier: <license>
@@ -45,10 +45,10 @@ name: foobar
 services:
 
   foobar:
-    image: {{ stack_vars.foobar.image }}:{{ stack_vars.foobar.version }}
+    image: {{ stack_vars.foobar.image }}
     container_name: foobar
     restart: {{ karo_compose_restart_policy }}
-    # security
+    ## security
     # user: 1000:1000
     # tty: false
     # stdin_open: false
@@ -75,7 +75,7 @@ services:
       - traefik.http.routers.foobar.rule=Host(`{{ stack_vars.foobar.domain }}`)
       - traefik.http.services.foobar.loadbalancer.server.port=1234
 {% if stack_vars.foobar.forward_auth_enabled %}
-      # forward auth
+      ## forward auth
       - traefik.http.routers.foobar.middlewares=tinyauth
       - tinyauth.apps.foobar.config.domain={{ stack_vars.foobar.domain }}
       - tinyauth.apps.foobar.oauth.groups={{ karo_compose_oidc_admin_group }}

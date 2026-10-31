@@ -71,7 +71,7 @@ host-preseed platform:
 [arg('hostname', help=hostname_usage)]
 [arg('stack', long, short="s", help="karo-custom stack name (e.g. 'traefik', 'pocketid')")]
 @compose action hostname='' stack='all': check-password
-    # manage symlinks
+    # refresh symlinks
     just custom-symlink
     # run ansible playbook
     ANSIBLE_DISPLAY_SKIPPED_HOSTS=false \
@@ -133,14 +133,14 @@ wireguard:
 
 custom_repo_name := "karo-custom"
 
-# Get/remove custom repo
+# Get/remove karo-custom repo
 [group('Custom repos')]
 [arg('action', help="karo-custom repo command", pattern="get|remove")]
 [arg('username', help="karo-custom repo username (e.g. 'karolabs', 'hazzuk')")]
 @custom action username:
     just custom-{{action}} {{lowercase(username)}}
 
-# Get remote karo-custom repo
+# Clone remote karo-custom repo
 [private]
 custom-get username:
     #!/usr/bin/env bash
@@ -149,10 +149,10 @@ custom-get username:
     # clone karo-custom git repo
     git clone git@github.com:{{username}}/{{custom_repo_name}}.git repos/{{username}}
     # check repo dir not empty
-    if [ -z "$(find repos/{{username}}/karo-compose -mindepth 1 -maxdepth 1)" ]; then
+    if [ -z "$(find repos/{{username}}/compose -mindepth 1 -maxdepth 1)" ]; then
         exit 0
     else
-        # manage symlinks
+        # refresh symlinks
         just custom-symlink
         # list stack groups for username
         printf "\nnew stack groups:\n"
@@ -169,28 +169,10 @@ custom-get username:
     just confirm
     # remove repo dir
     rm -rf "repos/{{username}}"
-    # manage symlinks
+    # refresh symlinks
     just custom-symlink
 
-# Manage symbolic links for custom files
+# Manage symlinks for karo-custom repos
 [private]
-custom-symlink:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    # clear existing symlinks
-    find roles/karo/compose/defaults/main/ -mindepth 1 -maxdepth 1 ! -name "main.yml" -delete
-    find roles/karo/compose/templates/ -mindepth 1 -maxdepth 1 ! -name ".gitkeep" -delete
-    # check repos dir not empty
-    if [ -z "$(find repos -mindepth 1 -maxdepth 1)" ]; then
-        exit 0
-    else
-        # symlink custom files
-        ln -sr repos/*/karo-compose/defaults/main/*/ roles/karo/compose/defaults/main/
-        ln -sr repos/*/karo-compose/templates/*/ roles/karo/compose/templates/
-    fi
-    # check inventory for compose dir
-    if [ -d inventory/karo-compose ]; then
-        # symlink custom files from inventory
-        ln -sr inventory/karo-compose/defaults/main/*/ roles/karo/compose/defaults/main/
-        ln -sr inventory/karo-compose/templates/*/ roles/karo/compose/templates/
-    fi
+@custom-symlink:
+    python3 ./scripts/custom_symlink.py

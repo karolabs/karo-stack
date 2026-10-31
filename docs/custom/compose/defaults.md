@@ -18,37 +18,42 @@ which later become a part of the rendered template.
 
 However, users aren't expected to define every possible variable,
 and they also need to know the variable names to use.
-Hence a defaults file, which contains all available variables,
+Hence the use of defaults files, which contains all available variables,
 with default values to be overridden where needed.
 
 ## Defaults files
 
-To add a stack (e.g. 'foobar') to your karo-custom repo, you'd need to create two defaults files.
+To add a stack (e.g. 'foobar') to your karo-custom repo, you'd need three defaults files.
 
--   `main.yml` (internal variables, primarily for the deployment order of stacks)
+-   `images.yml` (image variables, for specifying Docker image references)
 
-    ``` yaml+jinja { .no-copy title="karo-compose/defaults/main/example_group/main.yml" }
-    # docker will start stacks in this order
-    # docker will stop stacks in reverse order
+    ``` yaml { .no-copy title="(karo-custom)/compose/images.yml" }
+    example_foobar_image: docker.io/foobarorg/foobar:v1.0.0@sha256:100689790a0a0ea4...
+    ```
+
+-   `group.yml` (group variables, must define the deployment order of stacks)
+
+    ``` yaml+jinja { .no-copy title="(karo-custom)/compose/example_group/group.yml" }
+    ## docker will start stacks in this order
+    ## docker will stop stacks in reverse order
     example_group_stacks:
       - foobar
     ```
 
--   `foobar.yml` (stack variables, for users to override)
+-   `stack.yml` (stack variables, for compose file variables which users can override)
 
     !!! info "Stack variables"
 
         All variables created for a stack need to be added to the stack's defaults file.
 
-        Common variables include `image`, `version`, `domain` and `log_level`.
+        Common variables include `image`, `domain` and `log_level`.
 
-    ``` yaml+jinja { .no-copy title="karo-compose/defaults/main/example_group/foobar.yml" }
+    ``` yaml+jinja { .no-copy title="(karo-custom)/compose/example_group/foobar/stack.yml" }
     example_group_foobar_enabled: false
 
     example_group_foobar_stack_defaults:
       foobar:
-        image: docker.io/foobarorg/foobar
-        version: v1.0.0@sha256:100689790a0a0ea43ca45997e0450bc26aeb5308375b41c84dfc4f
+        image: "{{ example_foobar_image }}"
         domain: "foobar.{{ karo_compose_root_domain }}"
         log_level: info # debug, info, warn, error
         forward_auth_enabled: false
