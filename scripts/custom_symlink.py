@@ -6,7 +6,7 @@
 
 from pathlib import Path # https://docs.python.org/3/library/pathlib.html
 
-def main():
+def main() -> None:
     # handle broken symlinks
     remove_symlinks()
 
@@ -28,7 +28,7 @@ def main():
         print("no karo-custom repos found")
     return
 
-def remove_symlinks():
+def remove_symlinks() -> None:
     # check defaults
     for path in Path("roles/karo/compose/defaults/main").iterdir():
         if not path.exists() and path.is_symlink():
@@ -42,7 +42,7 @@ def remove_symlinks():
             path.unlink()
     return
 
-def list_repos():
+def list_repos() -> list[str]:
     # define directories list for ./repos
     repos = []
     for path in Path("repos").iterdir():
@@ -50,7 +50,7 @@ def list_repos():
             repos.append(path.name) # karolabs
     return repos
 
-def symlink_defaults(repo):
+def symlink_defaults(repo: Path) -> None:
 
     repo_path = "inventory" if repo == "inventory" else f"repos/{repo}"
 
@@ -85,7 +85,7 @@ def symlink_defaults(repo):
                 print(f"ignored unknown yaml file: {defaults_file}")
     return
 
-def symlink_templates(repo):
+def symlink_templates(repo: Path) -> None:
 
     repo_path = "inventory" if repo == "inventory" else f"repos/{repo}"
 
