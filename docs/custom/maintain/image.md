@@ -8,14 +8,12 @@ icon: lucide/snowflake
 
 # Image format
 
-The container's version is controlled by the Docker image URI value:
-
 === "Format"
 
-    ``` c { .no-copy title="compose example" }
+    ``` c { .no-copy title="Compose file example" }
     services:
       foobar:
-        image: <registry>/<project>/<image>:<tag>@<digest>
+        image: <registry>/<project>/<container>:<tag>@<digest>
     ```
 
 === "Template file"
@@ -23,10 +21,10 @@ The container's version is controlled by the Docker image URI value:
     ``` yaml+jinja { .no-copy title="compose.yml.j2" }
     services:
       foobar:
-        image: {{ stack_vars.foobar.image }}:{{ stack_vars.foobar.version }}
+        image: {{ stack_vars.foobar.image }}
     ```
 
-=== "Result"
+=== "Rendered file"
 
     ``` yaml { .no-copy title="compose.yml" }
     services:
@@ -34,22 +32,25 @@ The container's version is controlled by the Docker image URI value:
         image: docker.io/foobarorg/foobar:v1.0.0@sha256:100689790a0a0ea43ca45997e0450bc26aeb5308375b41c84dfc4f2475937ab
     ```
 
-It's common for both `<registry>` and `<digest>` to go unused when specifying an image URI.
+It's common for both `<registry>` and `<digest>` to go unused when defining an image URI.
 However, for greater clarity and stronger security, both should always be set.
+
+!!! info "Docker terminology"
+
+    More broadly, Docker refers to an image as `REPOSITORY:TAG`,
+    and a Docker image 'reference' is the  combination of the repository and tag.
+    See [Docker docs](https://docs.docker.com/reference/cli/docker/image/ls/)
+    and [OCI docs](https://github.com/opencontainers/.github/blob/main/docs/docs/introduction/digests.md).
 
 ## Registry
 
-Providing an image registry avoids ambiguity about the source of the image.
-And improves security by only pulling the image from the intended registry.
+Specifying an image registry avoids ambiguity (normally
+[docker.io](https://hub.docker.com "Docker Hub Registry"),
+[dhi.io](https://hub.docker.com/hardened-images/catalog "Docker Hardened Images Registry") or
+[ghcr.io](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry "GitHub Container Registry")):
 
-We define the registry, along with the project and image name in the first variable:
-
-``` yaml { .no-copy }
-example_group_foobar_stack_enabled: false
-
-example_group_foobar_stack_defaults:
-  foobar:
-    image: docker.io/foobarorg/foobar # or ghcr.io/foobarorg/foobar
+``` yaml { .no-copy title="(karo-custom)/compose/images.yml" }
+example_foobar_image: docker.io/foobarorg/foobar
 ```
 
 ## Digest
@@ -63,10 +64,6 @@ While it's not necessary to add a tag when using a digest, it's still helpful to
 The digest is the secure cryptographic identifier.
 Whereas the tag provides a human readable version number:
 
-``` yaml { .no-copy }
-example_group_foobar_stack_enabled: false
-
-example_group_foobar_stack_defaults:
-  foobar:
-    version: v1.0.0@sha256:100689790a0a0ea43ca45997e0450bc26aeb5308375b41c84dfc4f247
+``` yaml { .no-copy title="(karo-custom)/compose/images.yml" }
+example_foobar_image: docker.io/foobarorg/foobar:v1.0.0@sha256:100689790a0a0ea43ca45997e0450bc26aeb5308375b41c84dfc4f2475937ab
 ```

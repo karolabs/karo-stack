@@ -61,15 +61,15 @@ just password
 <!-- text -->
 
 --8<-- [start:custom_compose_filetree]
-karo-compose/
-├── defaults/main/
-│   └── karolabs_media/
-│       ├── main.yml
-│       └── jellyfin.yml
-└── templates/
-    └── karolabs_media/
-        └── jellyfin/
-            └── compose.yml.j2
+compose/
+├── images.yml
+└── karolabs_media/
+    ├── group.yml
+    ├── index.md
+    └── jellyfin/
+        ├── compose.yml.j2
+        ├── index.md
+        └── stack.yml
 --8<-- [end:custom_compose_filetree]
 
 --8<-- [start:compose_secrets_example]
