@@ -1,10 +1,9 @@
-#!/usr/bin/env python3
-
 # SPDX-FileCopyrightText: © 2026 hazzuk
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-from pathlib import Path # https://docs.python.org/3/library/pathlib.html
+import sys
+from pathlib import Path  # https://docs.python.org/3/library/pathlib.html
 
 DEFAULTS_DIR = Path("roles/karo/compose/defaults/main")
 TEMPLATES_DIR = Path("roles/karo/compose/templates")
@@ -16,8 +15,8 @@ def main() -> None:
 
     # symlink inventory
     if Path("inventory/compose").exists():
-        symlink_defaults("inventory")
-        symlink_templates("inventory")
+        symlink_defaults(Path("inventory"))
+        symlink_templates(Path("inventory"))
 
     # define karo-custom repos list
     repos = list_repos()
@@ -26,11 +25,10 @@ def main() -> None:
     if repos:
         print(f"repos: {repos}")
         for repo in repos:
-            symlink_defaults(repo)
-            symlink_templates(repo)
+            symlink_defaults(Path(repo))
+            symlink_templates(Path(repo))
     else:
         print("no karo-custom repos found")
-    return
 
 def remove_broken_symlinks(directory: Path) -> None:
     for path in directory.iterdir():
@@ -38,7 +36,6 @@ def remove_broken_symlinks(directory: Path) -> None:
         if path.is_symlink() and not path.exists():
             print(f"removing broken link: {path}")
             path.unlink()
-    return
 
 def list_repos() -> list[str]:
     # define directories list for ./repos
@@ -50,7 +47,7 @@ def list_repos() -> list[str]:
 
 def symlink_defaults(repo: Path) -> None:
 
-    repo_path = "inventory" if repo == "inventory" else f"repos/{repo}"
+    repo_path = repo if repo == Path("inventory") else Path(f"repos/{repo}")
 
     # loop karo-custom repo yaml files
     for defaults_file in Path(f"{repo_path}/compose").rglob("*.yml"):
@@ -81,11 +78,10 @@ def symlink_defaults(repo: Path) -> None:
 
             case _:
                 print(f"ignored unknown yaml file: {defaults_file}")
-    return
 
 def symlink_templates(repo: Path) -> None:
 
-    repo_path = "inventory" if repo == "inventory" else f"repos/{repo}"
+    repo_path = repo if repo == Path("inventory") else Path(f"repos/{repo}")
 
     # symlink group dirs
     for group_dir in Path(f"{repo_path}/compose").iterdir():
@@ -95,7 +91,6 @@ def symlink_templates(repo: Path) -> None:
             target = Path(f"../../../../{group_dir}")
             if not link.exists():
                 link.symlink_to(target)
-    return
 
 main()
-exit(0)
+sys.exit(0)
