@@ -14,9 +14,8 @@ def main() -> None:
     remove_broken_symlinks(TEMPLATES_DIR)
 
     # symlink inventory
-    if Path("inventory/compose").exists():
-        symlink_defaults(Path("inventory"))
-        symlink_templates(Path("inventory"))
+    if Path("inventory/compose").is_dir():
+        symlink_custom_repo(Path("inventory"))
 
     # define karo-custom repos list
     repos = list_repos()
@@ -25,8 +24,7 @@ def main() -> None:
     if repos:
         print(f"repos: {repos}")
         for repo in repos:
-            symlink_defaults(Path(repo))
-            symlink_templates(Path(repo))
+            symlink_custom_repo(Path(repo))
     else:
         print("no karo-custom repos found")
 
@@ -45,52 +43,43 @@ def list_repos() -> list[str]:
             repos.append(path.name) # karolabs
     return sorted(repos)
 
-def symlink_defaults(repo: Path) -> None:
+def create_symlink(link: Path, target: Path) -> None:
+    if not link.exists():
+        link.symlink_to(target)
 
+def symlink_custom_repo(repo: Path) -> None:
+    # inventory has a different path to other custom repos
     repo_path = repo if repo == Path("inventory") else Path(f"repos/{repo}")
 
-    # loop karo-custom repo yaml files
-    for defaults_file in Path(f"{repo_path}/compose").rglob("*.yml"):
-        # e.g. defaults_file is "repos/karolabs/compose/karolabs_core/traefik/stack.yml"
-
-        # symlink defaults files
-        match defaults_file.name:
+    # symlink yaml files into defaults
+    for yaml_file in Path(f"{repo_path}/compose").rglob("*.yml"):
+        # e.g. yaml_file is "repos/karolabs/compose/karolabs_core/traefik/stack.yml"
+        match yaml_file.name:
             case "images.yml":
                 link = Path(f"{DEFAULTS_DIR}/{repo}.images.yml")
-                target = Path(f"../../../../../{defaults_file}")
-                if not link.exists():
-                    link.symlink_to(target)
 
             case "group.yml":
-                group_name = defaults_file.parent.name # karolabs_core
+                group_name = yaml_file.parent.name # karolabs_core
                 link = Path(f"{DEFAULTS_DIR}/{group_name}.group.yml")
-                target = Path(f"../../../../../{defaults_file}")
-                if not link.exists():
-                    link.symlink_to(target)
 
             case "stack.yml":
-                stack_name = defaults_file.parent.parts[-1] # traefik
-                group_name = defaults_file.parent.parts[-2] # karolabs_core
+                stack_name = yaml_file.parent.parts[-1] # traefik
+                group_name = yaml_file.parent.parts[-2] # karolabs_core
                 link = Path(f"{DEFAULTS_DIR}/{group_name}_{stack_name}.stack.yml")
-                target = Path(f"../../../../../{defaults_file}")
-                if not link.exists():
-                    link.symlink_to(target)
 
             case _:
-                print(f"ignored unknown yaml file: {defaults_file}")
+                print(f"ignored unknown yaml file: {yaml_file}")
+                continue
 
-def symlink_templates(repo: Path) -> None:
+        create_symlink(link, target=Path(f"../../../../../{yaml_file}"))
 
-    repo_path = repo if repo == Path("inventory") else Path(f"repos/{repo}")
-
-    # symlink group dirs
+    # symlink group dirs into templates
     for group_dir in Path(f"{repo_path}/compose").iterdir():
         if group_dir.is_dir():
             # e.g. group_dir is "repos/karolabs/compose/karolabs_core"
             link = Path(f"{TEMPLATES_DIR}/{group_dir.name}")
             target = Path(f"../../../../{group_dir}")
-            if not link.exists():
-                link.symlink_to(target)
+            create_symlink(link, target)
 
 main()
 sys.exit(0)
