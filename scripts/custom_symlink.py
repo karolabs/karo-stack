@@ -48,21 +48,23 @@ def create_symlink(link: Path, target: Path) -> None:
         link.symlink_to(target)
 
 def symlink_custom_repo(repo_dir: Path) -> None:
+    compose_dir = repo_dir / "compose" # repos/karolabs/compose
+
     # symlink yaml files into compose role defaults
-    for yaml_file in Path(f"{repo_dir}/compose").rglob("*.yml"):
+    for yaml_file in compose_dir.rglob("*.yml"):
         # e.g. yaml_file is "repos/karolabs/compose/karolabs_core/traefik/stack.yml"
         match yaml_file.name:
             case "images.yml":
                 link = Path(f"{DEFAULTS_DIR}/{repo_dir.name}.images.yml")
 
             case "group.yml":
-                group_name = yaml_file.parent.name # karolabs_core
-                link = Path(f"{DEFAULTS_DIR}/{group_name}.group.yml")
+                group_dir = yaml_file.parent # ../karolabs_core
+                link = Path(f"{DEFAULTS_DIR}/{group_dir.name}.group.yml")
 
             case "stack.yml":
-                stack_name = yaml_file.parent.parts[-1] # traefik
-                group_name = yaml_file.parent.parts[-2] # karolabs_core
-                link = Path(f"{DEFAULTS_DIR}/{group_name}_{stack_name}.stack.yml")
+                stack_dir = yaml_file.parent # ../traefik
+                group_dir = stack_dir.parent # ../karolabs_core
+                link = Path(f"{DEFAULTS_DIR}/{group_dir.name}_{stack_dir.name}.stack.yml")
 
             case _:
                 print(f"ignored unknown yaml file: {yaml_file}")
@@ -71,7 +73,7 @@ def symlink_custom_repo(repo_dir: Path) -> None:
         create_symlink(link, target=Path(f"../../../../../{yaml_file}"))
 
     # symlink group dirs into compose role templates
-    for group_dir in Path(f"{repo_dir}/compose").iterdir():
+    for group_dir in compose_dir.iterdir():
         if group_dir.is_dir():
             # e.g. group_dir is "repos/karolabs/compose/karolabs_core"
             link = Path(f"{TEMPLATES_DIR}/{group_dir.name}")
