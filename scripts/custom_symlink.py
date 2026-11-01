@@ -22,9 +22,9 @@ def main() -> None:
 
     # symlink repos
     if repos:
-        print(f"repos: {repos}")
+        print(f"repos: {[repo.name for repo in repos]}")
         for repo in repos:
-            symlink_custom_repo(Path(repo))
+            symlink_custom_repo(repo)
     else:
         print("no karo-custom repos found")
 
@@ -35,28 +35,25 @@ def remove_broken_symlinks(directory: Path) -> None:
             print(f"removing broken link: {path}")
             path.unlink()
 
-def list_repos() -> list[str]:
-    # define directories list for ./repos
+def list_repos() -> list[Path]:
+    # list directory paths inside ./repos
     repos = []
     for path in Path("repos").iterdir():
         if path.is_dir():
-            repos.append(path.name) # karolabs
+            repos.append(path) # repos/karolabs
     return sorted(repos)
 
 def create_symlink(link: Path, target: Path) -> None:
     if not link.exists():
         link.symlink_to(target)
 
-def symlink_custom_repo(repo: Path) -> None:
-    # inventory has a different path to other custom repos
-    repo_path = repo if repo == Path("inventory") else Path(f"repos/{repo}")
-
-    # symlink yaml files into defaults
-    for yaml_file in Path(f"{repo_path}/compose").rglob("*.yml"):
+def symlink_custom_repo(repo_dir: Path) -> None:
+    # symlink yaml files into compose role defaults
+    for yaml_file in Path(f"{repo_dir}/compose").rglob("*.yml"):
         # e.g. yaml_file is "repos/karolabs/compose/karolabs_core/traefik/stack.yml"
         match yaml_file.name:
             case "images.yml":
-                link = Path(f"{DEFAULTS_DIR}/{repo}.images.yml")
+                link = Path(f"{DEFAULTS_DIR}/{repo_dir.name}.images.yml")
 
             case "group.yml":
                 group_name = yaml_file.parent.name # karolabs_core
@@ -73,8 +70,8 @@ def symlink_custom_repo(repo: Path) -> None:
 
         create_symlink(link, target=Path(f"../../../../../{yaml_file}"))
 
-    # symlink group dirs into templates
-    for group_dir in Path(f"{repo_path}/compose").iterdir():
+    # symlink group dirs into compose role templates
+    for group_dir in Path(f"{repo_dir}/compose").iterdir():
         if group_dir.is_dir():
             # e.g. group_dir is "repos/karolabs/compose/karolabs_core"
             link = Path(f"{TEMPLATES_DIR}/{group_dir.name}")
