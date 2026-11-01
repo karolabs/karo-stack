@@ -13,10 +13,6 @@ def main() -> None:
     # handle existing compose role symlinks
     remove_broken_symlinks()
 
-    # symlink inventory
-    if Path("inventory/compose").is_dir():
-        symlink_custom_repo(Path("inventory"))
-
     # define karo-custom repos list
     repos = list_repos()
 
@@ -37,11 +33,16 @@ def remove_broken_symlinks() -> None:
                 path.unlink()
 
 def list_repos() -> list[Path]:
-    # list directory paths inside ./repos
+    # list directory paths inside ./repos dir
     repos = []
     for path in Path("repos").iterdir():
         if path.is_dir():
             repos.append(path) # repos/karolabs
+
+    # optionally include inventory repo using custom dir
+    if Path("inventory/compose").is_dir():
+        repos.append(Path("inventory"))
+
     return sorted(repos)
 
 def create_symlink(link_file: Path, target: Path) -> None:
