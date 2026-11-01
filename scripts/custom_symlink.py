@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
+import os
 import sys
 from pathlib import Path  # https://docs.python.org/3/library/pathlib.html
 
@@ -43,9 +44,10 @@ def list_repos() -> list[Path]:
             repos.append(path) # repos/karolabs
     return sorted(repos)
 
-def create_symlink(link: Path, target: Path) -> None:
-    if not link.exists():
-        link.symlink_to(target)
+def create_symlink(link_file: Path, target: Path) -> None:
+    if not link_file.exists():
+        relative_target = Path(os.path.relpath(path=target, start=link_file.parent))
+        link_file.symlink_to(relative_target)
 
 def symlink_custom_repo(repo_dir: Path) -> None:
     compose_dir = repo_dir / "compose" # repos/karolabs/compose
@@ -55,30 +57,29 @@ def symlink_custom_repo(repo_dir: Path) -> None:
         # e.g. yaml_file is "repos/karolabs/compose/karolabs_core/traefik/stack.yml"
         match yaml_file.name:
             case "images.yml":
-                link = DEFAULTS_DIR / f"{repo_dir.name}.images.yml"
+                link_file = DEFAULTS_DIR / f"{repo_dir.name}.images.yml"
 
             case "group.yml":
                 group_dir = yaml_file.parent # ../karolabs_core
-                link = DEFAULTS_DIR / f"{group_dir.name}.group.yml"
+                link_file = DEFAULTS_DIR / f"{group_dir.name}.group.yml"
 
             case "stack.yml":
                 stack_dir = yaml_file.parent # ../traefik
                 group_dir = stack_dir.parent # ../karolabs_core
-                link = DEFAULTS_DIR / f"{group_dir.name}_{stack_dir.name}.stack.yml"
+                link_file = DEFAULTS_DIR / f"{group_dir.name}_{stack_dir.name}.stack.yml"
 
             case _:
                 print(f"ignored unknown yaml file: {yaml_file}")
                 continue
 
-        create_symlink(link, target=Path(f"../../../../../{yaml_file}"))
+        create_symlink(link_file, target=yaml_file)
 
     # symlink group dirs into compose role templates
     for group_dir in compose_dir.iterdir():
         if group_dir.is_dir():
             # e.g. group_dir is "repos/karolabs/compose/karolabs_core"
-            link = Path(f"{TEMPLATES_DIR}/{group_dir.name}")
-            target = Path(f"../../../../{group_dir}")
-            create_symlink(link, target)
+            link_file = TEMPLATES_DIR / group_dir.name
+            create_symlink(link_file, target=group_dir)
 
 main()
 sys.exit(0)
