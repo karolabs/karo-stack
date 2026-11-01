@@ -10,6 +10,8 @@ DEFAULTS_DIR = Path("roles/karo/compose/defaults/main")
 TEMPLATES_DIR = Path("roles/karo/compose/templates")
 
 def main() -> None:
+    links_created = 0
+
     # handle existing compose role symlinks
     remove_broken_symlinks()
 
@@ -19,17 +21,20 @@ def main() -> None:
     # symlink repos
     if repos:
         print(f"repos: {[repo.name for repo in repos]}")
+
         for repo in repos:
-            symlink_custom_repo(repo)
+            links_created += symlink_custom_repo(repo)
     else:
         print("no karo-custom repos found")
+
+    print(f"created {links_created} new symlink(s)")
 
 def remove_broken_symlinks() -> None:
     for role_dir in (DEFAULTS_DIR, TEMPLATES_DIR):
         # check both directories for broken symlinks
         for path in role_dir.iterdir():
             if path.is_symlink() and not path.exists():
-                print(f"removing broken link: {path}")
+                print(f"removing broken symlink: {path}")
                 path.unlink()
 
 def list_repos() -> list[Path]:
@@ -45,12 +50,17 @@ def list_repos() -> list[Path]:
 
     return sorted(repos)
 
-def create_symlink(link_file: Path, target: Path) -> None:
+def create_symlink(link_file: Path, target: Path) -> bool:
     if not link_file.exists():
         relative_target = Path(os.path.relpath(path=target, start=link_file.parent))
         link_file.symlink_to(relative_target)
+        return True
 
-def symlink_custom_repo(repo_dir: Path) -> None:
+    else:
+        return False
+
+def symlink_custom_repo(repo_dir: Path) -> int:
+    links_created = 0
     compose_dir = repo_dir / "compose" # repos/karolabs/compose
 
     # symlink yaml files into compose role defaults
@@ -73,14 +83,18 @@ def symlink_custom_repo(repo_dir: Path) -> None:
                 print(f"ignored unknown yaml file: {yaml_file}")
                 continue
 
-        create_symlink(link_file, target=yaml_file)
+        if create_symlink(link_file, target=yaml_file):
+            links_created += 1
 
     # symlink group dirs into compose role templates
     for group_dir in compose_dir.iterdir():
         if group_dir.is_dir():
             # e.g. group_dir is "repos/karolabs/compose/karolabs_core"
             link_file = TEMPLATES_DIR / group_dir.name
-            create_symlink(link_file, target=group_dir)
+            if create_symlink(link_file, target=group_dir):
+                links_created += 1
+
+    return links_created
 
 main()
 sys.exit(0)
