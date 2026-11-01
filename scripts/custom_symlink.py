@@ -55,16 +55,16 @@ def symlink_custom_repo(repo_dir: Path) -> None:
         # e.g. yaml_file is "repos/karolabs/compose/karolabs_core/traefik/stack.yml"
         match yaml_file.name:
             case "images.yml":
-                link = Path(f"{DEFAULTS_DIR}/{repo_dir.name}.images.yml")
+                link = DEFAULTS_DIR / f"{repo_dir.name}.images.yml"
 
             case "group.yml":
                 group_dir = yaml_file.parent # ../karolabs_core
-                link = Path(f"{DEFAULTS_DIR}/{group_dir.name}.group.yml")
+                link = DEFAULTS_DIR / f"{group_dir.name}.group.yml"
 
             case "stack.yml":
                 stack_dir = yaml_file.parent # ../traefik
                 group_dir = stack_dir.parent # ../karolabs_core
-                link = Path(f"{DEFAULTS_DIR}/{group_dir.name}_{stack_dir.name}.stack.yml")
+                link = DEFAULTS_DIR / f"{group_dir.name}_{stack_dir.name}.stack.yml"
 
             case _:
                 print(f"ignored unknown yaml file: {yaml_file}")
