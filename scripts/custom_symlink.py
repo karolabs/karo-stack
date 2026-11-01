@@ -11,8 +11,7 @@ TEMPLATES_DIR = Path("roles/karo/compose/templates")
 
 def main() -> None:
     # handle existing compose role symlinks
-    remove_broken_symlinks(DEFAULTS_DIR)
-    remove_broken_symlinks(TEMPLATES_DIR)
+    remove_broken_symlinks()
 
     # symlink inventory
     if Path("inventory/compose").is_dir():
@@ -29,12 +28,13 @@ def main() -> None:
     else:
         print("no karo-custom repos found")
 
-def remove_broken_symlinks(directory: Path) -> None:
-    for path in directory.iterdir():
-        # check for broken symlink
-        if path.is_symlink() and not path.exists():
-            print(f"removing broken link: {path}")
-            path.unlink()
+def remove_broken_symlinks() -> None:
+    for role_dir in (DEFAULTS_DIR, TEMPLATES_DIR):
+        # check both directories for broken symlinks
+        for path in role_dir.iterdir():
+            if path.is_symlink() and not path.exists():
+                print(f"removing broken link: {path}")
+                path.unlink()
 
 def list_repos() -> list[Path]:
     # list directory paths inside ./repos
