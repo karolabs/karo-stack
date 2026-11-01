@@ -10,7 +10,7 @@ DEFAULTS_DIR = Path("roles/karo/compose/defaults/main")
 TEMPLATES_DIR = Path("roles/karo/compose/templates")
 
 def main() -> None:
-    # handle existing symlinks in compose defaults and templates
+    # handle existing compose role symlinks
     remove_broken_symlinks(DEFAULTS_DIR)
     remove_broken_symlinks(TEMPLATES_DIR)
 
@@ -35,7 +35,7 @@ def main() -> None:
 def remove_broken_symlinks(directory: Path) -> None:
     for path in directory.iterdir():
         # check for broken symlink
-        if not path.exists() and path.is_symlink():
+        if path.is_symlink() and not path.exists():
             print(f"removing broken link: {path}")
             path.unlink()
     return
@@ -46,7 +46,7 @@ def list_repos() -> list[str]:
     for path in Path("repos").iterdir():
         if path.is_dir():
             repos.append(path.name) # karolabs
-    return repos
+    return sorted(repos)
 
 def symlink_defaults(repo: Path) -> None:
 
