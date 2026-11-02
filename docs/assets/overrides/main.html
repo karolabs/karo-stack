@@ -14,3 +14,9 @@ SPDX-License-Identifier: AGPL-3.0-only
   <link rel="icon" type="image/svg+xml" href="https://hazzuk.github.io/assets/karolabs/favicon.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="https://hazzuk.github.io/assets/karolabs/apple-touch-icon.png" />
 {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <!-- external scripts -->
+  <script src="https://hazzuk.github.io/assets/zensical/open_in_new_tab.js"></script>
+{% endblock %}
