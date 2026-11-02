@@ -13,6 +13,13 @@ the relevant commands to update the different parts of your system.
 
 ## System upgrades
 
+-   **Python packages**
+
+    ``` sh
+    # upgrade ansible and just
+    pipx upgrade-all
+    ```
+
 -   **Docker system packages**
 
     ``` sh
@@ -51,13 +58,6 @@ the relevant commands to update the different parts of your system.
     1. `apt update` refreshes the package index with the latest
        package versions available. Then `apt upgrade` installs
        the newer known versions of pre-existing packages.
-
--   **Python packages**
-
-    ``` sh
-    # upgrade ansible and just
-    pipx upgrade-all
-    ```
 
 ## karo-stack upgrades
 
