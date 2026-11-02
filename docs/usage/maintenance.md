@@ -59,6 +59,9 @@ the relevant commands to update the different parts of your system.
        package versions available. Then `apt upgrade` installs
        the newer known versions of pre-existing packages.
 
+    Performing a full [system reboot](linux.md#system)
+    after applying upgrades is recommended.
+
 ## karo-stack upgrades
 
 ??? tip "karo-stack release notifications"
