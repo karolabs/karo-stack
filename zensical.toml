@@ -91,6 +91,9 @@ nav = [
 
 extra_css = ["assets/stylesheets/extra.css"]
 
+[project.plugins.minify]
+minify_html = true
+
 [project.theme]
 custom_dir = "docs/assets/overrides"
 favicon = "assets/images/favicon.ico"
