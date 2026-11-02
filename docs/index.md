@@ -7,6 +7,19 @@ icon: lucide/house
 title: Home
 ---
 
+<style>
+    .md-typeset h1 {
+        font-size: 2.925em;
+        margin: 0.2em 0 0.85em;
+    }
+    .md-sidebar__inner {
+        display: none;
+    }
+    .md-footer__inner:not([hidden]) {
+        display: none !important;
+    }
+</style>
+
 # <img class="twemoji" src="https://hazzuk.github.io/assets/karolabs/karolabs.svg"> | karo-stack
 
 **A minimal toolkit for building a declarative Linux homeserver**
