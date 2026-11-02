@@ -40,7 +40,7 @@ the relevant commands to update the different parts of your system.
         Upgrading all system packages will include upgrading Docker.
         This can cause unwanted container downtime.
 
-        Upgrade Docker first to avoid this.
+        Upgrade Docker system packages first to avoid this.
 
     ``` sh
     # upgrade system packages (1)
@@ -48,7 +48,9 @@ the relevant commands to update the different parts of your system.
     sudo apt upgrade
     ```
 
-    1. Refreshes the package index with the latest package versions.
+    1. `apt update` refreshes the package index with the latest
+       package versions available. Then `apt upgrade` installs
+       the newer known versions of pre-existing packages.
 
 -   **Python packages**
 
