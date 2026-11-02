@@ -13,12 +13,19 @@ the relevant commands to update the different parts of your system.
 
 ## System upgrades
 
+-   **Python packages**
+
+    ``` sh
+    # upgrade ansible and just
+    pipx upgrade-all
+    ```
+
 -   **Docker system packages**
 
     ``` sh
-    # upgrade docker packages
+    # upgrade docker packages (1)
     just compose down homeserver && \
-    just install docker homeserver && \ # (1)!
+    just install docker homeserver && \
     just compose up homeserver
     ```
 
@@ -40,68 +47,77 @@ the relevant commands to update the different parts of your system.
         Upgrading all system packages will include upgrading Docker.
         This can cause unwanted container downtime.
 
-        Upgrade Docker first to avoid this.
+        Upgrade Docker system packages first to avoid this.
 
     ``` sh
-    # upgrade system packages
-    sudo apt update && \ # (1)!
+    # upgrade system packages (1)
+    sudo apt update && \
     sudo apt upgrade
     ```
 
-    1. Refreshes the package index with the latest package versions.
+    1. `apt update` refreshes the package index with the latest
+       package versions available. Then `apt upgrade` installs
+       the newer known versions of pre-existing packages.
 
--   **Python packages**
+    Performing a full [system reboot](linux.md#system)
+    after applying upgrades is recommended.
 
-    ``` sh
-    # upgrade ansible and just
-    pipx upgrade-all
-    ```
+## Repository upgrades
 
-## karo-stack upgrades
+-   karo-stack repo
 
-??? tip "karo-stack release notifications"
+    ??? tip "Release notifications"
 
-    Get notified about new karo-stack releases:
+        Get notified about new karo-stack releases:
 
-    1.  Go to [github.com/karolabs/karo-stack](https://github.com/karolabs/karo-stack)
+        1.  Go to [github.com/karolabs/karo-stack](https://github.com/karolabs/karo-stack)
 
-    2.  Click on ':octicons-eye-16: Watch'
+        2.  Click on ':octicons-eye-16: Watch'
 
-        - Select 'Custom'
+            - Select 'Custom'
 
-        - Select 'Releases'
+            - Select 'Releases'
 
-        - Select 'Apply'
+            - Select 'Apply'
 
-    3.  Repeat this for [github.com/karolabs/karo-custom](https://github.com/karolabs/karo-custom) (recommended)
+        3.  Repeat this for [github.com/karolabs/karo-custom](https://github.com/karolabs/karo-custom) (recommended)
 
-!!! warning "Breaking changes"
+    ??? warning "Breaking changes"
 
-    Make sure to read the karo-stack's
-    [release notes](https://github.com/karolabs/karo-stack/releases)
-    first. And check for any breaking changes before upgrading.
+        Make sure to read the karo-stack's
+        [release notes](https://github.com/karolabs/karo-stack/releases)
+        first. And check for any breaking changes before upgrading.
 
-    It's also recommended to stop any stack's you're currently running with
-    `just compose down homeserver`.
+        It's also recommended to stop any stack's you're currently running with
+        `just compose down homeserver`.
 
-=== "Latest"
+    === "Latest"
 
-    ``` sh
-    # upgrade karo-stack to latest
-    cd /srv/karo
-    git pull origin main
-    ```
+        ``` sh
+        # upgrade karo-stack to latest
+        cd /srv/karo
+        git pull origin main
+        ```
 
-=== "Specific version"
+    === "Specific version"
 
-    ``` bash
-    # set karo-stack version
-    KAROSTACK_VERSION=v3.0.0
-    ```
+        ``` bash
+        # set karo-stack version
+        KAROSTACK_VERSION=v3.0.0
+        ```
 
-    ``` sh
-    # checkout karo-stack version
-    cd /srv/karo
-    git fetch origin tag ${KAROSTACK_VERSION}
-    git checkout ${KAROSTACK_VERSION}
-    ```
+        ``` sh
+        # checkout karo-stack version
+        cd /srv/karo
+        git fetch origin tag ${KAROSTACK_VERSION}
+        git checkout ${KAROSTACK_VERSION}
+        ```
+
+-   Custom repos
+
+    !!! info
+
+        An update helper for custom repos will be implemented
+        in a future release. For now, adapt the steps above
+        for each git repo inside the repos directory
+        (e.g. `/srv/karo/repos/karolabs`).
