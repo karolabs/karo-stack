@@ -42,14 +42,36 @@ for configuring a well-optimised homeserver.
 It leaves the user in control of their system,
 while providing structure and useful automation.
 
-<div class="grid cards" style="grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));" markdown>
+<div class="grid cards" markdown>
 
-- :lucide-book-text: **Declarative**
-- :lucide-circle-check: **Unambiguous**
-- :lucide-lock-keyhole: **Secure**
-- :lucide-bolt: **Extensible**
-- :lucide-tree-pine: **Stable**
-- :lucide-code-xml: **Open-source**
+-   :lucide-book-text:{ .lg .middle } **Declarative**
+
+    ---
+
+    Unambiguous configuration using
+    [Ansible](https://docs.ansible.com/projects/ansible/latest/getting_started/introduction.html).
+
+-   :lucide-bolt:{ .lg .middle } **Extensible**
+
+    ---
+
+    Reusable [custom](custom/index.md) Docker compose stacks.
+
+-   :lucide-face-slightly-smiling:{ .lg .middle } **Not by AI**
+
+    ---
+
+    Developed [by humans](about/index.md) with great care.
+
+-   :lucide-code-xml:{ .lg .middle } **Open Source**
+
+    ---
+
+    Licensed under AGPLv3, code on
+    [GitHub](https://github.com/karolabs/karo-stack).
+
+    <!-- The karo-stack is licensed under the AGPLv3 and is available on
+    [GitHub](https://github.com/karolabs/karo-stack). -->
 
 </div>
 
