@@ -16,9 +16,9 @@ the relevant commands to update the different parts of your system.
 -   **Docker system packages**
 
     ``` sh
-    # upgrade docker packages
+    # upgrade docker packages (1)
     just compose down homeserver && \
-    just install docker homeserver && \ # (1)!
+    just install docker homeserver && \
     just compose up homeserver
     ```
 
@@ -43,8 +43,8 @@ the relevant commands to update the different parts of your system.
         Upgrade Docker first to avoid this.
 
     ``` sh
-    # upgrade system packages
-    sudo apt update && \ # (1)!
+    # upgrade system packages (1)
+    sudo apt update && \
     sudo apt upgrade
     ```
 
