@@ -8,7 +8,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 # karo-stack
 
-**A minimal toolkit for configuring a declarative Linux homeserver**
+**A minimal toolkit for declaratively configuring a Linux homeserver**
 
 [![Latest release](https://img.shields.io/github/v/release/karolabs/karo-stack?display_name=tag&cacheSeconds=7200&label=latest)](https://github.com/karolabs/karo-stack/releases)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-B461B3)](https://github.com/karolabs/karo-stack/blob/main/LICENSE)
@@ -29,9 +29,9 @@ SPDX-License-Identifier: AGPL-3.0-only
 The karo-stack enables users to reliably
 and efficiently configure a personalised homeserver.
 
-Platforms such as Proxmox, Unraid and TrueNAS offer powerful,
-comprehensive solutions, but that breadth can also bring unnecessary overhead
-and layers of abstraction that many setups simply don't need.
+Platforms such as Unraid or TrueNAS offer powerful,
+comprehensive solutions, but that breadth can also bring unnecessary
+overhead and layers of abstraction that many setups simply don't need.
 The karo-stack takes a different approach, providing a
 purpose-built self-hosting toolkit that leverages existing
 software rather than introducing another all-in-one platform.
