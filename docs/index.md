@@ -31,15 +31,16 @@ title: Home
 
 ---
 
-## About
-
-The karo-stack aims to provide a middle ground for managing a self-hosted setup.
-Somewhere between manually installing Docker on a bare bones server.
-And using an all-encompassing, abstracted solution like Proxmox or Unraid.
-Manual methods often become problematic when maintaining things long-term.
-Whereas the alternative is likely overkill for the needs of most users.
-
-This is why the karo-stack exists, built to a philosophy of six intrinsic principals:
+The karo-stack provides a middle ground between manually
+handling Docker containers on a bare bones server,
+and using an all-in-one platform such as Unraid or TrueNAS.
+Manual setups can become increasingly difficult to maintain over time,
+while larger platforms can introduce unnecessary overhead
+and layers of abstraction that many setups simply don't need.
+Instead, the karo-stack offers a purpose-built toolkit
+for configuring a well-optimised homeserver.
+It leaves the user in control of their system,
+while providing structure and useful automation.
 
 <div class="grid cards" style="grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));" markdown>
 
