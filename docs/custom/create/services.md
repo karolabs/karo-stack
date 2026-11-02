@@ -24,7 +24,7 @@ Important qualities to look for when assessing potential new services:
 
 - [x] **Performant** - Uses a fast, memory-safe, compiled language like Go, C# or Rust.
 
-- [x] **Lean** — Avoids unnecessary features, following separation-of-concerns principles.
+- [x] **Lean** - Avoids unnecessary features, following separation-of-concerns principles.
 
 - [x] **Declarative** - Fully configurable through Docker Compose or Ansible.
 
