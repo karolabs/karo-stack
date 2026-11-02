@@ -75,25 +75,22 @@ while providing structure and useful automation.
 
 </div>
 
-!!! info "TL;DR"
+!!! info "TL;DR - Configure a personalised homeserver for self-hosting"
 
-    The karo-stack enables users to reliably and
-    efficiently deploy a personalised self-hosted homeserver.
-
-    Starting with an automated installation of Debian Linux.
-    The server configuration tracked in git.
-    Sensitive information encrypted inside a vault.
-    Tasks are orchestrated using
-    [Ansible](https://docs.ansible.com/projects/ansible/latest/getting_started/introduction.html)
-    with idempotent behaviour.
-    And self-hosted Docker stacks run securely as a rootless user.
+    - Semi-automated Debian Linux installation.
+    - Declarative system configuration orchestrated using
+      Ansible with idempotent behaviour.
+    - Configuration tracked inside a private git repository.
+    - Sensitive data encrypted using an Ansible vault file.
+    - Dedicated rootless Docker environment for running containers.
+    - Templated Docker Compose stacks that can be reused and shared.
 
 ## Setup overview
 
-1. Install Debian with a preseed file
+1. Install Debian using a preseed file (bare metal or VM)
 2. Setup the karo-stack git repo
 3. Run the Ansible playbook
-4. Add custom provided Docker stacks
+4. Add custom Docker Compose stacks
 5. Start your configured services
 
 Read the [requirements page](setup/requirements.md).
