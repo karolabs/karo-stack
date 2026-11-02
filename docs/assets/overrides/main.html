@@ -4,8 +4,19 @@ SPDX-FileCopyrightText: © 2026 hazzuk
 SPDX-License-Identifier: AGPL-3.0-only
 -->
 
+<!-- https://zensical.org/docs/customization/#template-overrides -->
+
 {% extends "base.html" %}
 
-{# {% block announce %}
-  🚧 The docs are currently a work in progress
-{% endblock %} #}
+{% block extrahead %}
+  <!-- external favicons -->
+  <link rel="icon" type="image/png" href="https://hazzuk.github.io/assets/karolabs/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="https://hazzuk.github.io/assets/karolabs/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://hazzuk.github.io/assets/karolabs/apple-touch-icon.png" />
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <!-- external scripts -->
+  <script src="https://hazzuk.github.io/assets/zensical/open_in_new_tab.js"></script>
+{% endblock %}
