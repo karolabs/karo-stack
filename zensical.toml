@@ -94,9 +94,13 @@ extra_css = ["assets/stylesheets/extra.css"]
 [project.plugins.minify]
 minify_html = true
 
+[project.plugins.privacy]
+assets_exclude = ["img.shields.io/github/v/release/*"]
+
 [project.theme]
 custom_dir = "docs/assets/overrides"
-favicon = "assets/images/favicon.ico"
+favicon = "assets/external/hazzuk.github.io/assets/karolabs/favicon-96x96.png"
+logo = "assets/external/hazzuk.github.io/assets/karolabs/karolabs.svg"
 language = "en"
 
 features = [
@@ -129,7 +133,6 @@ features = [
 ]
 
 [project.theme.icon]
-logo = "karo"
 repo = "fontawesome/brands/github"
 
 [[project.theme.palette]]
