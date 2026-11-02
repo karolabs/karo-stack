@@ -62,51 +62,62 @@ the relevant commands to update the different parts of your system.
     Performing a full [system reboot](linux.md#system)
     after applying upgrades is recommended.
 
-## karo-stack upgrades
+## Repository upgrades
 
-??? tip "karo-stack release notifications"
+-   karo-stack repo
 
-    Get notified about new karo-stack releases:
+    ??? tip "Release notifications"
 
-    1.  Go to [github.com/karolabs/karo-stack](https://github.com/karolabs/karo-stack)
+        Get notified about new karo-stack releases:
 
-    2.  Click on ':octicons-eye-16: Watch'
+        1.  Go to [github.com/karolabs/karo-stack](https://github.com/karolabs/karo-stack)
 
-        - Select 'Custom'
+        2.  Click on ':octicons-eye-16: Watch'
 
-        - Select 'Releases'
+            - Select 'Custom'
 
-        - Select 'Apply'
+            - Select 'Releases'
 
-    3.  Repeat this for [github.com/karolabs/karo-custom](https://github.com/karolabs/karo-custom) (recommended)
+            - Select 'Apply'
 
-!!! warning "Breaking changes"
+        3.  Repeat this for [github.com/karolabs/karo-custom](https://github.com/karolabs/karo-custom) (recommended)
 
-    Make sure to read the karo-stack's
-    [release notes](https://github.com/karolabs/karo-stack/releases)
-    first. And check for any breaking changes before upgrading.
+    ??? warning "Breaking changes"
 
-    It's also recommended to stop any stack's you're currently running with
-    `just compose down homeserver`.
+        Make sure to read the karo-stack's
+        [release notes](https://github.com/karolabs/karo-stack/releases)
+        first. And check for any breaking changes before upgrading.
 
-=== "Latest"
+        It's also recommended to stop any stack's you're currently running with
+        `just compose down homeserver`.
 
-    ``` sh
-    # upgrade karo-stack to latest
-    cd /srv/karo
-    git pull origin main
-    ```
+    === "Latest"
 
-=== "Specific version"
+        ``` sh
+        # upgrade karo-stack to latest
+        cd /srv/karo
+        git pull origin main
+        ```
 
-    ``` bash
-    # set karo-stack version
-    KAROSTACK_VERSION=v3.0.0
-    ```
+    === "Specific version"
 
-    ``` sh
-    # checkout karo-stack version
-    cd /srv/karo
-    git fetch origin tag ${KAROSTACK_VERSION}
-    git checkout ${KAROSTACK_VERSION}
-    ```
+        ``` bash
+        # set karo-stack version
+        KAROSTACK_VERSION=v3.0.0
+        ```
+
+        ``` sh
+        # checkout karo-stack version
+        cd /srv/karo
+        git fetch origin tag ${KAROSTACK_VERSION}
+        git checkout ${KAROSTACK_VERSION}
+        ```
+
+-   Custom repos
+
+    !!! info
+
+        An update helper for custom repos will be implemented
+        in a future release. For now, adapt the steps above
+        for each git repo inside the repos directory
+        (e.g. `/srv/karo/repos/karolabs`).

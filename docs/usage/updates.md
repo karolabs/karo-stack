@@ -54,7 +54,7 @@ Because of this, you'll need to setup the official `karo-custom` repo.
     just compose down homeserver
     ```
 
-2.  [Upgrade the karo-stack](maintenance.md#karo-stack-upgrades)
+2.  [Upgrade the karo-stack](maintenance.md#repository-upgrades)
 
 3.  [Add the official karo-custom repo](https://custom.karolabs.dev/)
 
