@@ -175,4 +175,4 @@ custom-get username:
 # Manage symlinks for karo-custom repos
 [private]
 @custom-symlink:
-    python3 ./scripts/custom_symlink.py
+    python3 ./python/scripts/symlink_repos.py

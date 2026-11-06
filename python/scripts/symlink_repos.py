@@ -3,11 +3,11 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 
 import os
-import sys
 from pathlib import Path  # https://docs.python.org/3/library/pathlib.html
 
 DEFAULTS_DIR = Path("roles/karo/compose/defaults/main")
 TEMPLATES_DIR = Path("roles/karo/compose/templates")
+
 
 def main() -> None:
     links_created = 0
@@ -29,6 +29,7 @@ def main() -> None:
 
     print(f"created {links_created} new symlink(s)")
 
+
 def remove_broken_symlinks() -> None:
     for role_dir in (DEFAULTS_DIR, TEMPLATES_DIR):
         # check both directories for broken symlinks
@@ -37,18 +38,20 @@ def remove_broken_symlinks() -> None:
                 print(f"removing broken symlink: {path}")
                 path.unlink()
 
+
 def list_repos() -> list[Path]:
     # list directory paths inside ./repos dir
     repos = []
     for path in Path("repos").iterdir():
         if path.is_dir():
-            repos.append(path) # repos/karolabs
+            repos.append(path)  # repos/karolabs
 
     # optionally include inventory repo using custom dir
     if Path("inventory/compose").is_dir():
         repos.append(Path("inventory"))
 
     return sorted(repos)
+
 
 def create_symlink(link_file: Path, target: Path) -> bool:
     if not link_file.exists():
@@ -59,9 +62,10 @@ def create_symlink(link_file: Path, target: Path) -> bool:
     else:
         return False
 
+
 def symlink_custom_repo(repo_dir: Path) -> int:
     links_created = 0
-    compose_dir = repo_dir / "compose" # repos/karolabs/compose
+    compose_dir = repo_dir / "compose"  # repos/karolabs/compose
 
     # symlink yaml files into compose role defaults
     for yaml_file in compose_dir.rglob("*.yml"):
@@ -71,13 +75,15 @@ def symlink_custom_repo(repo_dir: Path) -> int:
                 link_file = DEFAULTS_DIR / f"{repo_dir.name}.images.yml"
 
             case "group.yml":
-                group_dir = yaml_file.parent # ../karolabs_core
+                group_dir = yaml_file.parent  # ../karolabs_core
                 link_file = DEFAULTS_DIR / f"{group_dir.name}.group.yml"
 
             case "stack.yml":
-                stack_dir = yaml_file.parent # ../traefik
-                group_dir = stack_dir.parent # ../karolabs_core
-                link_file = DEFAULTS_DIR / f"{group_dir.name}_{stack_dir.name}.stack.yml"
+                stack_dir = yaml_file.parent  # ../traefik
+                group_dir = stack_dir.parent  # ../karolabs_core
+                link_file = (
+                    DEFAULTS_DIR / f"{group_dir.name}_{stack_dir.name}.stack.yml"
+                )
 
             case _:
                 print(f"ignored unknown yaml file: {yaml_file}")
@@ -96,5 +102,6 @@ def symlink_custom_repo(repo_dir: Path) -> int:
 
     return links_created
 
-main()
-sys.exit(0)
+
+if __name__ == "__main__":
+    main()
