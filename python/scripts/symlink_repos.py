@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 
 import os
-import sys
 from pathlib import Path  # https://docs.python.org/3/library/pathlib.html
 
 DEFAULTS_DIR = Path("roles/karo/compose/defaults/main")
@@ -105,4 +104,3 @@ def symlink_custom_repo(repo_dir: Path) -> int:
 
 
 main()
-sys.exit(0)
