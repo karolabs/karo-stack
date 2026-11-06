@@ -16,3 +16,7 @@
 # misc
 /.dev/
 /notes.md
+/python/karo-custom-cli/karo-custom.toml
+
+# python
+__pycache__

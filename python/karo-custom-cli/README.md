@@ -1,0 +1,7 @@
+<!--
+SPDX-FileCopyrightText: © 2025 hazzuk
+
+SPDX-License-Identifier: AGPL-3.0-only
+-->
+
+# karo-custom cli

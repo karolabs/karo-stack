@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: © 2026 hazzuk
+#
+# SPDX-License-Identifier: AGPL-3.0-only
+
+# Python configuration file used by packaging-related tools.
+# See https://packaging.python.org for more information.
+#:schema https://www.schemastore.org/pyproject.json
+
+[project]
+name = "karo-custom-cli"
+description = "Command-line interface for creating karo-custom repos"
+readme = "README.md"
+requires-python = ">= 3.13"
+license = "AGPL-3.0-only"
+authors = [{ name = "hazzuk" }]
+dynamic = ["version"]
+
+[project.urls]
+Documentation = "https://docs.karolabs.dev"
+Repository = "https://github.com/karolabs/karo-stack"
+
+[project.scripts]
+karo-custom = "karo_custom.cli:main"
