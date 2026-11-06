@@ -103,4 +103,5 @@ def symlink_custom_repo(repo_dir: Path) -> int:
     return links_created
 
 
-main()
+if __name__ == "__main__":
+    main()
