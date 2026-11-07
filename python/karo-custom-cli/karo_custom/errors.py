@@ -5,3 +5,7 @@
 
 class ExpectedError(Exception):
     """Base exception for expected application errors."""
+
+
+class ConfigError(ExpectedError):
+    """Configuration loading or validation failure."""
