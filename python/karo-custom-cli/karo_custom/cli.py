@@ -5,7 +5,7 @@
 import argparse
 import logging
 
-from karo_custom import logger
+from karo_custom import application, logger
 from karo_custom.errors import ExpectedError
 
 log = logging.getLogger(__name__)
@@ -39,14 +39,14 @@ def main() -> int:
 
     logger.configure_logging(args.debug)
 
+    log.debug(args)
+
     try:
-        if args.apply:
-            print("apply")
-        else:
-            print("lint only")
+        application.run(args.apply)
 
     except ExpectedError as exc:
         log.error(exc)
         return 1
 
+    log.debug("Safe exit")
     return 0
