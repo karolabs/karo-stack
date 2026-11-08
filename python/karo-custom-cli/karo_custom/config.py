@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 
 import logging
+import re
 import tomllib
 from pathlib import Path
 
@@ -32,4 +33,131 @@ def load_config() -> dict:
     except OSError as exc:
         raise ConfigError(f"Unable to read configuration file: {exc}") from exc
 
+    validate_config(config_data)
+
     return config_data
+
+
+def validate_config(config_data: dict) -> None:
+    """Validate `karo-custom.toml` configuration data."""
+
+    log.debug("Validating config")
+
+    KEYS = (
+        "spec_version",
+        "username",
+        "license",
+        "dependencies",
+        "compose",
+    )
+
+    REQUIRED_KEYS = ("spec_version", "username", "compose")
+
+    GITHUB_USERNAME_RE = re.compile(
+        r"""
+        (?!.{40})       # max length 39 characters
+        [a-z\d]+        # starts with letter/digit
+        (?:-[a-z\d]+)*  # hyphens must be followed by letters/digits
+        """,
+        re.IGNORECASE | re.ASCII | re.VERBOSE,
+    )
+
+    def err(key: str, msg: str) -> None:
+        raise ConfigError(f"Invalid config: '{key}' {msg}")
+
+    def check_lowercase(key: str, value: str) -> None:
+        if value != value.lower():
+            err(key, "must be lower case")
+
+    def check_username(key: str, username: str) -> None:
+        if GITHUB_USERNAME_RE.fullmatch(username) is None:
+            err(
+                key,
+                "may only contain alphanumeric characters or single hyphens, "
+                "and cannot begin or end with a hyphen",
+            )
+
+    unknown_keys = set(config_data) - set(KEYS)
+
+    if unknown_keys:
+        raise ConfigError(f"Unknown config keys: '{"', '".join(sorted(unknown_keys))}'")
+
+    for key in KEYS:
+        if key not in config_data:
+            if key in REQUIRED_KEYS:
+                # required key not found
+                raise ConfigError(f"missing required key: '{key}'")
+
+            # optional key not found
+            continue
+
+        value = config_data[key]
+
+        match key:
+            case "spec_version":  # int, >= 1
+                if not isinstance(value, int):
+                    err(key, "must be an integer")
+
+                if value < 1:
+                    err(key, "must be >= 1")
+
+            case "username":  # str, lower case
+                if not isinstance(value, str):
+                    err(key, "must be a string")
+
+                check_username(key, value)
+
+                check_lowercase(key, value)
+
+            case "license":  # str
+                if not isinstance(value, str):
+                    err(key, "must be a string")
+
+            case "dependencies":  # list[str], lower case
+                if not isinstance(value, list):
+                    err(key, "must be a list")
+
+                if not value:
+                    err(key, "is empty")
+
+                for i, dependency in enumerate(value):
+                    key = f"dependencies[{i}]"
+
+                    if not isinstance(dependency, str):
+                        err(key, "must be a string")
+
+                    if not dependency:
+                        err(key, "is empty")
+
+                    check_username(key, dependency)
+
+                    check_lowercase(key, dependency)
+
+            case "compose":  # dict[str, list[str]], all lower case
+                if not isinstance(value, dict):
+                    err(key, "must be a TOML table")
+
+                if not value:
+                    err(key, "must not be empty")
+
+                for group, stacks in value.items():
+                    group_key = f"compose.{group}"
+
+                    check_lowercase(group_key, group)
+
+                    if not isinstance(stacks, list):
+                        err(group_key, "must be a list")
+
+                    if not stacks:
+                        err(group_key, "is empty")
+
+                    for i, stack in enumerate(stacks):
+                        stack_key = group_key + f"[{i}]"
+
+                        if not isinstance(stack, str):
+                            err(stack_key, "must be a string")
+
+                        if not stack:
+                            err(stack_key, "is empty")
+
+                        check_lowercase(stack_key, stack)
