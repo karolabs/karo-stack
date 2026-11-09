@@ -105,6 +105,9 @@ def validate_config(config_data: dict) -> None:
                 if not isinstance(value, str):
                     err(key, "must be a string")
 
+                if not value:
+                    err(key, "must not be empty")
+
                 check_username(key, value)
 
                 check_lowercase(key, value)
