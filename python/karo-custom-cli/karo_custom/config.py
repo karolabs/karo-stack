@@ -121,17 +121,17 @@ def validate_config(config_data: dict) -> None:
                     err(key, "is empty")
 
                 for i, dependency in enumerate(value):
-                    key = f"dependencies[{i}]"
+                    dependency_key = f"dependencies[{i}]"
 
                     if not isinstance(dependency, str):
-                        err(key, "must be a string")
+                        err(dependency_key, "must be a string")
 
                     if not dependency:
-                        err(key, "is empty")
+                        err(dependency_key, "is empty")
 
-                    check_username(key, dependency)
+                    check_username(dependency_key, dependency)
 
-                    check_lowercase(key, dependency)
+                    check_lowercase(dependency_key, dependency)
 
             case "compose":  # dict[str, list[str]], all lower case
                 if not isinstance(value, dict):
