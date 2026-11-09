@@ -62,6 +62,19 @@ def validate_config(config_data: dict) -> None:
         re.IGNORECASE | re.ASCII | re.VERBOSE,
     )
 
+    RESERVED_GROUP_SCOPES = (
+        "compose",
+        "docker",
+        "git",
+        "nftables",
+        "ssh",
+        "system",
+        "stacks",
+        "stack",
+        "custom",
+        "karo",
+    )
+
     def err(key: str, msg: str) -> None:
         raise ConfigError(f"Invalid config: '{key}' {msg}")
 
@@ -76,6 +89,34 @@ def validate_config(config_data: dict) -> None:
                 "may only contain alphanumeric characters or single hyphens, "
                 "and cannot begin or end with a hyphen",
             )
+
+    def check_group_name(key: str, stack_group: str) -> None:
+        p = stack_group.split("_")
+
+        if len(p) != 2:
+            err(key, "invalid stack group format (<username>_<scope>)")
+
+        group_username, group_scope = p
+
+        # username checks
+
+        if group_username != config_data["username"]:
+            err(
+                key,
+                f"stack group must use defined username '{config_data['username']}'",
+            )
+
+        check_username(key, group_username)
+
+        # scope checks
+
+        if not group_scope:
+            err(key, "stack group scope must not be empty")
+
+        check_username(key, group_scope)  # same validation requirements
+
+        if group_scope in RESERVED_GROUP_SCOPES:
+            err(key, "stack group cannot use reserved scope name")
 
     unknown_keys = set(config_data) - set(KEYS)
 
@@ -154,6 +195,8 @@ def validate_config(config_data: dict) -> None:
 
                     if not stacks:
                         err(group_key, "is empty")
+
+                    check_group_name(group_key, group)
 
                     for i, stack in enumerate(stacks):
                         stack_key = group_key + f"[{i}]"
