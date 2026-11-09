@@ -80,13 +80,14 @@ def validate_config(config_data: dict) -> None:
     unknown_keys = set(config_data) - set(KEYS)
 
     if unknown_keys:
-        raise ConfigError(f"Unknown config keys: '{"', '".join(sorted(unknown_keys))}'")
+        unknown = "', '".join(sorted(unknown_keys))
+        raise ConfigError(f"Invalid config: unknown keys '{unknown}'")
 
     for key in KEYS:
         if key not in config_data:
             if key in REQUIRED_KEYS:
                 # required key not found
-                raise ConfigError(f"missing required key: '{key}'")
+                err(key, "is required")
 
             # optional key not found
             continue
