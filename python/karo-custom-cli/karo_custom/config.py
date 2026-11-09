@@ -62,6 +62,14 @@ def validate_config(config_data: dict) -> None:
         re.IGNORECASE | re.ASCII | re.VERBOSE,
     )
 
+    SCOPE_STACK_RE = re.compile(
+        r"""
+        (?!.{40})       # max length 39 characters
+        [a-z\d]+        # only letters/digits
+        """,
+        re.IGNORECASE | re.ASCII | re.VERBOSE,
+    )
+
     RESERVED_GROUP_SCOPES = (
         "compose",
         "docker",
@@ -90,6 +98,10 @@ def validate_config(config_data: dict) -> None:
                 "and cannot begin or end with a hyphen",
             )
 
+    def check_scope_stack(key: str, value: str) -> None:
+        if SCOPE_STACK_RE.fullmatch(value) is None:
+            err(key, "can only use alphanumeric characters")
+
     def check_group_name(key: str, stack_group: str) -> None:
         p = stack_group.split("_")
 
@@ -113,7 +125,7 @@ def validate_config(config_data: dict) -> None:
         if not group_scope:
             err(key, "stack group scope must not be empty")
 
-        check_username(key, group_scope)  # same validation requirements
+        check_scope_stack(key, group_scope)
 
         if group_scope in RESERVED_GROUP_SCOPES:
             err(key, "stack group cannot use reserved scope name")
@@ -206,5 +218,7 @@ def validate_config(config_data: dict) -> None:
 
                         if not stack:
                             err(stack_key, "is empty")
+
+                        check_scope_stack(stack_key, stack)
 
                         check_lowercase(stack_key, stack)
