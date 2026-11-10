@@ -27,6 +27,7 @@ SPDX-License-Identifier = "CC0-1.0"
 [[annotations]]
 path = [
   "docs/abbreviations.md",
+  "python/karo-custom-cli/karo_custom/templates/*",
 ]
 precedence = "override"
 SPDX-FileCopyrightText = "© hazzuk"

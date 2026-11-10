@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: © ${year} ${author}
+#
+# SPDX-License-Identifier: ${license}
+
+# karo-custom stack defaults, for specifying Docker Compose stack variables.
+# See https://docs.karolabs.dev for more information.
+
+---
+
+${group}_${stack}_enabled: false
+
+${group}_${stack}_stack_defaults:
+  ${stack}:
+    image: "{{ ${username}_${stack}_image }}"
+    domain: "${stack}.{{ karo_compose_root_domain }}"
+    log_level: info # debug, info, warn, error

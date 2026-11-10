@@ -3,7 +3,9 @@
 # SPDX-License-Identifier: AGPL-3.0-only
 
 import logging
+from datetime import date
 from pathlib import Path
+from string import Template
 
 log = logging.getLogger(__name__)
 
@@ -33,8 +35,26 @@ def review_repo(config: dict, apply_mode: bool) -> None:
             log.debug(f"Found file '{file}'")
         else:
             if apply_mode:
-                log.info(f"Creating file '{file}'")
-                file.touch()
+                template_file = Path("karo_custom/templates") / file.name
+                source = template_file.read_text()
+                context = {
+                    "year": date.today().year,
+                    "author": config["author"],
+                    "license": config["license"],
+                    "username": config["username"],
+                }
+                match file.name:
+                    # stack dir
+                    case "compose.yml.j2" | "stack.yml":
+                        context["group"] = file.parent.parent.name
+                        context["stack"] = file.parent.name
+                    # group dir
+                    case "group.yml":
+                        context["group"] = file.parent.name
+
+                file.write_text(Template(source).substitute(context))
+                log.info(f"Created file '{file}'")
+
             else:
                 log.warning(f"Missing file '{file}'")
 
