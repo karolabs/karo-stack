@@ -5,10 +5,13 @@
 import logging
 
 from karo_custom.config import load_config
+from karo_custom.filesystem import review_repo
 
 log = logging.getLogger(__name__)
 
 
-def run(run_apply: bool) -> None:
+def run(apply_mode: bool) -> None:
     config = load_config()
     log.debug(f"{config=}")
+
+    review_repo(config, apply_mode)
