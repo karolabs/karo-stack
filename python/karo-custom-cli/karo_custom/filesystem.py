@@ -18,18 +18,15 @@ def review_repo(config: dict, apply_mode: bool) -> None:
     COMPOSE_FILE = "{path}/compose.yml.j2"
     STACK_FILE = "{path}/stack.yml"
 
-    def action_dir(dir: Path) -> bool:
+    def action_dir(dir: Path) -> None:
         if dir.is_dir():
             log.debug(f"Found directory '{dir}'")
-            return False
         else:
             if apply_mode:
-                log.info(f"Creating directory '{dir}'")
                 dir.mkdir()
-                return False
+                log.info(f"Created directory '{dir}'")
             else:
                 log.warning(f"Missing directory '{dir}'")
-                return True
 
     def action_file(file: Path) -> None:
         if file.is_file():
@@ -42,8 +39,7 @@ def review_repo(config: dict, apply_mode: bool) -> None:
                 log.warning(f"Missing file '{file}'")
 
     # COMPOSE/
-    if action_dir(COMPOSE_DIR):
-        return
+    action_dir(COMPOSE_DIR)
 
     action_file(IMAGES_FILE)
 
