@@ -46,6 +46,7 @@ def validate_config(config_data: dict) -> None:
     KEYS = (
         "spec_version",
         "username",
+        "author",
         "license",
         "dependencies",
         "compose",
@@ -143,6 +144,9 @@ def validate_config(config_data: dict) -> None:
                 err(key, "is required")
 
             # optional key not found
+            if key == "author":
+                # default missing author to username
+                config_data["author"] = config_data["username"]
             continue
 
         value = config_data[key]
@@ -165,6 +169,13 @@ def validate_config(config_data: dict) -> None:
                 check_username(key, value)
 
                 check_lowercase(key, value)
+
+            case "author":  # str
+                if not isinstance(value, str):
+                    err(key, "must be a string")
+
+                if not value:
+                    err(key, "is empty")
 
             case "license":  # str
                 if not isinstance(value, str):
