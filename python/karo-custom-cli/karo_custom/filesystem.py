@@ -38,6 +38,29 @@ def review_repo(config: dict, apply_mode: bool) -> None:
         "username": config["username"],
     }
 
+    def write_file(file: Path) -> None:
+        file_vars = TEMPLATE_VARS.copy()
+
+        # define path dependant variables
+        match file.name:
+            # stack dir
+            case "compose.yml.j2" | "stack.yml":
+                file_vars.update(
+                    group=file.parent.parent.name,
+                    stack=file.parent.name,
+                )
+            # group dir
+            case "group.yml":
+                file_vars.update(
+                    group=file.parent.name,
+                )
+
+        # create file from related template
+        file.write_text(
+            data=Template(TEMPLATES[file.name]).substitute(file_vars),
+            encoding="utf-8",
+        )
+
     def action_dir(directory: Path) -> None:
         if directory.is_dir():
             log.debug(f"Found directory '{directory}'")
@@ -53,28 +76,12 @@ def review_repo(config: dict, apply_mode: bool) -> None:
         if file.is_file():
             log.debug(f"Found file '{file}'")
 
+            if apply_mode and file.name == TEMPLATE_NAMES["group"]:
+                write_file(file)
+                log.info(f"Updated file '{file}'")
+
         elif apply_mode:
-            file_vars = TEMPLATE_VARS.copy()
-
-            # define path dependant variables
-            match file.name:
-                # stack dir
-                case "compose.yml.j2" | "stack.yml":
-                    file_vars.update(
-                        group=file.parent.parent.name,
-                        stack=file.parent.name,
-                    )
-                # group dir
-                case "group.yml":
-                    file_vars.update(
-                        group=file.parent.name,
-                    )
-
-            # create file from related template
-            file.write_text(
-                data=Template(TEMPLATES[file.name]).substitute(file_vars),
-                encoding="utf-8",
-            )
+            write_file(file)
             log.info(f"Created file '{file}'")
 
         else:
