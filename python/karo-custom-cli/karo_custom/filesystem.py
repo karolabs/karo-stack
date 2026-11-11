@@ -53,7 +53,7 @@ def review_repo(config: dict, apply_mode: bool) -> None:
             log.debug(f"Found file '{file}'")
         else:
             if apply_mode:
-                file_vars = TEMPLATE_VARS
+                file_vars = TEMPLATE_VARS.copy()
 
                 # define path dependant variables
                 match file.name:
