@@ -42,18 +42,17 @@ def review_repo(config: dict, apply_mode: bool) -> None:
         file_vars = TEMPLATE_VARS.copy()
 
         # define path dependant variables
-        match file.name:
+        if file.name in (TEMPLATE_NAMES["compose"], TEMPLATE_NAMES["stack"]):
             # stack dir
-            case "compose.yml.j2" | "stack.yml":
-                file_vars.update(
-                    group=file.parent.parent.name,
-                    stack=file.parent.name,
-                )
+            file_vars.update(
+                group=file.parent.parent.name,
+                stack=file.parent.name,
+            )
+        elif file.name == TEMPLATE_NAMES["group"]:
             # group dir
-            case "group.yml":
-                file_vars.update(
-                    group=file.parent.name,
-                )
+            file_vars.update(
+                group=file.parent.name,
+            )
 
         # create file from related template
         file.write_text(
