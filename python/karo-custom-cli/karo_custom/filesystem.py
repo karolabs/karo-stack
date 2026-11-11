@@ -41,39 +41,40 @@ def review_repo(config: dict, apply_mode: bool) -> None:
     def action_dir(directory: Path) -> None:
         if directory.is_dir():
             log.debug(f"Found directory '{directory}'")
+
+        elif apply_mode:
+            directory.mkdir()
+            log.info(f"Created directory '{directory}'")
+
         else:
-            if apply_mode:
-                directory.mkdir()
-                log.info(f"Created directory '{directory}'")
-            else:
-                log.warning(f"Missing directory '{directory}'")
+            log.warning(f"Missing directory '{directory}'")
 
     def action_file(file: Path) -> None:
         if file.is_file():
             log.debug(f"Found file '{file}'")
+
+        elif apply_mode:
+            file_vars = TEMPLATE_VARS.copy()
+
+            # define path dependant variables
+            match file.name:
+                # stack dir
+                case "compose.yml.j2" | "stack.yml":
+                    file_vars["group"] = file.parent.parent.name
+                    file_vars["stack"] = file.parent.name
+                # group dir
+                case "group.yml":
+                    file_vars["group"] = file.parent.name
+
+            # create file from related template
+            file.write_text(
+                data=Template(TEMPLATES[file.name]).substitute(file_vars),
+                encoding="utf-8",
+            )
+            log.info(f"Created file '{file}'")
+
         else:
-            if apply_mode:
-                file_vars = TEMPLATE_VARS.copy()
-
-                # define path dependant variables
-                match file.name:
-                    # stack dir
-                    case "compose.yml.j2" | "stack.yml":
-                        file_vars["group"] = file.parent.parent.name
-                        file_vars["stack"] = file.parent.name
-                    # group dir
-                    case "group.yml":
-                        file_vars["group"] = file.parent.name
-
-                # create file from related template
-                file.write_text(
-                    data=Template(TEMPLATES[file.name]).substitute(file_vars),
-                    encoding="utf-8",
-                )
-                log.info(f"Created file '{file}'")
-
-            else:
-                log.warning(f"Missing file '{file}'")
+            log.warning(f"Missing file '{file}'")
 
     # COMPOSE/
     action_dir(COMPOSE_DIR)
