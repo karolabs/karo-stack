@@ -62,9 +62,11 @@ def review_repo(config: dict, apply_mode: bool) -> None:
         )
 
     def action_dir(directory: Path) -> None:
+        # check for existing dir
         if directory.is_dir():
             log.debug(f"Found directory '{directory}'")
 
+        # create new directory
         elif apply_mode:
             directory.mkdir()
             log.info(f"Created directory '{directory}'")
@@ -73,13 +75,16 @@ def review_repo(config: dict, apply_mode: bool) -> None:
             log.warning(f"Missing directory '{directory}'")
 
     def action_file(file: Path) -> None:
+        # check for existing file
         if file.is_file():
             log.debug(f"Found file '{file}'")
 
+            # update group file
             if apply_mode and file.name == TEMPLATE_NAMES["group"]:
                 write_file(file)
                 log.info(f"Updated file '{file}'")
 
+        # create new file
         elif apply_mode:
             write_file(file)
             log.info(f"Created file '{file}'")
