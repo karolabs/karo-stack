@@ -60,11 +60,15 @@ def review_repo(config: dict, apply_mode: bool) -> None:
             match file.name:
                 # stack dir
                 case "compose.yml.j2" | "stack.yml":
-                    file_vars["group"] = file.parent.parent.name
-                    file_vars["stack"] = file.parent.name
+                    file_vars.update(
+                        group=file.parent.parent.name,
+                        stack=file.parent.name,
+                    )
                 # group dir
                 case "group.yml":
-                    file_vars["group"] = file.parent.name
+                    file_vars.update(
+                        group=file.parent.name,
+                    )
 
             # create file from related template
             file.write_text(
