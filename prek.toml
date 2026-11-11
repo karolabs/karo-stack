@@ -27,7 +27,7 @@ hooks = [
   { id = "check-json", exclude = { glob = ".vscode/settings.json" } },
   { id = "check-json5" },
   { id = "check-toml" },
-  { id = "check-yaml" },
+  { id = "check-yaml", exclude = { glob = "python/karo-custom-cli/karo_custom/templates/*" } },
   { id = "mixed-line-ending", args = ["--fix=lf"] },
 ]
 

@@ -38,6 +38,11 @@ def review_repo(config: dict, apply_mode: bool) -> None:
         "username": config["username"],
     }
 
+    def format_group_stacks(group: str) -> str:
+        stacks = config["compose"][group]
+        # generate list of stacks as string
+        return "\n".join(f"  - {stack}" for stack in stacks)
+
     def write_file(file: Path) -> None:
         file_vars = TEMPLATE_VARS.copy()
 
@@ -52,6 +57,7 @@ def review_repo(config: dict, apply_mode: bool) -> None:
             # group dir
             file_vars.update(
                 group=file.parent.name,
+                stack_list=format_group_stacks(file.parent.name),
             )
 
         # create file from related template
