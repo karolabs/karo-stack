@@ -38,15 +38,15 @@ def review_repo(config: dict, apply_mode: bool) -> None:
         "username": config["username"],
     }
 
-    def action_dir(dir: Path) -> None:
-        if dir.is_dir():
-            log.debug(f"Found directory '{dir}'")
+    def action_dir(directory: Path) -> None:
+        if directory.is_dir():
+            log.debug(f"Found directory '{directory}'")
         else:
             if apply_mode:
-                dir.mkdir()
-                log.info(f"Created directory '{dir}'")
+                directory.mkdir()
+                log.info(f"Created directory '{directory}'")
             else:
-                log.warning(f"Missing directory '{dir}'")
+                log.warning(f"Missing directory '{directory}'")
 
     def action_file(file: Path) -> None:
         if file.is_file():
