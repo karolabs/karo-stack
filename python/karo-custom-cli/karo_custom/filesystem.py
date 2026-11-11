@@ -4,6 +4,7 @@
 
 import logging
 from datetime import date
+from importlib import resources
 from pathlib import Path
 from string import Template
 
@@ -14,11 +15,28 @@ def review_repo(config: dict, apply_mode: bool) -> None:
     """Certify repository's contents against defined config values."""
 
     COMPOSE_DIR = Path("compose")
+    TEMPLATES_DIR = resources.files("karo_custom") / "templates"
 
-    IMAGES_FILE = Path(COMPOSE_DIR / "images.yml")
-    GROUP_FILE = "{path}/group.yml"
-    COMPOSE_FILE = "{path}/compose.yml.j2"
-    STACK_FILE = "{path}/stack.yml"
+    TEMPLATE_NAMES = {
+        "images": "images.yml",
+        "group": "group.yml",
+        "compose": "compose.yml.j2",
+        "stack": "stack.yml",
+    }
+
+    # read bundled templates (e.g. "images.yml": <template text>)
+    TEMPLATES = {
+        filename: (TEMPLATES_DIR / filename).read_text(encoding="utf-8")
+        for _, filename in TEMPLATE_NAMES.items()
+    }
+
+    # define common template variables
+    TEMPLATE_VARS = {
+        "year": date.today().year,
+        "author": config["author"],
+        "license": config["license"],
+        "username": config["username"],
+    }
 
     def action_dir(dir: Path) -> None:
         if dir.is_dir():
@@ -35,24 +53,23 @@ def review_repo(config: dict, apply_mode: bool) -> None:
             log.debug(f"Found file '{file}'")
         else:
             if apply_mode:
-                template_file = Path("karo_custom/templates") / file.name
-                source = template_file.read_text()
-                context = {
-                    "year": date.today().year,
-                    "author": config["author"],
-                    "license": config["license"],
-                    "username": config["username"],
-                }
+                file_vars = TEMPLATE_VARS
+
+                # define path dependant variables
                 match file.name:
                     # stack dir
                     case "compose.yml.j2" | "stack.yml":
-                        context["group"] = file.parent.parent.name
-                        context["stack"] = file.parent.name
+                        file_vars["group"] = file.parent.parent.name
+                        file_vars["stack"] = file.parent.name
                     # group dir
                     case "group.yml":
-                        context["group"] = file.parent.name
+                        file_vars["group"] = file.parent.name
 
-                file.write_text(Template(source).substitute(context))
+                # create file from related template
+                file.write_text(
+                    data=Template(TEMPLATES[file.name]).substitute(file_vars),
+                    encoding="utf-8",
+                )
                 log.info(f"Created file '{file}'")
 
             else:
@@ -61,21 +78,21 @@ def review_repo(config: dict, apply_mode: bool) -> None:
     # COMPOSE/
     action_dir(COMPOSE_DIR)
 
-    action_file(IMAGES_FILE)
+    action_file(COMPOSE_DIR / TEMPLATE_NAMES["images"])
 
     # GROUP/
     for stack_group, stacks in config["compose"].items():
-        stack_group_dir = Path(COMPOSE_DIR / stack_group)
+        stack_group_dir = COMPOSE_DIR / stack_group
 
         action_dir(stack_group_dir)
 
-        action_file(Path(GROUP_FILE.format(path=stack_group_dir)))
+        action_file(stack_group_dir / TEMPLATE_NAMES["group"])
 
         # STACK/
         for stack in stacks:
-            stack_dir = Path(stack_group_dir / stack)
+            stack_dir = stack_group_dir / stack
 
             action_dir(stack_dir)
 
-            action_file(Path(COMPOSE_FILE.format(path=stack_dir)))
-            action_file(Path(STACK_FILE.format(path=stack_dir)))
+            action_file(stack_dir / TEMPLATE_NAMES["compose"])
+            action_file(stack_dir / TEMPLATE_NAMES["stack"])
