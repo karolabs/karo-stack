@@ -43,7 +43,7 @@ def review_repo(config: dict, apply_mode: bool) -> None:
         # generate list of stacks as string
         return "\n".join(f"  - {stack}" for stack in stacks)
 
-    def write_file(file: Path) -> None:
+    def write_file(file: Path) -> bool:
         file_vars = TEMPLATE_VARS.copy()
 
         # define path dependant variables
@@ -60,11 +60,29 @@ def review_repo(config: dict, apply_mode: bool) -> None:
                 stack_list=format_group_stacks(file.parent.name),
             )
 
-        # create file from related template
-        file.write_text(
-            data=Template(TEMPLATES[file.name]).substitute(file_vars),
-            encoding="utf-8",
-        )
+        # render template
+        content = Template(TEMPLATES[file.name]).substitute(file_vars)
+
+        # update existing group file
+        if file.is_file() and file.name == TEMPLATE_NAMES["group"]:
+            # read file
+            existing_content = file.read_text(encoding="utf-8")
+
+            # preserve existing file header
+            existing_header, separator, _ = existing_content.partition("\n---\n")
+            _, _, template_body = content.partition("\n---\n")
+
+            if not separator:
+                raise ValueError(f"Missing YAML document separator in '{file}'")
+
+            content = existing_header + separator + template_body
+
+            # skip write if no difference
+            if existing_content == content:
+                return False
+
+        file.write_text(content, encoding="utf-8")
+        return True
 
     def action_dir(directory: Path) -> None:
         # check for existing dir
@@ -85,8 +103,11 @@ def review_repo(config: dict, apply_mode: bool) -> None:
             log.debug(f"Found file '{file}'")
 
             # update group file
-            if apply_mode and file.name == TEMPLATE_NAMES["group"]:
-                write_file(file)
+            if (
+                apply_mode
+                and file.name == TEMPLATE_NAMES["group"]
+                and write_file(file)  # attempt write
+            ):
                 log.info(f"Updated file '{file}'")
 
         # create new file
