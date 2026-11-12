@@ -97,7 +97,7 @@ def review_repo(config: dict, apply_mode: bool) -> None:
         else:
             log.debug(f"Missing directory '{directory}'")
 
-    def action_file(file: Path) -> None:
+    def action_file(file: Path) -> int:
         # check for existing file
         if file.is_file():
             log.debug(f"Found file '{file}'")
@@ -109,6 +109,10 @@ def review_repo(config: dict, apply_mode: bool) -> None:
                 and write_file(file)  # attempt write
             ):
                 log.info(f"Updated file '{file}'")
+                return 1
+
+            # no changes
+            return 0
 
         # create new file
         elif apply_mode:
@@ -118,12 +122,16 @@ def review_repo(config: dict, apply_mode: bool) -> None:
         else:
             log.warning(f"Missing file '{file}'")
 
+        return 1
+
     log.info("Reviewing repository file structure")
+
+    file_count = 0
 
     # COMPOSE/
     action_dir(COMPOSE_DIR)
 
-    action_file(COMPOSE_DIR / TEMPLATE_NAMES["images"])
+    file_count += action_file(COMPOSE_DIR / TEMPLATE_NAMES["images"])
 
     # GROUP/
     for stack_group, stacks in config["compose"].items():
@@ -131,7 +139,7 @@ def review_repo(config: dict, apply_mode: bool) -> None:
 
         action_dir(stack_group_dir)
 
-        action_file(stack_group_dir / TEMPLATE_NAMES["group"])
+        file_count += action_file(stack_group_dir / TEMPLATE_NAMES["group"])
 
         # STACK/
         for stack in stacks:
@@ -139,5 +147,12 @@ def review_repo(config: dict, apply_mode: bool) -> None:
 
             action_dir(stack_dir)
 
-            action_file(stack_dir / TEMPLATE_NAMES["compose"])
-            action_file(stack_dir / TEMPLATE_NAMES["stack"])
+            file_count += action_file(stack_dir / TEMPLATE_NAMES["compose"])
+            file_count += action_file(stack_dir / TEMPLATE_NAMES["stack"])
+
+    # log summary
+    state = "Changed" if apply_mode else "Missing"
+    log.info(f"{state} {file_count} file(s)")
+
+    if file_count and not apply_mode:
+        log.info("Use '--apply' to create file(s)")
