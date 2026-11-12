@@ -27,7 +27,7 @@ def review_repo(config: dict, apply_mode: bool) -> None:
     # read bundled templates (e.g. "images.yml": <template text>)
     TEMPLATES = {
         filename: (TEMPLATES_DIR / filename).read_text(encoding="utf-8")
-        for _, filename in TEMPLATE_NAMES.items()
+        for filename in TEMPLATE_NAMES.values()
     }
 
     # define common template variables
