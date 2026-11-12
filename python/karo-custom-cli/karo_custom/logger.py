@@ -41,7 +41,7 @@ def configure_logging(debug: bool) -> None:
     handler.setFormatter(CustomFormatter(LOG_FORMAT))
 
     # set global logging config
-    log_level = logging.DEBUG if debug else logging.WARNING
+    log_level = logging.DEBUG if debug else logging.INFO
 
     logging.basicConfig(
         level=log_level,
