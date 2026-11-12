@@ -92,10 +92,10 @@ def review_repo(config: dict, apply_mode: bool) -> None:
         # create new directory
         elif apply_mode:
             directory.mkdir()
-            log.info(f"Created directory '{directory}'")
+            log.debug(f"Created directory '{directory}'")
 
         else:
-            log.warning(f"Missing directory '{directory}'")
+            log.debug(f"Missing directory '{directory}'")
 
     def action_file(file: Path) -> None:
         # check for existing file
