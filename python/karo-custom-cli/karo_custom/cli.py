@@ -26,13 +26,13 @@ def main() -> int:
     parser.add_argument(
         "--debug",
         action="store_true",
-        help="Enable debug output.",
+        help="Enable debug logging.",
     )
 
     parser.add_argument(
         "--apply",
         action="store_true",
-        help="Generate 'karo-custom.toml' defined file structure.",
+        help="Create or update file structure defined by 'karo-custom.toml'.",
     )
 
     args = parser.parse_args()
