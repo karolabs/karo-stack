@@ -21,3 +21,9 @@ Repository = "https://github.com/karolabs/karo-stack"
 
 [project.scripts]
 karo-custom = "karo_custom.cli:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "karo_custom.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["karo_custom*"]

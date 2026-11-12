@@ -5,7 +5,7 @@
 import argparse
 import logging
 
-from karo_custom import application, logger
+from karo_custom import __version__, application, logger
 from karo_custom.errors import ExpectedError
 
 log = logging.getLogger(__name__)
@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 
 def main() -> int:
 
-    parser = argparse.ArgumentParser(prog="karo_custom", add_help=False)
+    parser = argparse.ArgumentParser(add_help=False)
 
     parser.add_argument(
         "-h",
@@ -21,6 +21,13 @@ def main() -> int:
         action="help",
         default=argparse.SUPPRESS,
         help="Show this help message and exit.",
+    )
+
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"karo-custom-cli {__version__}",
+        help="Show version and exit.",
     )
 
     parser.add_argument(
