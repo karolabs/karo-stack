@@ -118,6 +118,8 @@ def review_repo(config: dict, apply_mode: bool) -> None:
         else:
             log.warning(f"Missing file '{file}'")
 
+    log.info("Reviewing repository file structure")
+
     # COMPOSE/
     action_dir(COMPOSE_DIR)
 

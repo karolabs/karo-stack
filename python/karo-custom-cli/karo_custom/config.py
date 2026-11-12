@@ -34,6 +34,7 @@ def load_config() -> dict:
         raise ConfigError(f"Unable to read configuration file: {exc}") from exc
 
     validate_config(config_data)
+    log.info(f"Loaded valid '{CONFIG_FILE}'")
 
     return config_data
 
