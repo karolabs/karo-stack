@@ -10,12 +10,12 @@ Command-line interface for creating karo-custom repos.
 
 ## Features
 
-- Validates `karo-custom.toml` configuration files.
+- Validates your `karo-custom.toml` configuration file.
 
 - Warns when expected files are missing.
 
 - `--apply` will create the necessary file structure defined by `karo-custom.toml`,
-  and update stack lists inside existing `group.yml` files.
+  and update any existing `group.yml` files.
 
 ## Install
 
@@ -23,7 +23,7 @@ Recommended to use `pipx`.
 
 Simply run the install command and supply a path to this directory.
 
-`pipx install --editable ./python/karo-custom-cli/`
+`pipx install --editable --force ./python/karo-custom-cli/`
 
 ## Usage
 
