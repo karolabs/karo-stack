@@ -15,6 +15,7 @@ icon: lucide/folder-tree
     ``` text { .no-copy title="Repo example" }
     karo-custom/
     ├── compose/...
+    ├── karo-custom.toml
     ├── LICENSE
     └── README.md
     ```
@@ -45,11 +46,12 @@ icon: lucide/folder-tree
     └── hosts.ini
     ```
 
-!!! tip "karo-cli"
+!!! tip "karo-custom-cli"
 
-    To help you quickly generate the required structure,
-    and lint your custom repo.
-    You can use the [karo-cli](https://github.com/karolabs/karo-cli) tool.
+    Use the [karo-custom-cli](https://github.com/karolabs/karo-stack/tree/main/python/karo-custom-cli),
+    a Python project that comes with the main karo-stack repository.
+    It works by validating your karo-custom configuration,
+    and automatically creating the required file structure for each stack.
 
 ## Example layout
 

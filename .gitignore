@@ -8,6 +8,8 @@
 /roles/karo/compose/templates/*
 !/roles/karo/compose/defaults/main/main.yml
 !/roles/karo/compose/templates/.gitkeep
+/python/karo-custom-cli/karo-custom.toml
+/python/karo-custom-cli/compose/
 
 # docs
 /.cache/
@@ -16,3 +18,7 @@
 # misc
 /.dev/
 /notes.md
+
+# python
+*.egg-info/
+__pycache__/

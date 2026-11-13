@@ -1,0 +1,38 @@
+# SPDX-FileCopyrightText: © ${year} ${author}
+#
+# SPDX-License-Identifier: ${license}
+
+# karo-custom stack template, for rendering a Docker Compose file.
+# See https://docs.karolabs.dev for more information.
+
+{{ ansible_managed | comment }}
+
+---
+
+name: ${stack}
+services:
+
+  ${stack}:
+    image: {{ stack_vars.${stack}.image }}
+    container_name: ${stack}
+    restart: {{ karo_compose_restart_policy }}
+    networks:
+      - frontend
+    volumes:
+      - type: volume
+        source: ${stack}_data
+        target: /app/example/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${stack}.rule=Host(`{{ stack_vars.${stack}.domain }}`)
+      - traefik.http.services.${stack}.loadbalancer.server.port=8080
+    environment:
+      - LOG_LEVEL={{ stack_vars.${stack}.log_level }}
+
+networks:
+  frontend:
+    external: true
+
+volumes:
+  ${stack}_data:
+    name: ${stack}_data

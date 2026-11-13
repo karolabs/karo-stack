@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: © ${year} ${author}
+#
+# SPDX-License-Identifier: ${license}
+
+# karo-custom stack group defaults, for specifying stack deployment order.
+# See https://docs.karolabs.dev for more information.
+
+---
+
+${group}_stacks:
+${stack_list}

@@ -54,7 +54,7 @@ nav = [
     { "Create" = [
       "custom/create/methods.md",
       "custom/create/structure.md",
-      "custom/create/services.md",
+      "custom/create/config.md",
     ] },
     { "Compose" = [
       "custom/compose/defaults.md",
@@ -64,6 +64,7 @@ nav = [
     { "Maintain" = [
       "custom/maintain/image.md",
       "custom/maintain/upgrades.md",
+      "custom/maintain/services.md",
     ] },
   ] },
   { "Advanced" = [
