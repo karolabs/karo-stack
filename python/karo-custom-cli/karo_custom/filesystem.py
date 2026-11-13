@@ -77,9 +77,13 @@ def review_repo(config: dict, apply_mode: bool) -> None:
 
             content = existing_header + separator + template_body
 
-            # skip write if no difference
             if existing_content == content:
+                # no difference, skip write
                 return False
+
+            if not apply_mode:
+                # difference, but can't apply, skip write
+                return True
 
         file.write_text(content, encoding="utf-8")
         return True
@@ -103,13 +107,16 @@ def review_repo(config: dict, apply_mode: bool) -> None:
             log.debug(f"Found file '{file}'")
 
             # update group file
-            if (
-                apply_mode
-                and file.name == TEMPLATE_NAMES["group"]
-                and write_file(file)  # attempt write
-            ):
-                log.info(f"Updated file '{file}'")
-                return 1
+            if file.name == TEMPLATE_NAMES["group"]:
+                changed = write_file(file)
+
+                if not changed:
+                    log.debug(f"No difference with file '{file}'")
+                elif apply_mode:
+                    log.info(f"Updated file '{file}'")
+                    return 1
+                else:
+                    log.warning(f"Discrepancy with file '{file}'")
 
             # no changes
             return 0
