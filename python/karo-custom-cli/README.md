@@ -8,6 +8,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 Command-line interface for creating karo-custom repos.
 
+Can be used by both brand new and existing repositories.
+
 ## Features
 
 - Validates your `karo-custom.toml` configuration file.
@@ -29,7 +31,10 @@ Simply run the install command and supply a path to this directory.
 
 ``` sh
 # navigate to your locally cloned karo-custom git repo
-cd karo-custom
+cd ./projects/git/karo-custom
+
+# see help text
+karo-custom --help
 
 # run read only checks
 karo-custom
