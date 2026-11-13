@@ -54,6 +54,7 @@ nav = [
     { "Create" = [
       "custom/create/methods.md",
       "custom/create/structure.md",
+      "custom/create/config.md",
       "custom/create/services.md",
     ] },
     { "Compose" = [

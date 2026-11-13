@@ -15,6 +15,7 @@ icon: lucide/folder-tree
     ``` text { .no-copy title="Repo example" }
     karo-custom/
     ├── compose/...
+    ├── karo-custom.toml
     ├── LICENSE
     └── README.md
     ```
