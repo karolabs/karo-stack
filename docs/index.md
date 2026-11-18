@@ -7,7 +7,7 @@ icon: lucide/house
 title: Home
 ---
 
-# karo-stack
+# <img class="twemoji" src="https://hazzuk.github.io/assets/karolabs/karolabs.svg"> | karo-stack
 
 **A minimal toolkit for building a declarative Linux homeserver**
 

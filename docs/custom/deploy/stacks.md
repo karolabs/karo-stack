@@ -11,7 +11,7 @@ icon: simple/docker
 !!! tip "Use the official karo-custom repo"
 
     The project maintains its own karo-custom repo:
-    [karolabs/karo-custom](https://custom.karolabs.dev/){:target='_blank'}
+    [karolabs/karo-custom](https://custom.karolabs.dev/)
 
     It provides essential core stacks
     (a reverse proxy and OIDC provider).
