@@ -99,7 +99,8 @@ being applied promptly.
         1. Required, container image repository
         2. Regular expression extracting the version from each tag
            (default regex matches 'v1.0.0')
-        3. Semantic versioning constraint (e.g. '>=2.0.0')
+        3. Semantic versioning constraint (e.g. '>=2.0.0') -
+           [Syntax guide](https://github.com/Masterminds/semver#checking-version-constraints)
         4. Enforce strict semantic versioning rules when parsing versions
            (e.g. 1.2 is dropped instead of being read as 1.2.0)
         5. Extra markdown included in pull requests
